@@ -6,6 +6,8 @@ const ITEM_H = 28
 const ITEM_W = 80
 const INTERVAL = 1220
 const LINE_ANIM_DURATION = 800
+const LINE_DELAY = 250
+const CAROUSEL_DELAY = LINE_DELAY + LINE_ANIM_DURATION
 
 export default function BuiltForCarousel() {
   const isMobile = useIsMobile()
@@ -15,8 +17,8 @@ export default function BuiltForCarousel() {
   const trackRef = useRef(null)
 
   useEffect(() => {
-    const lineTimer = setTimeout(() => setLineReady(true), 100)
-    const carouselTimer = setTimeout(() => setCarouselActive(true), 100 + LINE_ANIM_DURATION)
+    const lineTimer = setTimeout(() => setLineReady(true), LINE_DELAY)
+    const carouselTimer = setTimeout(() => setCarouselActive(true), CAROUSEL_DELAY)
     return () => { clearTimeout(lineTimer); clearTimeout(carouselTimer) }
   }, [])
 
