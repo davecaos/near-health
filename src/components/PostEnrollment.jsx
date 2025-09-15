@@ -37,11 +37,11 @@ export default function PostEnrollment() {
   return (
     <section className="post-enrollment" id="why-near" ref={fade.ref}>
       <div className={`container ${fade.className}`}>
-        <h2 className="section-title">Designed for the<br />post-enrollment reality</h2>
+        <h2 className="section-title" style={{ transitionDelay: '0s' }}>Designed for the<br />post-enrollment reality</h2>
         {isMobile ? (
           <div className="post-list">
             {features.map((f, i) => (
-              <div className="post-list-item" key={i}>
+              <div className="post-list-item" key={i} style={{ transitionDelay: `${0.08 + i * 0.08}s` }}>
                 <div className="post-list-header">
                   <div className="post-icon">{f.icon}</div>
                   <h3>{f.title}</h3>
@@ -56,7 +56,7 @@ export default function PostEnrollment() {
               {features.slice(0, 3).map((f, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <div className="post-divider-v"></div>}
-                  <div className="post-col">
+                  <div className="post-col" style={{ transitionDelay: `${0.1 + i * 0.1}s` }}>
                     <div className="post-icon">{f.icon}</div>
                     <h3>{f.title}</h3>
                     <p>{f.desc}</p>
@@ -68,7 +68,7 @@ export default function PostEnrollment() {
               {features.slice(3).map((f, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <div className="post-divider-v"></div>}
-                  <div className="post-col">
+                  <div className="post-col" style={{ transitionDelay: `${0.3 + i * 0.1}s` }}>
                     <div className="post-icon">{f.icon}</div>
                     <h3>{f.title}</h3>
                     <p>{f.desc}</p>
