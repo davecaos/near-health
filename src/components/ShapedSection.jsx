@@ -7,7 +7,7 @@ export default function ShapedSection() {
   const isMobile = useIsMobile()
 
   return (
-    <section className="shaped-section" ref={fade.ref}>
+    <section className="shaped-section" id="shaped" ref={fade.ref}>
       <div className={`container ${fade.className}`}>
         <h2 className="section-title">Shaped by real-world use</h2>
         <div className="shaped-photo">

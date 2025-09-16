@@ -15,7 +15,7 @@ export default function OnePlatform() {
     ])
 
   return (
-    <section className="one-platform" ref={fade.ref}>
+    <section className="one-platform" id="one-platform" ref={fade.ref}>
       <div className={`container one-platform-inner ${fade.className}`}>
         <div className="platform-text">
           <h2 className="section-title">One platform.<br />All coverage.</h2>

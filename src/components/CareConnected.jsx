@@ -18,7 +18,7 @@ export default function CareConnected() {
   }, [fade.visible, dotLottie])
 
   return (
-    <section className="care-connected" ref={fade.ref}>
+    <section className="care-connected" id="care-connected" ref={fade.ref}>
       <div className={`container ${fade.className}`}>
         <div className="care-connected-card">
           <DotLottieReact

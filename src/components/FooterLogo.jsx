@@ -2,7 +2,7 @@ import NearBrand from './ui/NearBrand'
 
 export default function FooterLogo() {
   return (
-    <section className="footer-logo-section">
+    <section className="footer-logo-section" id="footer-logo">
       <div className="container footer-logo-container">
         <NearBrand size="lg" />
       </div>
