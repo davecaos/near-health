@@ -43,8 +43,8 @@
 
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: var(--white); overscroll-behavior-y: none; }
-body { font-family: var(--font); color: var(--dark); background: var(--white); overflow-x: hidden; position: relative; font-size: var(--fs-body); }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: transparent; overscroll-behavior-y: none; }
+body { font-family: var(--font); color: var(--dark); background: transparent; overflow-x: hidden; position: relative; font-size: var(--fs-body); }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
@@ -54,12 +54,9 @@ ul { list-style: none; }
 /* ── Page gradient background (Manhattan Ice) ── */
 .page-gradient {
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(ellipse 100vw 60vh  at 50%   0%,  #E9D4D1                    0%, transparent 100%), /* TL */
-    radial-gradient(ellipse 80vw  80vh  at -10%  50%, rgba(159, 233, 253, 0.3)   0%, transparent 70%),  /* BL */
-    radial-gradient(ellipse 120vw 100vh at 110%  90%, #F8CA9E                    0%, transparent 60%),  /* BR */
-    radial-gradient(ellipse 80vw  120vh at 110%  55%, #D4CAD3                    0%, transparent 70%);  /* TR */
-  opacity: 0.5;
+}
+.page-gradient img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
 
 /* ── Buttons ── */
