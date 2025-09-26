@@ -51,12 +51,43 @@ ul { list-style: none; }
 
 .container { max-width: 100%; margin: 0 auto; padding: 0 var(--px); }
 
-/* ── Page gradient background (Manhattan Ice) ── */
+/* ── Page gradient background (Manhattan Ice – Figma layers) ── */
 .page-gradient {
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  overflow: hidden; opacity: 0.5;
 }
-.page-gradient img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+.bg-tl, .bg-bl, .bg-br, .bg-tr {
+  position: absolute; border-radius: 50%;
+}
+/* TL – #E9D4D1, top-center, huge vertical ellipse */
+.bg-tl {
+  width: 220vw; height: 130vh;
+  top: -65vh; left: 50%; transform: translateX(-50%);
+  background: #E9D4D1;
+  filter: blur(min(33vw, 600px));
+}
+/* BL – blue linear-gradient, left-middle, rotated (Figma matrix) */
+.bg-bl {
+  width: 100vw; height: 100vh;
+  top: 10%; left: -35%;
+  background: linear-gradient(90deg, rgba(159, 233, 253, 0.3) 0%, rgba(255, 255, 255, 0.4) 100%);
+  filter: blur(min(33vw, 600px));
+  transform: matrix(-0.44, 0.9, -0.83, -0.56, 0, 0);
+}
+/* BR – Manhattan #F8CA9E, bottom-right, rotated (Figma matrix) */
+.bg-br {
+  width: 160vw; height: 130vh;
+  bottom: -30%; right: -40%;
+  background: #F8CA9E;
+  filter: blur(min(33vw, 600px));
+  transform: matrix(0.24, 0.97, -0.95, 0.31, 0, 0);
+}
+/* TR – Mercury #D4CAD3, bottom-center, huge vertical ellipse */
+.bg-tr {
+  width: 220vw; height: 130vh;
+  bottom: -65vh; left: 50%; transform: translateX(-50%);
+  background: #D4CAD3;
+  filter: blur(min(33vw, 600px));
 }
 
 /* ── Buttons ── */
@@ -147,7 +178,7 @@ ul { list-style: none; }
 .hero {
   position: relative; min-height: 100vh;
   display: flex; align-items: flex-start;
-  padding: calc(66px + var(--space-lg)) 0 var(--space-lg);
+  padding: calc(66px + var(--space-lg) * 1.6) 0 var(--space-lg);
   overflow: visible;
 }
 .hero-container { width: 100%; display: flex; flex-direction: column; gap: var(--space-md); }
@@ -324,7 +355,7 @@ ul { list-style: none; }
 .how-num { font-size: clamp(16px, 1.4vw, 20px); font-weight: 500; flex-shrink: 0; }
 .how-arrow { flex-shrink: 0; margin: 0 -20px; position: relative; z-index: 1; }
 .how-arrow svg { display: block; width: clamp(120px, 18vw, 268px); height: auto; }
-.how-center-icon { flex-shrink: 0; z-index: 2; display: flex; justify-content: center; margin: var(--space-md) 0; }
+.how-center-icon { flex: 1; min-width: clamp(200px, 28vw, 500px); z-index: 2; display: flex; justify-content: center; }
 
 /* Spacer keeps the gap between Card 1 and Card 3 in the flex row */
 .how-spacer { flex: 1; min-width: clamp(200px, 28vw, 500px); }
@@ -346,7 +377,7 @@ ul { list-style: none; }
   display: flex; align-items: center; justify-content: center;
 }
 .how-circle-logo { width: 48px; height: 48px; }
-.how-step-center-row { display: flex; justify-content: center; margin-top: var(--space-md); }
+.how-step-center-row { display: flex; justify-content: center; margin-top: calc(var(--space-md) * 2); }
 
 /* ── Post-Enrollment (Dark) ── */
 .post-enrollment { padding: var(--space-section) var(--px); margin: 0 auto; }
@@ -359,7 +390,7 @@ ul { list-style: none; }
   display: flex; gap: 0; flex-wrap: wrap;
   border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-lg);
 }
-.post-grid-bottom { margin-top: 0; border-top: 1px solid rgba(255,255,255,0.1); }
+.post-grid-bottom { margin-top: 0; }
 .post-col { flex: 1 1 250px; padding: 0 clamp(16px, 2vw, 32px); }
 .post-col:first-child { padding-left: 0; }
 .post-divider-v { width: 1px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
@@ -747,9 +778,7 @@ ul { list-style: none; }
   .post-enrollment .section-title { font-size: 32px; letter-spacing: -0.01em; margin-bottom: 40px; }
   .post-list-item {
     padding: 24px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.12);
   }
-  .post-list-item:last-child { border-bottom: none; }
   .post-list-header {
     display: flex; align-items: center; gap: 12px;
     margin-bottom: 10px;

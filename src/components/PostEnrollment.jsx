@@ -1,20 +1,21 @@
 import React from 'react'
 import { useFadeIn } from '../hooks/useScrollAnimation'
 import useIsMobile from '../hooks/useIsMobile'
+import { asset } from '../utils/assetPath'
 
 const features = [
   {
-    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#5EE6FD" strokeWidth="2"/><path d="M6 10h8M10 6v8" stroke="#5EE6FD" strokeWidth="2"/></svg>,
+    icon: <img src={asset('assets/images/where-actually-begins-icon.svg')} alt="" width="20" height="20" />,
     title: 'Where care actually begins',
     desc: 'The moment where coverage turns into real needs.',
   },
   {
-    icon: <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M1 9l6 6L19 1" stroke="#5EE6FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+    icon: <img src={asset('assets/images/AI that moves care forward-icon.svg')} alt="" width="20" height="20" />,
     title: 'AI that moves care forward',
     desc: 'Resolves requests and turns intent into action.',
   },
   {
-    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="1" stroke="#5EE6FD" strokeWidth="2"/><rect x="11" y="1" width="8" height="8" rx="1" stroke="#5EE6FD" strokeWidth="2"/><rect x="1" y="11" width="8" height="8" rx="1" stroke="#5EE6FD" strokeWidth="2"/><rect x="11" y="11" width="8" height="8" rx="1" stroke="#5EE6FD" strokeWidth="2"/></svg>,
+    icon: <img src={asset('assets/images/One connected flow-icon.svg')} alt="" width="20" height="20" />,
     title: 'One connected flow',
     desc: 'Members, brokers, and providers move in sync.',
   },

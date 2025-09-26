@@ -132,10 +132,9 @@ export default function HowItWorks() {
           <div className="how-layout" ref={layoutRef}>
             <div className="how-steps-row">
               <StepCard {...steps[0]} delay={0.1} />
-              <div className="how-spacer" />
+              <CenterIcon delay={0.2} />
               <StepCard {...steps[2]} delay={0.3} />
             </div>
-            <CenterIcon delay={0.2} />
             <div className="how-step-center-row">
               <StepCard {...steps[1]} delay={0.4} />
             </div>

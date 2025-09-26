@@ -1,4 +1,3 @@
-import { asset } from './utils/assetPath'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import CareJourney from './components/CareJourney'
@@ -17,7 +16,10 @@ export default function App() {
   return (
     <>
       <div className="page-gradient" aria-hidden="true">
-        <img src={asset('assets/images/background.png')} alt="" />
+        <div className="bg-tl" />
+        <div className="bg-bl" />
+        <div className="bg-br" />
+        <div className="bg-tr" />
       </div>
       <Navbar />
       <Hero />

@@ -10,7 +10,7 @@ export default function MemberExperience() {
     <section className="member-experience" id="member-experience" ref={fade.ref}>
       <div className={`container ${fade.className}`}>
         <div className="member-header">
-          <SectionTitle>What your members<br />experience</SectionTitle>
+          <SectionTitle>What your<br />members experience</SectionTitle>
           <p className="member-desc">Members can interact via chat or voice for everyday questions after enrollment. Near takes over the request, keeps brokers in the loop, and routes care when needed.</p>
         </div>
         <div className="member-video-wrap">
