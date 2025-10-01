@@ -376,7 +376,7 @@ ul { list-style: none; }
   background: var(--dark); border-radius: 30px;
   display: flex; align-items: center; justify-content: center;
 }
-.how-circle-logo { width: 48px; height: 48px; }
+.how-circle-logo { width: 96px; height: 96px; }
 .how-step-center-row { display: flex; justify-content: center; margin-top: calc(var(--space-md) * 2); }
 
 /* ── Post-Enrollment (Dark) ── */
@@ -388,7 +388,7 @@ ul { list-style: none; }
 .post-enrollment .section-title { color: var(--white); margin-bottom: var(--space-lg); }
 .post-grid {
   display: flex; gap: 0; flex-wrap: wrap;
-  border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-lg);
+  padding-top: var(--space-lg);
 }
 .post-grid-bottom { margin-top: 0; }
 .post-col { flex: 1 1 250px; padding: 0 clamp(16px, 2vw, 32px); }
@@ -437,7 +437,7 @@ ul { list-style: none; }
 .real-world .section-title { margin-bottom: var(--space-lg); }
 .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(16px, 2.8vw, 40px); }
 .feature-card {
-  border-radius: clamp(12px, 1.2vw, 16px); padding: clamp(20px, 2.2vw, 32px) clamp(16px, 1.7vw, 24px);
+  border-radius: clamp(12px, 1.2vw, 16px); padding: clamp(30px, 3.3vw, 48px) clamp(16px, 1.7vw, 24px);
   text-align: center; background: rgba(255,255,255,0.5); border: 1px solid rgba(10,28,30,0.04);
 }
 .feature-icon {
@@ -479,7 +479,7 @@ ul { list-style: none; }
 }
 .shaped-overlay-badge {
   display: flex; align-items: center; gap: 12px;
-  margin-left: auto;
+  margin-left: auto; max-width: 480px; width: 100%;
 }
 .shaped-overlay-badge .shaped-badge-icon { width: clamp(24px, 2.5vw, 36px); height: auto; }
 .shaped-overlay-badge span {
@@ -491,8 +491,8 @@ ul { list-style: none; }
 /* ── Care, Connected ── */
 .care-connected { padding: var(--space-lg) 0; }
 .care-connected-card {
-  max-width: min(946px, 90vw); margin: 0 auto;
-  height: clamp(200px, 28vw, 408px);
+  max-width: min(1287px, 81vw); margin: 0 auto;
+  height: clamp(272px, 38vw, 555px);
   border-radius: clamp(16px, 1.7vw, 24px); position: relative; overflow: hidden;
   background: transparent;
   display: flex; align-items: center; justify-content: center;
@@ -526,6 +526,7 @@ ul { list-style: none; }
   max-width: 533px; margin: 0 auto var(--space-md);
 }
 .footer-cta-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.footer-cta-buttons .btn { min-width: 200px; text-align: center; justify-content: center; }
 
 /* Footer CTA staggered reveal */
 .footer-cta .fade-in { opacity: 1; transform: none; transition: none; }

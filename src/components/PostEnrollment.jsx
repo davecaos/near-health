@@ -20,12 +20,12 @@ const features = [
     desc: 'Members, brokers, and providers move in sync.',
   },
   {
-    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 1v18M1 10h18" stroke="#5EE6FD" strokeWidth="2"/><circle cx="10" cy="10" r="9" stroke="#5EE6FD" strokeWidth="2"/></svg>,
+    icon: <img src={asset('assets/images/Built to scale across networks.svg')} alt="" width="20" height="20" />,
     title: 'Built to scale across networks',
     desc: 'From individual teams to full ecosystems.',
   },
   {
-    icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="7" cy="7" r="6" stroke="#5EE6FD" strokeWidth="2"/><circle cx="13" cy="13" r="6" stroke="#5EE6FD" strokeWidth="2"/><circle cx="13" cy="13" r="3" fill="#5EE6FD"/></svg>,
+    icon: <img src={asset('assets/images/integration-ready.svg')} alt="" width="20" height="20" />,
     title: 'Integration-ready',
     desc: 'Fits seamlessly into existing broker and provider workflows.',
   },
