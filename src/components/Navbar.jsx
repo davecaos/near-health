@@ -12,6 +12,7 @@ export default function Navbar() {
     if (target) {
       const offset = document.querySelector('.navbar')?.offsetHeight || 0
       window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' })
+      history.pushState(null, '', id)
     }
     setMenuOpen(false)
   }

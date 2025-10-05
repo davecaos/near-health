@@ -25,16 +25,26 @@ export default function ResponsiveVideo({ desktop, mobile, desktopWebm, mobileWe
     if (!video) return
     video.muted = true
 
+    let visible = false
+    const tryPlay = () => {
+      if (visible && video.paused) video.play().catch(() => {})
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) video.play()
+        visible = entry.isIntersecting
+        if (visible) tryPlay()
         else video.pause()
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     )
 
+    video.addEventListener('loadeddata', tryPlay)
     observer.observe(video)
-    return () => observer.disconnect()
+    return () => {
+      video.removeEventListener('loadeddata', tryPlay)
+      observer.disconnect()
+    }
   }, [scrollPlay])
 
   useEffect(() => {
