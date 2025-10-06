@@ -16,7 +16,7 @@ const cards = [
       'Improve member experience and retention.',
       'Coordinate care with visibility.',
     ],
-    desc: 'Deliver post-enrollment support that truly scales - and focus on relationships, not operations.',
+    desc: <>Deliver post-enrollment support that truly scales - and focus on<br />relationships, not operations.</>,
   },
   {
     title: 'For Providers',
@@ -28,7 +28,7 @@ const cards = [
       'Gain visibility with high-intent patients and broker-driven referrals.',
       'Streamline intake and scheduling with better-prepared patients.',
     ],
-    desc: 'Turn access into growth by connecting you with the right patients, at the right moment.',
+    desc: <>Turn access into growth by connecting you with the right patients, at<br />the right moment.</>,
   },
 ]
 
