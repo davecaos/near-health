@@ -395,7 +395,7 @@ ul { list-style: none; }
   padding-top: var(--space-lg);
 }
 .post-grid-bottom { margin-top: 0; }
-.post-col { width: 392px; flex: 0 0 auto; padding: 0; }
+.post-col { flex: 1 1 min(392px, 30%); padding: 0; }
 .post-col:first-child { padding-left: 0; }
 .post-divider-v { width: 1px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
 .post-divider-hidden { visibility: hidden; }
