@@ -426,15 +426,27 @@ ul { list-style: none; }
 .platform-phone { margin-top: var(--space-lg); border-radius: clamp(30px, 4vw, 44px); overflow: hidden; }
 .platform-phone-img { max-width: min(454px, 80vw); width: 100%; height: auto; display: block; border-radius: clamp(30px, 4vw, 44px); }
 
-.coverage-ticker {
-  margin-top: var(--space-lg); overflow: hidden; white-space: nowrap; padding-bottom: 20px;
-  mask-image: linear-gradient(to right, transparent 0%, black 35%, black 65%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%, black 65%, transparent 100%);
+.coverage-carousel {
+  margin-top: var(--space-lg); overflow: hidden; padding-bottom: 20px;
+  mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
 }
-.ticker-track { display: inline-flex; align-items: baseline; gap: clamp(12px, 1.6vw, 24px); animation: ticker 30s linear infinite; }
-.ticker-item { font-size: var(--fs-ticker); font-weight: 400; line-height: 1; flex-shrink: 0; color: var(--dark); }
-.ticker-dot { font-size: var(--fs-ticker); font-weight: 400; color: var(--dark); flex-shrink: 0; }
-@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.carousel-track {
+  display: inline-flex; align-items: baseline; position: relative;
+  gap: clamp(16px, 2.5vw, 40px);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.carousel-item {
+  font-size: var(--fs-ticker); font-weight: 400; line-height: 1;
+  white-space: nowrap; flex-shrink: 0;
+  transition: opacity 0.6s ease, color 0.4s ease;
+  color: rgba(10, 28, 30, 0.25);
+}
+.carousel-item--active {
+  color: var(--dark);
+  font-weight: 500;
+}
 
 /* ── Real-World Operations ── */
 .real-world { padding: var(--space-section) 0; }
@@ -806,8 +818,8 @@ ul { list-style: none; }
   .one-platform .section-title { font-size: 36px; letter-spacing: -0.01em; }
   .platform-subtitle { font-size: 16px; line-height: 1.32; }
   .platform-phone { border-radius: 30px; }
-  .ticker-item, .ticker-dot { font-size: 28px; }
-  .coverage-ticker { width: 100vw; margin-left: calc(-50vw + 50%); }
+  .carousel-item { font-size: 28px; }
+  .coverage-carousel { width: 100vw; margin-left: calc(-50vw + 50%); }
 
   /* ── Real World Operations ── */
   .real-world { padding: 80px 0; }
