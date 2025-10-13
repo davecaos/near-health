@@ -5,7 +5,10 @@
       "Bash(pkill -f \"vite build\")",
       "Bash(pkill -f \"npm run build\")",
       "Bash(pkill -f \"vite\")",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:5175/)",
+      "Bash(curl -s http://localhost:5175/landing/src/components/HowItWorks.jsx)",
+      "Bash(curl -s \"http://localhost:5175/landing/src/components/HowItWorks.jsx\")"
     ]
   }
 }
