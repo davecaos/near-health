@@ -1,7 +1,10 @@
+import NearBrand from './ui/NearBrand'
+
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
+        <NearBrand size="lg" className="footer-brand" />
         <span className="footer-item footer-copyright">&copy; Near Health LLC. 2026</span>
         <a href="mailto:hello@near.health" className="footer-item footer-email">hello@near.health</a>
         <a href="#" className="footer-item footer-terms">Terms</a>

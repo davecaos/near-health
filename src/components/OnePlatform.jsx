@@ -1,72 +1,94 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useFadeIn } from '../hooks/useScrollAnimation'
 import useIsMobile from '../hooks/useIsMobile'
 import { asset } from '../utils/assetPath'
 
-const items = ['Vision', 'Dental', 'Medicare', 'ACA', 'Employer-sponsored']
+const INITIAL = ['Vision', 'Dental', 'Medicare', 'ACA', 'Employer-sponsored']
 const INTERVAL = 2200
-const allItems = [...items, ...items, ...items]
+const DURATION = 550
+const COPIES = 3
+const items = Array.from({ length: COPIES }, () => INITIAL).flat()
 
 export default function OnePlatform() {
   const fade = useFadeIn()
   const isMobile = useIsMobile()
-  // Start at the middle copy so we have room on both sides
-  const [activeIdx, setActiveIdx] = useState(items.length)
-  const [translateX, setTranslateX] = useState(0)
-  const [snap, setSnap] = useState(false)
+  const centerOffset = Math.floor(INITIAL.length / 2)
+
+  const [baseIndex, setBaseIndex] = useState(INITIAL.length)
+  const [animated, setAnimated] = useState(false)
+  const [tx, setTx] = useState(0)
+
   const trackRef = useRef(null)
   const containerRef = useRef(null)
+  const txRef = useRef(0)
+  const baseRef = useRef(INITIAL.length)
+  const busyRef = useRef(false)
 
-  const recenter = useCallback((idx) => {
+  const activeIndex = baseIndex + centerOffset
+
+  const getTxForIndex = useCallback((idx) => {
+    const track = trackRef.current
+    const container = containerRef.current
+    if (!track || !container) return 0
+    const item = track.children[idx]
+    if (!item) return 0
+    return container.offsetWidth / 2 - (item.offsetLeft + item.offsetWidth / 2)
+  }, [])
+
+  const applyTx = useCallback((value, withAnim) => {
+    txRef.current = value
+    setAnimated(withAnim)
+    setTx(value)
+  }, [])
+
+  /* Center on mount */
+  useEffect(() => {
     requestAnimationFrame(() => {
-      const track = trackRef.current
-      const container = containerRef.current
-      if (!track || !container) return
-      const item = track.children[idx]
-      if (!item) return
-      const containerMid = container.offsetWidth / 2
-      const itemMid = item.offsetLeft + item.offsetWidth / 2
-      setTranslateX(containerMid - itemMid)
+      applyTx(getTxForIndex(INITIAL.length + centerOffset), false)
     })
   }, [])
 
-  // Advance index every interval
+  /* Resize handler */
   useEffect(() => {
-    const id = setInterval(() => {
-      setActiveIdx(prev => {
-        const next = prev + 1
-        // Reset silently to the middle copy when we've gone through one full copy
-        // We'll handle the reset after the transition
-        return next
-      })
-    }, INTERVAL)
-    return () => clearInterval(id)
-  }, [])
-
-  // When activeIdx reaches the last copy, snap back silently to middle copy
-  useEffect(() => {
-    if (activeIdx >= items.length * 2) {
-      const equivalent = activeIdx - items.length
-      const id = setTimeout(() => {
-        setSnap(true)           // disable transition
-        setActiveIdx(equivalent)
-        requestAnimationFrame(() => requestAnimationFrame(() => setSnap(false)))
-      }, 650)
-      return () => clearTimeout(id)
+    const onResize = () => {
+      applyTx(getTxForIndex(baseRef.current + centerOffset), false)
     }
-  }, [activeIdx])
-
-  // Recalculate translateX whenever activeIdx changes
-  useEffect(() => {
-    recenter(activeIdx)
-  }, [activeIdx, recenter])
-
-  // Recalculate on resize
-  useEffect(() => {
-    const onResize = () => recenter(activeIdx)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [activeIdx, recenter])
+  }, [applyTx, getTxForIndex, centerOffset])
+
+  /* Advance one step */
+  const advance = useCallback(() => {
+    if (busyRef.current) return
+    busyRef.current = true
+
+    const newBase = baseRef.current + 1
+    const newActive = newBase + centerOffset
+
+    applyTx(getTxForIndex(newActive), true)
+    baseRef.current = newBase
+    setBaseIndex(newBase)
+  }, [applyTx, getTxForIndex, centerOffset])
+
+  /* On transitionend: check if we need to jump back */
+  const onTransitionEnd = useCallback(() => {
+    busyRef.current = false
+
+    if (baseRef.current >= 2 * INITIAL.length) {
+      const newBase = baseRef.current - INITIAL.length
+      baseRef.current = newBase
+      setBaseIndex(newBase)
+      requestAnimationFrame(() => {
+        applyTx(getTxForIndex(newBase + centerOffset), false)
+      })
+    }
+  }, [applyTx, getTxForIndex, centerOffset])
+
+  /* Auto-advance interval */
+  useEffect(() => {
+    const id = setInterval(advance, INTERVAL)
+    return () => clearInterval(id)
+  }, [advance])
 
   return (
     <section className="one-platform" id="one-platform" ref={fade.ref}>
@@ -92,16 +114,21 @@ export default function OnePlatform() {
         <div
           className="carousel-track"
           ref={trackRef}
-          style={{ transform: `translateX(${translateX}px)`, transition: snap ? 'none' : undefined }}
+          onTransitionEnd={onTransitionEnd}
+          style={{
+            transform: `translateX(${tx}px)`,
+            transition: animated
+              ? `transform ${DURATION}ms cubic-bezier(0.16,1,0.3,1)`
+              : 'none',
+          }}
         >
-          {allItems.map((item, i) => {
-            const dist = Math.abs(i - activeIdx)
-            const isActive = dist === 0
+          {items.map((item, i) => {
+            const dist = Math.abs(i - activeIndex)
             return (
               <span
-                key={i}
-                className={`carousel-item${isActive ? ' carousel-item--active' : ''}`}
-                style={{ opacity: Math.max(0, 1 - dist * 0.3) }}
+                key={`${item}-${i}`}
+                className={`carousel-item${i === activeIndex ? ' carousel-item--active' : ''}`}
+                style={{ opacity: Math.max(0.15, 1 - dist * 0.25) }}
               >
                 {item}
               </span>

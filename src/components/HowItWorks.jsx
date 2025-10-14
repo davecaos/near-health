@@ -9,10 +9,6 @@ const steps = [
   { title: 'Align everyone', desc: 'Members, brokers, and providers stay in sync.', num: '03' },
 ]
 
-/* κ controls curve squareness: 0.55 = ellipse, 1.0 = right angle.
-   0.92 gives a squared L-shape with a smooth rounded corner. */
-const K = 0.92
-
 function CenterIcon({ delay = 0 }) {
   return (
     <div className="how-center-icon" style={delay ? { transitionDelay: `${delay}s` } : undefined}>
@@ -23,9 +19,9 @@ function CenterIcon({ delay = 0 }) {
   )
 }
 
-function StepCard({ title, desc, num, delay = 0 }) {
+function StepCard({ title, desc, num, delay = 0, refProp }) {
   return (
-    <div className="how-step-card" style={delay ? { transitionDelay: `${delay}s` } : undefined}>
+    <div className="how-step-card" ref={refProp} style={delay ? { transitionDelay: `${delay}s` } : undefined}>
       <div className="how-step-top">
         <h3>{title}</h3>
         <span className="how-num">{num}</span>
@@ -39,68 +35,53 @@ export default function HowItWorks() {
   const fade = useFadeIn()
   const isMobile = useIsMobile()
   const layoutRef = useRef(null)
-  const [svg, setSvg] = useState(null)
+  const card1Ref = useRef(null)
+  const card2Ref = useRef(null)
+  const card3Ref = useRef(null)
+  const [curves, setCurves] = useState(null)
 
   useEffect(() => {
-    if (isMobile) { setSvg(null); return }
-
-    /* Walk offsetParent chain to get layout position relative to ancestor
-       — immune to CSS transforms (scroll-reveal translateY) */
-    const offsetTo = (node, ancestor) => {
-      let top = 0, left = 0
-      let el = node
-      while (el && el !== ancestor) {
-        top += el.offsetTop
-        left += el.offsetLeft
-        el = el.offsetParent
-      }
-      return { top, left }
-    }
+    if (isMobile) { setCurves(null); return }
 
     const compute = () => {
-      const el = layoutRef.current
-      if (!el) return
+      const layout = layoutRef.current
+      const c1 = card1Ref.current
+      const c2 = card2Ref.current
+      const c3 = card3Ref.current
+      if (!layout || !c1 || !c2 || !c3) return
 
-      const topCards = el.querySelectorAll('.how-steps-row .how-step-card')
-      const card2 = el.querySelector('.how-step-center-row .how-step-card')
-      if (!topCards[0] || !topCards[1] || !card2) return
+      const lb = layout.getBoundingClientRect()
+      const r1 = c1.getBoundingClientRect()
+      const r2 = c2.getBoundingClientRect()
+      const r3 = c3.getBoundingClientRect()
 
-      const p1 = offsetTo(topCards[0], el)
-      const p2 = offsetTo(card2, el)
-      const p3 = offsetTo(topCards[1], el)
+      // All positions relative to layout top-left
+      const x1 = r1.left - lb.left + r1.width / 2   // Card 01 bottom-center x
+      const y1 = r1.bottom - lb.top                   // Card 01 bottom y
+      const x2L = r2.left - lb.left                   // Card 02 left edge
+      const y2 = r2.top - lb.top + r2.height / 2     // Card 02 vertical center
+      const x2R = r2.right - lb.left                  // Card 02 right edge
+      const x3 = r3.left - lb.left + r3.width / 2   // Card 03 bottom-center x
+      const y3 = r3.bottom - lb.top                   // Card 03 bottom y
 
-      // Anchor points (layout positions, no transform offset)
-      const x1 = p1.left + topCards[0].offsetWidth / 2   // Card 1 bottom center
-      const y1 = p1.top + topCards[0].offsetHeight
-      const x2l = p2.left                                 // Card 2 left middle
-      const y2 = p2.top + card2.offsetHeight / 2
-      const x2r = p2.left + card2.offsetWidth              // Card 2 right middle
-      const x3 = p3.left + topCards[1].offsetWidth / 2     // Card 3 bottom center
-      const y3 = p3.top + topCards[1].offsetHeight
+      const W = lb.width
+      const H = lb.height
 
-      // Path 1: Card 1 bottom-center → Card 2 left-middle
-      // Start tangent: vertical ↓   End tangent: horizontal → (arriving from left)
-      const dy1 = y2 - y1
-      const dx1 = x2l - x1
-      const d1 = [
-        `M ${x1} ${y1}`,
-        `C ${x1} ${y1 + K * dy1},`,
-        `${x2l - K * dx1} ${y2},`,
-        `${x2l} ${y2}`,
-      ].join(' ')
+      // Left curve: Card01 bottom-center → Card02 left-middle
+      // Figma shape: M0.5 0 C 0.5 85 69.45 154 154.5 154 H268.5
+      // Ratios: control1=(0, 0.552h), control2=(0.259w, h), corner=(0.576w, h), end=(w, h)
+      const lW = x2L - x1
+      const lH = y2 - y1
+      const left = `M ${x1} ${y1} C ${x1} ${y1 + lH * 0.552}, ${x1 + lW * 0.259} ${y2}, ${x1 + lW * 0.576} ${y2} L ${x2L} ${y2}`
 
-      // Path 2: Card 2 right-middle → Card 3 bottom-center
-      // Start tangent: horizontal →   End tangent: vertical ↑
-      const dx2 = x3 - x2r
-      const dy2 = y2 - y3
-      const d2 = [
-        `M ${x2r} ${y2}`,
-        `C ${x2r + K * dx2} ${y2},`,
-        `${x3} ${y3 + K * dy2},`,
-        `${x3} ${y3}`,
-      ].join(' ')
+      // Right curve: Card03 bottom-center → Card02 right-middle
+      // Figma shape: M268 0 C 268 82.29 201.29 149 119 149 H0
+      // Mirror of left: control1=(w, 0.552h), control2=(0.741w, h), corner=(0.444w, h), end=(0, h)
+      const rW = x3 - x2R
+      const rH = y2 - y3
+      const right = `M ${x3} ${y3} C ${x3} ${y3 + rH * 0.552}, ${x3 - rW * 0.259} ${y2}, ${x3 - rW * 0.576} ${y2} L ${x2R} ${y2}`
 
-      setSvg({ w: el.scrollWidth, h: el.scrollHeight, d1, d2 })
+      setCurves({ W, H, left, right })
     }
 
     requestAnimationFrame(() => requestAnimationFrame(compute))
@@ -118,7 +99,6 @@ export default function HowItWorks() {
         </div>
 
         {isMobile ? (
-          /* Mobile: center icon + vertical timeline */
           <>
             <CenterIcon delay={0.1} />
             <div className="how-steps-row">
@@ -128,27 +108,25 @@ export default function HowItWorks() {
             </div>
           </>
         ) : (
-          /* Desktop: two Hermite-interpolated curves connecting cards */
           <div className="how-layout" ref={layoutRef}>
             <div className="how-steps-row">
-              <StepCard {...steps[0]} delay={0.1} />
+              <StepCard {...steps[0]} delay={0.1} refProp={card1Ref} />
               <CenterIcon delay={0.2} />
-              <StepCard {...steps[2]} delay={0.3} />
+              <StepCard {...steps[2]} delay={0.3} refProp={card3Ref} />
             </div>
-            <div className="how-step-center-row">
-              <StepCard {...steps[1]} delay={0.4} />
+            <div className="how-curves-row">
+              <StepCard {...steps[1]} delay={0.4} refProp={card2Ref} />
             </div>
-            {svg && (
+            {curves && (
               <svg
                 className="how-curves"
-                width={svg.w}
-                height={svg.h}
-                viewBox={`0 0 ${svg.w} ${svg.h}`}
+                width={curves.W}
+                height={curves.H}
+                viewBox={`0 0 ${curves.W} ${curves.H}`}
                 fill="none"
-                style={{ transitionDelay: '0.15s' }}
               >
-                <path d={svg.d1} stroke="#0A1C1E" strokeWidth="1.5" />
-                <path d={svg.d2} stroke="#0A1C1E" strokeWidth="1.5" />
+                <path d={curves.left}  stroke="#0A1C1E" strokeWidth="1" strokeOpacity="0.2" />
+                <path d={curves.right} stroke="#0A1C1E" strokeWidth="1" strokeOpacity="0.2" />
               </svg>
             )}
           </div>

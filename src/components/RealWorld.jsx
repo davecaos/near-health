@@ -2,11 +2,11 @@ import { useFadeIn } from '../hooks/useScrollAnimation'
 import { asset } from '../utils/assetPath'
 
 const features = [
-  { title: 'HIPAA-compliant', desc: 'Secure, compliant infrastructure with complete audit trails.',
+  { title: 'HIPAA-compliant', desc: <>Secure, compliant infrastructure<br />with complete audit trails.</>,
     icon: <img src={asset('assets/images/hippa-compliant-icon.svg')} alt="" width="19" height="26" /> },
   { title: 'Role-based access', desc: 'Structured permissions across members, brokers, and providers.',
     icon: <img src={asset('assets/images/role-access.svg')} alt="" width="20" height="20" /> },
-  { title: 'Deep integrations', desc: 'Scheduling, enrollment, and plan data - fully connected.',
+  { title: 'Deep integrations', desc: <>Scheduling, enrollment, and<br />plan data - fully connected.</>,
     icon: <img src={asset('assets/images/deep-integration.svg')} alt="" width="22" height="22" /> },
   { title: 'Multi-tenant ready', desc: 'Supports branded experiences across agencies and provider networks.',
     icon: <img src={asset('assets/images/Multi-tenant ready-icon.svg')} alt="" width="22" height="22" /> },

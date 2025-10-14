@@ -9,7 +9,6 @@ import RealWorld from './components/RealWorld'
 import ShapedSection from './components/ShapedSection'
 import CareConnected from './components/CareConnected'
 import FooterCta from './components/FooterCta'
-import FooterLogo from './components/FooterLogo'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -33,7 +32,6 @@ export default function App() {
       <CareConnected />
       <div className="footer-wrap">
         <FooterCta />
-        <FooterLogo />
         <Footer />
       </div>
     </>
