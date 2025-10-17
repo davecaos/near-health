@@ -52,7 +52,13 @@ export default function ResponsiveVideo({ desktop, mobile, desktopWebm, mobileWe
     const video = videoRef.current
     if (!video) return
     video.muted = true
+
+    const handleCanPlay = () => video.play().catch(() => {})
+    video.addEventListener('canplay', handleCanPlay, { once: true })
+    video.load()
     video.play().catch(() => {})
+
+    return () => video.removeEventListener('canplay', handleCanPlay)
   }, [isMobile, scrollPlay])
 
   return (
