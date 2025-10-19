@@ -33,12 +33,16 @@
   .real-world .section-title { letter-spacing: -0.01em; }
   .features-grid { grid-template-columns: 1fr; gap: 11px; }
   .feature-card {
-    border-radius: 26px; padding: 20px; text-align: left;
+    border-radius: 26px; padding: 16px 16.5px; text-align: left;
     max-width: 381px; height: 118px;
-    display: flex; flex-direction: column; align-items: flex-start;
+    display: grid; grid-template-columns: 36px 1fr; grid-template-rows: auto auto;
+    column-gap: 14px; row-gap: 10px; align-content: start;
     background: rgba(255,255,255,0.5);
   }
-  .feature-icon { width: 36px; height: 36px; margin: 0 0 12px 0; }
-  .feature-card h3 { font-size: 22px; }
-  .feature-card p { font-size: 16px; line-height: 1.32; }
+  .feature-icon {
+    width: 36px; height: 36px; grid-row: 1 / -1; align-self: start;
+    margin: 0; border-radius: 746.25px;
+  }
+  .feature-card h3 { font-size: 20px; font-weight: 400; letter-spacing: 0.02em; margin-bottom: 10px; }
+  .feature-card p { font-size: 16px; line-height: 1.32; letter-spacing: 0.02em; opacity: 0.6; color: var(--dark); }
 }
