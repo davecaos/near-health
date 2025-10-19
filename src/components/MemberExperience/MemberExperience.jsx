@@ -1,7 +1,8 @@
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import Button from './ui/Button'
-import SectionTitle from './ui/SectionTitle'
-import ResponsiveVideo from './ui/ResponsiveVideo'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import Button from '../ui/Button/Button'
+import SectionTitle from '../ui/SectionTitle/SectionTitle'
+import ResponsiveVideo from '../ui/ResponsiveVideo/ResponsiveVideo'
+import './MemberExperience.css'
 
 export default function MemberExperience() {
   const fade = useFadeIn()

@@ -1,4 +1,4 @@
-import NearBrand from './ui/NearBrand'
+import NearBrand from '../ui/NearBrand/NearBrand'
 
 export default function FooterLogo() {
   return (

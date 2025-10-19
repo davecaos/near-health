@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import useIsMobile from '../hooks/useIsMobile'
-import { asset } from '../utils/assetPath'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import useIsMobile from '../../hooks/useIsMobile'
+import { asset } from '../../utils/assetPath'
+import './OnePlatform.css'
 
 const INITIAL = ['Vision', 'Dental', 'Medicare', 'ACA', 'Employer-sponsored']
 const INTERVAL = 2200

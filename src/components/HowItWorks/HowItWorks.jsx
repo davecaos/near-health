@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import useIsMobile from '../hooks/useIsMobile'
-import { asset } from '../utils/assetPath'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import useIsMobile from '../../hooks/useIsMobile'
+import { asset } from '../../utils/assetPath'
+import './HowItWorks.css'
 
 const steps = [
   { title: 'Capture what matters', desc: 'Every request starts with real intent.', num: '01' },

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import useIsMobile from '../hooks/useIsMobile'
-import { asset } from '../utils/assetPath'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import useIsMobile from '../../hooks/useIsMobile'
+import { asset } from '../../utils/assetPath'
+import './CareConnected.css'
 
 export default function CareConnected() {
   const isMobile = useIsMobile()

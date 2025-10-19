@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import useIsMobile from '../hooks/useIsMobile'
+import useIsMobile from '../../hooks/useIsMobile'
 
 const ITEMS = ['Agents', 'Agencies', 'FMOs', 'GAs', 'Clinics', 'Groups', 'MSOs']
 const ITEM_H = 28

@@ -1,7 +1,8 @@
 import React from 'react'
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import useIsMobile from '../hooks/useIsMobile'
-import { asset } from '../utils/assetPath'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import useIsMobile from '../../hooks/useIsMobile'
+import { asset } from '../../utils/assetPath'
+import './PostEnrollment.css'
 
 const features = [
   {

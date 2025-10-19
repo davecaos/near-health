@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import useIsMobile from '../../hooks/useIsMobile'
-import { asset } from '../../utils/assetPath'
+import useIsMobile from '../../../hooks/useIsMobile'
+import { asset } from '../../../utils/assetPath'
 
 /**
  * Video that switches source based on viewport

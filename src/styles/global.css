@@ -1,0 +1,117 @@
+/* ============================================
+   Near Health Landing Page — Global Styles
+   ============================================ */
+
+
+:root {
+  /* Colors */
+  --dark: #0A1C1E;
+  --accent: #5EE6FD;
+  --white: #FFFFFF;
+  --warm: #EEE0DB;
+  --warm-light: #FAF4F1;
+  --text-muted: rgba(10, 28, 30, 0.7);
+
+  /* Fonts */
+  --font: 'Gilroy-Medium', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Gilroy-Regular', 'Inter', -apple-system, sans-serif;
+
+  /* Motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 0.7s;
+
+  /* Fluid spacing */
+  --px: clamp(20px, 5vw, 80px);
+  --space-section: clamp(72px, 9.6vw, 144px);
+  --space-lg: clamp(24px, 3vw, 48px);
+  --space-md: clamp(16px, 2vw, 32px);
+  --space-sm: clamp(8px, 1vw, 16px);
+
+  /* Fluid typography */
+  --fs-hero: clamp(54px, 6.5vw, 96px);
+  --fs-h2: clamp(48px, 4vw, 58px);
+  --fs-h3: 36px;
+  --fs-h4: clamp(20px, 1.8vw, 30px);
+  --fs-h5: clamp(18px, 1.5vw, 22px);
+  --fs-body: clamp(14px, 1.2vw, 18px);
+  --fs-body-sm: clamp(13px, 1vw, 16px);
+  --fs-caption: clamp(11px, 0.8vw, 14px);
+  --fs-btn: clamp(10px, 0.85vw, 12px);
+  --fs-ticker: clamp(48px, 6.5vw, 96px);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: transparent; overscroll-behavior-y: none; }
+body { font-family: var(--font); color: var(--dark); background: transparent; overflow-x: hidden; position: relative; font-size: var(--fs-body); }
+img { max-width: 100%; height: auto; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+.container { max-width: 100%; margin: 0 auto; padding: 0 var(--px); }
+
+/* ── Page gradient background (Manhattan Ice – Figma layers) ── */
+.page-gradient {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  overflow: hidden; opacity: 0.5;
+}
+.bg-tl, .bg-bl, .bg-br, .bg-tr {
+  position: absolute; border-radius: 50%;
+}
+.bg-tl {
+  width: 220vw; height: 130vh;
+  top: -65vh; left: 50%; transform: translateX(-50%);
+  background: #E9D4D1;
+  filter: blur(min(33vw, 600px));
+}
+.bg-bl {
+  width: 100vw; height: 100vh;
+  top: 10%; left: -35%;
+  background: linear-gradient(90deg, rgba(159, 233, 253, 0.3) 0%, rgba(255, 255, 255, 0.4) 100%);
+  filter: blur(min(33vw, 600px));
+  transform: matrix(-0.44, 0.9, -0.83, -0.56, 0, 0);
+}
+.bg-br {
+  width: 160vw; height: 130vh;
+  bottom: -30%; right: -40%;
+  background: #F8CA9E;
+  filter: blur(min(33vw, 600px));
+  transform: matrix(0.24, 0.97, -0.95, 0.31, 0, 0);
+}
+.bg-tr {
+  width: 220vw; height: 130vh;
+  bottom: -65vh; left: 50%; transform: translateX(-50%);
+  background: #D4CAD3;
+  filter: blur(min(33vw, 600px));
+}
+
+/* ── Section shared ── */
+.section-title {
+  font-family: var(--font-heading); font-size: var(--fs-h2);
+  font-weight: 400; line-height: 1; letter-spacing: -0.03em;
+}
+.section-subtitle {
+  font-size: 18px; font-weight: 500;
+  line-height: 1.36; letter-spacing: 0.02em; margin-top: var(--space-sm);
+}
+.section-header { margin-bottom: var(--space-md); }
+
+/* ── Animations ── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease); }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Footer wrap (cyan gradient behind logo + cta + footer) ── */
+.footer-wrap {
+  position: relative;
+}
+.footer-wrap::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(94,230,253,0) 50%, rgba(94,230,253,0.51) 85%, #5EE6FD 100%);
+  opacity: 0.7; pointer-events: none; z-index: 0;
+}
+.footer-wrap > * { position: relative; z-index: 1; }
+
+@media (max-width: 768px) {
+  .section-subtitle { font-size: 16px; }
+}

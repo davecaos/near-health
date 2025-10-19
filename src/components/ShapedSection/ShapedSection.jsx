@@ -1,6 +1,7 @@
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import useIsMobile from '../hooks/useIsMobile'
-import { asset } from '../utils/assetPath'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import useIsMobile from '../../hooks/useIsMobile'
+import { asset } from '../../utils/assetPath'
+import './ShapedSection.css'
 
 export default function ShapedSection() {
   const fade = useFadeIn()

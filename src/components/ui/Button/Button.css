@@ -1,0 +1,19 @@
+/* ── Buttons ── */
+.btn, .btn--primary, .btn--secondary, .btn--outline, .btn--ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font); font-weight: 600; cursor: pointer;
+  transition: all 0.25s var(--ease); border: 1.5px solid transparent;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.btn--md, .btn { padding: 12px 18px; border-radius: 30px; font-size: var(--fs-btn); }
+.btn--sm { padding: 8px 16px; border-radius: 30px; font-size: var(--fs-btn); }
+.btn--primary, .btn-primary { background: var(--accent); color: var(--dark); border-color: var(--accent); }
+.btn--primary:hover, .btn-primary:hover { background: #A6F2FF; border-color: #A6F2FF; }
+.btn--secondary, .btn-secondary { background: rgba(255,255,255,0.8); color: var(--dark); border: none; }
+.btn--secondary:hover, .btn-secondary:hover { background: rgba(228,211,211,0.8); }
+.btn--outline { background: transparent; color: var(--dark); border-color: var(--dark); }
+.btn--outline:hover { background: var(--dark); color: var(--white); }
+.btn--ghost { background: rgba(255,255,255,0.5); color: var(--dark); border: none; }
+.btn--ghost:hover { background: rgba(255,255,255,0.8); }
+/* Legacy compat */
+.btn-sm { padding: 8px 16px; }

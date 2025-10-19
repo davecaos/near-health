@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import useIsMobile from '../hooks/useIsMobile'
-import ResponsiveVideo from './ui/ResponsiveVideo'
+import useIsMobile from '../../hooks/useIsMobile'
+import ResponsiveVideo from '../ui/ResponsiveVideo/ResponsiveVideo'
 import BuiltForCarousel from './BuiltForCarousel'
+import './Hero.css'
 
 export default function Hero() {
   const isMobile = useIsMobile()

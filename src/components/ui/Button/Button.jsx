@@ -1,3 +1,5 @@
+import './Button.css'
+
 /**
  * Shared Button component
  * @param {string} variant - 'primary' | 'secondary' | 'outline' | 'ghost'

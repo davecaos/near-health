@@ -1,5 +1,6 @@
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import { asset } from '../utils/assetPath'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import { asset } from '../../utils/assetPath'
+import './RealWorld.css'
 
 const features = [
   { title: 'HIPAA-compliant', desc: <>Secure, compliant infrastructure<br />with complete audit trails.</>,

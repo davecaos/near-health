@@ -1,5 +1,6 @@
-import { useFadeIn } from '../hooks/useScrollAnimation'
-import Button from './ui/Button'
+import { useFadeIn } from '../../hooks/useScrollAnimation'
+import Button from '../ui/Button/Button'
+import './FooterCta.css'
 
 export default function FooterCta() {
   const fade = useFadeIn()

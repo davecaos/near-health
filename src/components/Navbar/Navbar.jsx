@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useNavbarScroll } from '../hooks/useScrollAnimation'
-import NearBrand from './ui/NearBrand'
+import { useNavbarScroll } from '../../hooks/useScrollAnimation'
+import NearBrand from '../ui/NearBrand/NearBrand'
+import './Navbar.css'
 
 export default function Navbar() {
   const scrolled = useNavbarScroll()

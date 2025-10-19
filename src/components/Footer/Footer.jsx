@@ -1,4 +1,5 @@
-import NearBrand from './ui/NearBrand'
+import NearBrand from '../ui/NearBrand/NearBrand'
+import './Footer.css'
 
 export default function Footer() {
   return (

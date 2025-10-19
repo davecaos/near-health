@@ -1,0 +1,40 @@
+/* ── Footer CTA — soft gradient presence ── */
+.footer-cta {
+  padding: var(--space-section) 0; text-align: center;
+  position: relative; overflow: hidden;
+}
+.footer-cta::before {
+  content: ''; position: absolute; inset: -40% -20%;
+  background: radial-gradient(ellipse at 30% 50%, rgba(94,230,253,0.10) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(159,233,253,0.08) 0%, transparent 60%);
+  animation: cta-gradient-drift 8s ease-in-out infinite alternate;
+  pointer-events: none; z-index: 0;
+}
+@keyframes cta-gradient-drift {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  100% { transform: translate(3%, -4%) scale(1.05); opacity: 1; }
+}
+.footer-cta .container { position: relative; z-index: 1; }
+.footer-cta-text {
+  font-size: 18px; font-weight: 500; line-height: 1.35;
+  max-width: 533px; margin: 0 auto var(--space-md);
+}
+.footer-cta-buttons { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 auto; }
+.footer-cta-buttons .btn { text-align: center; justify-content: center; white-space: nowrap; }
+
+/* Footer CTA staggered reveal */
+.footer-cta .fade-in { opacity: 1; transform: none; transition: none; }
+.footer-cta .fade-in .footer-cta-text,
+.footer-cta .fade-in .footer-cta-buttons {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.footer-cta .fade-in.visible .footer-cta-text,
+.footer-cta .fade-in.visible .footer-cta-buttons {
+  opacity: 1; transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .footer-cta { padding: 40px 0; }
+  .footer-cta-text { font-size: 16px; }
+}

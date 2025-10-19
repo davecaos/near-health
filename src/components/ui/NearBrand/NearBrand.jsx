@@ -1,4 +1,5 @@
-import { asset } from '../../utils/assetPath'
+import { asset } from '../../../utils/assetPath'
+import './NearBrand.css'
 
 export default function NearBrand({ size = 'sm', className = '' }) {
   return (
