@@ -36,7 +36,6 @@ export default function BuiltForCarousel() {
         <div className="built-for-h-viewport">
           <div
             className={`built-for-h-track${carouselActive ? ' built-for-h-track--active' : ''}`}
-            style={{ opacity: carouselActive ? 1 : 0 }}
           >
             {TRIPLED.map((item, i) => (
               <span className="built-for-h-item" key={i}>{item}</span>

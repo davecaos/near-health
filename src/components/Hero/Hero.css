@@ -141,8 +141,15 @@
 }
 .built-for-h-track {
   display: flex; align-items: center; gap: 0;
+  opacity: 0; transition: opacity 0.3s;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
 }
 .built-for-h-track--active {
+  opacity: 1;
   animation: built-for-scroll 10s linear infinite;
 }
 .built-for-h-item {

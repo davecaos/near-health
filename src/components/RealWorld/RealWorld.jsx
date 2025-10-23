@@ -19,7 +19,10 @@ export default function RealWorld() {
   return (
     <section className="real-world" id="real-world" ref={fade.ref}>
       <div className={`container ${fade.className}`}>
-        <h2 className="section-title" style={{ transitionDelay: '0s' }}>Built for real-world operations</h2>
+        <h2 className="section-title" style={{ transitionDelay: '0s' }}>
+          <span className="desktop-only">Built for real-world operations</span>
+          <span className="mobile-only">Shaped by<br />real-world use</span>
+        </h2>
         <div className="features-grid">
           {features.map((f, i) => (
             <div className="feature-card" key={i} style={{ transitionDelay: `${0.1 + i * 0.1}s` }}>
