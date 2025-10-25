@@ -11,13 +11,16 @@ import { asset } from '../../../utils/assetPath'
  * @param {boolean} [scrollPlay] - if true, play only when scrolled into view
  * @param {string} className - extra classes
  */
-export default function ResponsiveVideo({ desktop, mobile, desktopWebm, mobileWebm, scrollPlay = false, className = '' }) {
+export default function ResponsiveVideo({ desktop, mobile, desktopWebm, mobileWebm, desktopPoster, mobilePoster, scrollPlay = false, className = '' }) {
   const isMobile = useIsMobile()
   const videoRef = useRef(null)
   const mp4Src = asset(isMobile ? mobile : desktop)
   const webmSrc = (isMobile ? mobileWebm : desktopWebm)
     ? asset(isMobile ? mobileWebm : desktopWebm)
     : null
+  const posterSrc = (isMobile ? mobilePoster : desktopPoster)
+    ? asset(isMobile ? mobilePoster : desktopPoster)
+    : undefined
 
   useEffect(() => {
     if (!scrollPlay) return
@@ -66,6 +69,8 @@ export default function ResponsiveVideo({ desktop, mobile, desktopWebm, mobileWe
       ref={videoRef}
       autoPlay={!scrollPlay}
       muted loop playsInline
+      preload="auto"
+      poster={posterSrc}
       className={className}
       key={isMobile ? 'mobile' : 'desktop'}
     >
