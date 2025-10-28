@@ -17,8 +17,10 @@
 .social-icon:hover svg path { stroke: var(--white); }
 
 @media (max-width: 768px) {
-  .footer-brand .near-brand__icon { height: 99px; width: 97px; }
-  .footer-brand .near-brand__wordmark img { height: 66px; width: auto; }
+  .footer-brand { width: 380px; max-width: 100%; height: auto; gap: 32.8px; }
+  .footer-brand .near-brand__icon { height: 99px; width: 97.15px; }
+  .footer-brand .near-brand__wordmark { width: 250.05px; height: 65.92px; gap: 8.14px; }
+  .footer-brand .near-brand__wordmark img { height: 64.57px; width: 56.41px; }
   .footer .container {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
