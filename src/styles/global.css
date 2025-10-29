@@ -43,7 +43,7 @@
 
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: transparent; overscroll-behavior-y: none; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: transparent; overscroll-behavior-y: none; overflow-x: hidden; }
 body { font-family: var(--font); color: var(--dark); background: transparent; overflow-x: hidden; position: relative; font-size: var(--fs-body); }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
