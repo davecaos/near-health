@@ -44,47 +44,18 @@
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background: transparent; overscroll-behavior-y: none; overflow-x: hidden; }
-body { font-family: var(--font); color: var(--dark); background: transparent; overflow-x: hidden; position: relative; font-size: var(--fs-body); }
+body {
+  font-family: var(--font); color: var(--dark); overflow-x: hidden;
+  position: relative; font-size: var(--fs-body);
+  /* Full-page gradient from Figma "Background Layer" — scrolls with content */
+  background: #fff url('/landing/assets/page-bg.webp') top center / 100% auto no-repeat;
+}
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
 .container { max-width: 100%; margin: 0 auto; padding: 0 var(--px); }
 
-/* ── Page gradient background (Manhattan Ice – Figma layers) ── */
-.page-gradient {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  overflow: hidden; opacity: 0.5;
-}
-.bg-tl, .bg-bl, .bg-br, .bg-tr {
-  position: absolute; border-radius: 50%;
-}
-.bg-tl {
-  width: 220vw; height: 130vh;
-  top: -65vh; left: 50%; transform: translateX(-50%);
-  background: #E9D4D1;
-  filter: blur(min(33vw, 600px));
-}
-.bg-bl {
-  width: 100vw; height: 100vh;
-  top: 10%; left: -35%;
-  background: linear-gradient(90deg, rgba(159, 233, 253, 0.3) 0%, rgba(255, 255, 255, 0.4) 100%);
-  filter: blur(min(33vw, 600px));
-  transform: matrix(-0.44, 0.9, -0.83, -0.56, 0, 0);
-}
-.bg-br {
-  width: 160vw; height: 130vh;
-  bottom: -30%; right: -40%;
-  background: #F8CA9E;
-  filter: blur(min(33vw, 600px));
-  transform: matrix(0.24, 0.97, -0.95, 0.31, 0, 0);
-}
-.bg-tr {
-  width: 220vw; height: 130vh;
-  bottom: -65vh; left: 50%; transform: translateX(-50%);
-  background: #D4CAD3;
-  filter: blur(min(33vw, 600px));
-}
 
 /* ── Section shared ── */
 .section-title {

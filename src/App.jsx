@@ -14,12 +14,6 @@ import Footer from './components/Footer/Footer'
 export default function App() {
   return (
     <>
-      <div className="page-gradient" aria-hidden="true">
-        <div className="bg-tl" />
-        <div className="bg-bl" />
-        <div className="bg-br" />
-        <div className="bg-tr" />
-      </div>
       <Navbar />
       <Hero />
       <CareJourney />
