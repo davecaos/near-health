@@ -3,17 +3,6 @@
   padding: var(--space-section) 0; text-align: center;
   position: relative; overflow: hidden;
 }
-.footer-cta::before {
-  content: ''; position: absolute; inset: -40% -20%;
-  background: radial-gradient(ellipse at 30% 50%, rgba(94,230,253,0.10) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 50%, rgba(159,233,253,0.08) 0%, transparent 60%);
-  animation: cta-gradient-drift 8s ease-in-out infinite alternate;
-  pointer-events: none; z-index: 0;
-}
-@keyframes cta-gradient-drift {
-  0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  100% { transform: translate(3%, -4%) scale(1.05); opacity: 1; }
-}
 .footer-cta .container { position: relative; z-index: 1; }
 .footer-cta-text {
   font-size: 18px; font-weight: 500; line-height: 1.35;
