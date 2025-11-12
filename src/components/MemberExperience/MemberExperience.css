@@ -4,7 +4,7 @@
   display: flex; justify-content: space-between; align-items: flex-start;
   gap: var(--space-lg); margin-bottom: var(--space-md); max-width: 1439px;
 }
-.member-header .section-title { flex-shrink: 0; max-width: 527px; font-size: var(--fs-h3); }
+.member-header .section-title { flex-shrink: 0; max-width: 527px; font-size: var(--fs-h2); }
 .member-desc {
   font-size: 18px; font-weight: 500; line-height: 1.36;
   letter-spacing: 0.02em; max-width: 447px; padding-top: 10px;

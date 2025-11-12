@@ -1,6 +1,6 @@
 /* ── Real-World Operations ── */
 .real-world { padding: var(--space-section) 0; }
-.real-world .section-title { margin-bottom: var(--space-lg); font-size: var(--fs-h3); }
+.real-world .section-title { margin-bottom: var(--space-lg); }
 .real-world .mobile-only { display: none; }
 .real-world .desktop-only { display: inline; }
 .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(16px, 2.8vw, 40px); }
