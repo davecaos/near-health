@@ -1,5 +1,5 @@
 /* ── Post-Enrollment (Dark) ── */
-.post-enrollment { padding: var(--space-section) var(--px); margin: 0 auto; }
+.post-enrollment { padding: 120px var(--px); margin: 0 auto; }
 .post-enrollment > .container {
   background: #0A1C1E; border-radius: 40px;
   padding: clamp(40px, 5.5vw, 80px) clamp(24px, 4vw, 60px);
@@ -42,7 +42,7 @@
 }
 
 @media (max-width: 768px) {
-  .post-enrollment { padding: 80px var(--px); }
+  .post-enrollment { padding: 71px var(--px); }
   .post-enrollment > .container { border-radius: 30px; padding: 36px 24px; }
   .post-enrollment .section-title { font-size: 32px; letter-spacing: -0.01em; margin-bottom: 40px; }
   .post-list-item {

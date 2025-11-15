@@ -1,5 +1,5 @@
 /* ── Real-World Operations ── */
-.real-world { padding: var(--space-section) 0; }
+.real-world { padding: 120px 0; }
 .real-world .section-title { margin-bottom: var(--space-lg); }
 .real-world .mobile-only { display: none; }
 .real-world .desktop-only { display: inline; }
@@ -31,7 +31,7 @@
 }
 
 @media (max-width: 768px) {
-  .real-world { padding: 80px 0; }
+  .real-world { padding: 71px 0; }
   .real-world .section-title { letter-spacing: -0.01em; }
   .real-world .mobile-only { display: inline; }
   .real-world .desktop-only { display: none; }

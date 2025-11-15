@@ -37,7 +37,7 @@
   --fs-body: clamp(14px, 1.2vw, 18px);
   --fs-body-sm: clamp(13px, 1vw, 16px);
   --fs-caption: clamp(11px, 0.8vw, 14px);
-  --fs-btn: clamp(10px, 0.85vw, 12px);
+  --fs-btn: 12px;
   --fs-ticker: clamp(48px, 6.5vw, 96px);
 }
 
