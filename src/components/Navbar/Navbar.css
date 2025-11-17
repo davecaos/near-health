@@ -3,13 +3,26 @@
   position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
   height: 66px; display: flex; align-items: center;
   transition: all 0.3s var(--ease);
-  background: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.45);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(10,28,30,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.25);
 }
 .navbar.scrolled {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.65);
 }
+/* Dark-section glass */
+.navbar.navbar--dark {
+  background: rgba(10,28,30,0.45);
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+.navbar.navbar--dark.scrolled {
+  background: rgba(10,28,30,0.65);
+}
+.navbar.navbar--dark .nav-link { color: var(--white); }
+.navbar.navbar--dark .nav-link:hover, .navbar.navbar--dark .nav-link:active { background: rgba(255,255,255,0.15); }
+.navbar.navbar--dark .nav-cta { background: rgba(255,255,255,0.2); color: var(--white); border-color: transparent; }
+.navbar.navbar--dark .nav-cta:hover, .navbar.navbar--dark .nav-cta:active { background: rgba(255,255,255,0.3); }
+.navbar.navbar--dark .mobile-menu-btn span { background: var(--white); }
 .nav-container {
   width: 100%; padding: 0 var(--px);
   display: flex; align-items: center;

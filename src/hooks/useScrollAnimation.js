@@ -13,6 +13,28 @@ export function useNavbarScroll() {
   return scrolled
 }
 
+export function useNavbarDark() {
+  const [onDark, setOnDark] = useState(false)
+
+  useEffect(() => {
+    const handle = () => {
+      const navBottom = 66
+      const darks = document.querySelectorAll('[data-navbar-dark]')
+      let dark = false
+      for (const el of darks) {
+        const rect = el.getBoundingClientRect()
+        if (rect.top < navBottom && rect.bottom > 0) { dark = true; break }
+      }
+      setOnDark(dark)
+    }
+    window.addEventListener('scroll', handle, { passive: true })
+    handle()
+    return () => window.removeEventListener('scroll', handle)
+  }, [])
+
+  return onDark
+}
+
 export function useFadeIn() {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)

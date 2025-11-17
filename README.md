@@ -132,6 +132,49 @@ Font: **Gilroy** (loaded from CDNfonts)
 - Buttons/labels: Gilroy-SemiBold (600)
 - Fallback: Inter, system fonts
 
+### Navbar Glass Effect + Dark Section Color Swap
+
+The navbar uses a **frosted glass (glassmorphism)** effect with an automatic color swap when it overlaps dark sections.
+
+**Glass effect — how it works:**
+
+Two CSS properties work together:
+
+```css
+background: rgba(255,255,255,0.45);   /* semi-transparent white */
+backdrop-filter: blur(20px);           /* blurs whatever is BEHIND the element */
+```
+
+- `background: rgba(255,255,255,0.45)` — the navbar is only 45% white, so you can see through it
+- `backdrop-filter: blur(20px)` — anything visible through that transparency gets a 20px gaussian blur, creating the "frosted glass" look (like looking through a shower door)
+- `border-bottom: 1px solid rgba(255,255,255,0.25)` — a subtle white edge that catches light, making the glass feel physical
+
+When the user scrolls past 50px, the `.scrolled` class bumps the white to 65% — slightly more opaque but still glassy.
+
+**Dark section color swap — how it works:**
+
+When the navbar floats over a dark-background element (e.g. the PostEnrollment card with `#0A1C1E`):
+
+1. A scroll listener (`useNavbarDark` hook) checks every frame: "is any `[data-navbar-dark]` element behind the navbar right now?"
+2. If yes, the `.navbar--dark` class is added to the `<nav>`
+3. CSS takes over:
+   - Glass tint flips from white to dark: `rgba(10,28,30,0.45)` — same blur, different tint color
+   - Logo filter changes to `brightness(0) invert(1)` — turns any image pure white
+   - Nav links get `color: white`
+4. Everything has `transition: 0.3s` so the swap is a smooth fade, not a hard cut
+
+To mark a new section as dark, add `data-navbar-dark` to the element with the dark background:
+
+```jsx
+<div className="my-dark-container" data-navbar-dark>
+```
+
+**Key files:**
+- `src/components/Navbar/Navbar.css` — glass styles + `.navbar--dark` rules
+- `src/components/Navbar/Navbar.jsx` — applies `scrolled` and `navbar--dark` classes
+- `src/components/ui/NearBrand/NearBrand.css` — logo white filter override
+- `src/hooks/useScrollAnimation.js` — `useNavbarScroll()` + `useNavbarDark()` hooks
+
 ### Adding a Mobile Version
 
 The architecture is ready for mobile-specific layouts:

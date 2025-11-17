@@ -38,7 +38,7 @@ export default function PostEnrollment() {
 
   return (
     <section className="post-enrollment" id="why-near" ref={fade.ref}>
-      <div className={`container ${fade.className}`}>
+      <div className={`container ${fade.className}`} data-navbar-dark>
         <h2 className="section-title" style={{ transitionDelay: '0s' }}>Designed for the<br />post-enrollment reality</h2>
         {isMobile ? (
           <div className="post-list">
