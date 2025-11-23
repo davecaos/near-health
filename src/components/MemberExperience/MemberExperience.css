@@ -1,5 +1,6 @@
 /* ── Member Experience ── */
 .member-experience { padding: 120px 0; }
+.member-experience .container { padding: 0 75px 0 80px; }
 .member-header {
   display: flex; justify-content: space-between; align-items: flex-start;
   gap: var(--space-lg); margin-bottom: var(--space-md); max-width: 1439px;
@@ -47,6 +48,7 @@
 
 @media (max-width: 768px) {
   .member-experience { padding: 71px 0; }
+  .member-experience .container { padding: 0 19.5px; }
   .member-header { flex-direction: column; gap: 16px; }
   .member-header .section-title { letter-spacing: -0.01em; }
   .member-desc { font-size: 16px; line-height: 1.42; }

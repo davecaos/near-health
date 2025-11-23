@@ -38,7 +38,7 @@
 .navbar.navbar--dark .nav-cta:hover, .navbar.navbar--dark .nav-cta:active { background: rgba(255,255,255,0.3); }
 .navbar.navbar--dark .mobile-menu-btn span { background: var(--white); }
 .nav-container {
-  width: 100%; padding: 0 var(--px);
+  width: 100%; padding: 0 80px;
   display: flex; align-items: center;
   position: relative; z-index: 1;
 }
@@ -64,6 +64,6 @@
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .mobile-menu-btn { display: none; }
-  .nav-container { justify-content: space-between; }
+  .nav-container { justify-content: space-between; padding: 0 20px; }
   .nav-cta { display: inline-flex; margin-left: auto; }
 }

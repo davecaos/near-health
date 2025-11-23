@@ -1,3 +1,6 @@
+/* ── Footer Logo ── */
+.footer-logo-section .container { padding: 0 74px 0 80px; }
+
 /* ── Footer ── */
 .footer { padding: var(--space-md) 0; }
 .footer .container { display: flex; align-items: center; gap: clamp(12px, 2vw, 24px); flex-wrap: wrap; }

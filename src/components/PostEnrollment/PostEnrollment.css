@@ -1,9 +1,9 @@
 /* ── Post-Enrollment (Dark) ── */
-.post-enrollment { padding: 120px var(--px); margin: 0 auto; }
+.post-enrollment { padding: 120px 74px 120px 80px; margin: 0 auto; }
 .post-enrollment > .container {
   background: #0A1C1E; border-radius: 40px;
   padding: clamp(40px, 5.5vw, 80px) clamp(24px, 4vw, 60px);
-  max-width: 1440px; height: 717px;
+  max-width: 100%; width: 100%; height: 717px;
 }
 .post-enrollment .section-title { color: var(--white); margin-bottom: calc(var(--space-lg) * 2); }
 .post-grid {
