@@ -36,17 +36,22 @@ const cards = [
 function CareCard({ card }) {
   const isMobile = useIsMobile()
   const [hovered, setHovered] = useState(false)
-  const showLottie = !isMobile && hovered
+  const [pressed, setPressed] = useState(false)
+  const showLottie = isMobile ? pressed : hovered
+  const lottieSrc = asset(isMobile ? 'assets/Hover_Gradient_Mobile.lottie' : 'assets/Hover_Gradient_Desktop.lottie')
 
   return (
     <div
       className="care-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setPressed(true)}
+      onTouchEnd={() => setPressed(false)}
+      onTouchCancel={() => setPressed(false)}
     >
       {showLottie && (
         <DotLottieReact
-          src={asset('assets/Hover_Gradient.json')}
+          src={lottieSrc}
           loop
           autoplay
           className="care-card-lottie"

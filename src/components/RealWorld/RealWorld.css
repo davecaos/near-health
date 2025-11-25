@@ -1,7 +1,7 @@
 /* ── Real-World Operations ── */
 .real-world { padding: 120px 0; }
 .real-world .container { padding: 0 74px 0 80px; }
-.real-world .section-title { margin-bottom: var(--space-lg); }
+.real-world .section-title { margin-bottom: 32px; }
 .real-world .mobile-only { display: none; }
 .real-world .desktop-only { display: inline; }
 .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(16px, 2.8vw, 40px); }
@@ -34,7 +34,7 @@
 @media (max-width: 768px) {
   .real-world { padding: 71px 0; }
   .real-world .container { padding: 0 19.5px; }
-  .real-world .section-title { letter-spacing: -0.01em; }
+  .real-world .section-title { letter-spacing: -0.01em; margin-bottom: 28px; }
   .real-world .mobile-only { display: inline; }
   .real-world .desktop-only { display: none; }
   .features-grid { grid-template-columns: 1fr; gap: 11px; }
