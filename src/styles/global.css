@@ -47,8 +47,14 @@ html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; background:
 body {
   font-family: var(--font); color: var(--dark); overflow-x: hidden;
   position: relative; font-size: var(--fs-body);
-  /* Full-page gradient from Figma "Background Layer" — scrolls with content */
-  background: #fff url('/landing/assets/page-bg.webp') top center / 100% auto no-repeat;
+  background: #fff;
+}
+/* Figma "Background Layer" — fixed to viewport so it never cuts out
+   as the page grows taller than the image's natural height */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1;
+  background: url('/landing/assets/page-bg.webp') center center / cover no-repeat;
+  pointer-events: none;
 }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }

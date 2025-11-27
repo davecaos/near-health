@@ -28,8 +28,9 @@
 
 @media (max-width: 768px) {
   .shaped-section { padding: 71px 0; }
+  .shaped-section .container { padding: 0 19.5px; }
   .shaped-section .section-title { letter-spacing: -0.01em; margin-bottom: 16px; }
-  .shaped-photo { border-radius: 30px; max-width: 380px; height: 665px; }
+  .shaped-photo { border-radius: 30px; max-width: 380px; height: auto; aspect-ratio: 380 / 665; margin: 0 auto; }
   .shaped-photo img { height: 100%; object-fit: cover; }
   .shaped-overlay {
     justify-content: flex-end; padding: 24px 29px;
