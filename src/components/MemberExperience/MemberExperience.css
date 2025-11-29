@@ -1,9 +1,9 @@
 /* ── Member Experience ── */
 .member-experience { padding: 120px 0; }
-.member-experience .container { padding: 0 75px 0 80px; }
+.member-experience .container { padding: 0 74px 0 80px; }
 .member-header {
   display: flex; justify-content: space-between; align-items: flex-start;
-  gap: var(--space-lg); margin-bottom: var(--space-md); max-width: 1439px;
+  gap: var(--space-lg); margin-bottom: var(--space-md);
 }
 .member-header .section-title { flex-shrink: 0; max-width: 527px; font-size: var(--fs-h2); }
 .member-desc {
@@ -11,7 +11,7 @@
   letter-spacing: 0.02em; max-width: 447px; padding-top: 10px;
 }
 .member-video-wrap {
-  width: 100%; max-width: 1439px; border-radius: 40px; overflow: hidden;
+  width: 100%; border-radius: 40px; overflow: hidden;
   background: var(--white); aspect-ratio: 1439/810;
 }
 .member-video { width: 100%; height: 100%; object-fit: cover; }
