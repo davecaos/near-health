@@ -40,13 +40,27 @@
 .care-card-divider { height: 1px; background: var(--white); margin-bottom: var(--space-md); }
 .care-card-text { font-size: var(--fs-body); font-weight: 500; line-height: 1.36; letter-spacing: 0.02em; margin-bottom: var(--space-md); }
 .care-card-btn {
+  position: relative;
   display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 18px; border-radius: 30px; font-size: var(--fs-btn); font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase;
-  background: rgba(255,255,255,0.5); color: var(--dark);
-  border: none; transition: all 0.25s ease; cursor: pointer;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.14),
+              inset 0 1px 0 rgba(255,255,255,0.5);
+  color: var(--dark);
+  transition: all 0.25s ease; cursor: pointer;
 }
-.care-card-btn:hover { background: rgba(255,255,255,0.8); }
+.care-card-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.care-card-btn:hover { background: rgba(255,255,255,0.5); }
 
 /* Care card hover elevation */
 .care-card { transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }

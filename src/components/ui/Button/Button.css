@@ -9,8 +9,27 @@
 .btn--sm { padding: 8px 16px; border-radius: 30px; font-size: var(--fs-btn); }
 .btn--primary, .btn-primary { background: var(--accent); color: var(--dark); border-color: var(--accent); }
 .btn--primary:hover, .btn-primary:hover { background: #A6F2FF; border-color: #A6F2FF; }
-.btn--secondary, .btn-secondary { background: rgba(255,255,255,0.8); color: var(--dark); border: none; }
-.btn--secondary:hover, .btn-secondary:hover { background: rgba(228,211,211,0.8); }
+/* Glass effect — same recipe as navbar, higher opacity for visibility */
+.btn--secondary, .btn-secondary {
+  position: relative;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.14),
+              inset 0 1px 0 rgba(255,255,255,0.5);
+  color: var(--dark);
+}
+.btn--secondary::before, .btn-secondary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.btn--secondary:hover, .btn-secondary:hover {
+  background: rgba(255,255,255,0.5);
+}
 .btn--outline { background: transparent; color: var(--dark); border-color: var(--dark); }
 .btn--outline:hover { background: var(--dark); color: var(--white); }
 .btn--ghost { background: rgba(255,255,255,0.5); color: var(--dark); border: none; }
