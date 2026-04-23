@@ -17,10 +17,8 @@ export default function MemberExperience() {
         <div className="member-video-animate">
           <div className="member-video-wrap">
             <ResponsiveVideo
-              desktop="assets/AI Chat_Desktop.mp4"
-              mobile="assets/AI Chat_Mobile.mp4"
-              desktopWebm="assets/AI Chat_Desktop.webm"
-              mobileWebm="assets/AI Chat_Mobile.webm"
+              desktop="assets/AI_Chat_Desktop.mp4"
+              mobile="assets/AI_Chat_Mobile.mp4"
               desktopPoster="assets/AI_Chat_Desktop_poster.jpg"
               mobilePoster="assets/AI_Chat_Mobile_poster.jpg"
               scrollPlay

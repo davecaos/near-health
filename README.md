@@ -74,8 +74,8 @@ public/
     ├── images/                # Photos, platform screenshots
     ├── Hero_Desktop.mp4       # Hero video (desktop)
     ├── Hero_Mobile.mp4        # Hero video (mobile)
-    ├── AI Chat_Desktop.mp4    # Member experience video (desktop)
-    ├── AI Chat_Mobile.mp4     # Member experience video (mobile)
+    ├── AI_Chat_Desktop.mp4    # Member experience video (desktop)
+    ├── AI_Chat_Mobile.mp4     # Member experience video (mobile)
     ├── CTA_Gradient_Desktop.lottie
     └── CTA_Gradient_Mobile.lottie
 ```
