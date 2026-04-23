@@ -1,6 +1,6 @@
 /* ── Footer CTA — soft gradient presence ── */
 .footer-cta {
-  padding: var(--space-section) 0; text-align: center;
+  padding: 59px 0 var(--space-section); text-align: center;
   position: relative; overflow: hidden;
 }
 .footer-cta .container { position: relative; z-index: 1; }

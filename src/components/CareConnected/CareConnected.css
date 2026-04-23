@@ -1,5 +1,5 @@
 /* ── Care, Connected ── */
-.care-connected { padding: 120px 0 var(--space-lg); }
+.care-connected { padding: 120px 0 0; }
 .care-connected-card {
   width: min(946px, 100%); margin: 0 auto;
   height: 408px;
