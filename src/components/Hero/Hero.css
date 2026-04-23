@@ -75,7 +75,8 @@
   mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
 }
-/* Track handles the scroll only — pure CSS, forced GPU layer */
+/* Track ticks like a clock: 7 steps × (1.2s hold + 0.3s slide) = 10.5s loop.
+   Item height = 28px, so each tick advances by one row. */
 .built-for-track {
   display: flex; flex-direction: column;
   transform: translateZ(0);
@@ -83,13 +84,25 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  animation: built-for-scroll-v 12s linear 1.35s infinite;
+  animation: built-for-scroll-v 10.5s ease-out 1.35s infinite;
 }
 .built-for-item { height: 28px; line-height: 28px; font-size: var(--fs-caption); font-weight: 500; white-space: nowrap; color: inherit; }
 
 @keyframes built-for-scroll-v {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-196px); }
+  0%,    11.43% { transform: translateY(0); }
+  14.29%        { transform: translateY(-28px); }
+  25.71%        { transform: translateY(-28px); }
+  28.57%        { transform: translateY(-56px); }
+  40.00%        { transform: translateY(-56px); }
+  42.86%        { transform: translateY(-84px); }
+  54.29%        { transform: translateY(-84px); }
+  57.14%        { transform: translateY(-112px); }
+  68.57%        { transform: translateY(-112px); }
+  71.43%        { transform: translateY(-140px); }
+  82.86%        { transform: translateY(-140px); }
+  85.71%        { transform: translateY(-168px); }
+  97.14%        { transform: translateY(-168px); }
+  100%          { transform: translateY(-196px); }
 }
 
 /* ── Hero Mobile ── */
@@ -141,7 +154,8 @@
 @keyframes fade-in-track {
   to { opacity: 1; }
 }
-/* Track handles the scroll only — one animation, forced GPU layer */
+/* Track ticks like a clock: 7 steps × (1.2s hold + 0.3s slide) = 10.5s loop.
+   Loops seamlessly because -560px lands on the next repeated set in TRIPLED. */
 .built-for-h-track {
   display: flex; align-items: center; gap: 0;
   transform: translateZ(0);
@@ -149,15 +163,27 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
-  animation: built-for-scroll 10s linear 1.35s infinite;
+  animation: built-for-scroll 10.5s ease-out 1.35s infinite;
 }
 .built-for-h-item {
   flex-shrink: 0; width: 80px; text-align: center;
   font-size: var(--fs-body); font-weight: 500;
 }
 @keyframes built-for-scroll {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-560px, 0, 0); }
+  0%,    11.43% { transform: translate3d(0,    0, 0); }
+  14.29%        { transform: translate3d(-80px,  0, 0); }
+  25.71%        { transform: translate3d(-80px,  0, 0); }
+  28.57%        { transform: translate3d(-160px, 0, 0); }
+  40.00%        { transform: translate3d(-160px, 0, 0); }
+  42.86%        { transform: translate3d(-240px, 0, 0); }
+  54.29%        { transform: translate3d(-240px, 0, 0); }
+  57.14%        { transform: translate3d(-320px, 0, 0); }
+  68.57%        { transform: translate3d(-320px, 0, 0); }
+  71.43%        { transform: translate3d(-400px, 0, 0); }
+  82.86%        { transform: translate3d(-400px, 0, 0); }
+  85.71%        { transform: translate3d(-480px, 0, 0); }
+  97.14%        { transform: translate3d(-480px, 0, 0); }
+  100%          { transform: translate3d(-560px, 0, 0); }
 }
 .hero-mobile-video {
   width: 100%; max-width: 380px; aspect-ratio: 1/1; margin: 0 auto;
@@ -188,15 +214,15 @@
   .hero-video-card,
   .hero-mobile-video,
   .built-for-viewport,
-  .built-for-track,
   .built-for-divider,
   .built-for-h-viewport,
-  .built-for-h-track,
   .built-for-line-v {
     animation-duration: 0.01ms;
     animation-delay: 0ms;
     animation-iteration-count: 1;
   }
+  /* .built-for-track and .built-for-h-track stay animated — stepped ticks with
+     long pauses are not vestibular-triggering, and the labels carry brand info. */
 }
 
 @media (max-width: 1024px) {
