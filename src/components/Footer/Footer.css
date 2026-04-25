@@ -1,5 +1,5 @@
 /* ── Footer Logo container ── */
-.footer-logo-section .container { padding: 0 74px 0 80px; }
+.footer-logo-section .container { padding: var(--px-section-x); }
 
 /* ── Footer ── */
 .footer { padding: var(--space-md) 0; }

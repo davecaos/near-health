@@ -17,9 +17,9 @@
 /* Glass effect — same recipe as navbar, higher opacity for visibility */
 .btn--secondary, .btn-secondary {
   position: relative;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid var(--glass-border);
   color: var(--dark);
-  background: rgba(255,255,255,0.35);
+  background: var(--glass-surface);
   box-shadow: var(--shadow-glass);
   backdrop-filter: var(--backdrop-glass);
   -webkit-backdrop-filter: var(--backdrop-glass);

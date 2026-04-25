@@ -1,6 +1,6 @@
 /* ── Care Journey ── */
 .care-journey { padding: var(--space-section) 0 120px; }
-.care-journey .container { padding: 0 74px 0 80px; }
+.care-journey .container { padding: var(--px-section-x); }
 .care-journey-header { margin-bottom: var(--space-md); }
 .care-cards {
   display: grid;
@@ -73,12 +73,12 @@
   position: relative;
   display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 18px;
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-card);
   font-size: var(--fs-btn); font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--dark);
-  background: rgba(255,255,255,0.35);
+  background: var(--glass-surface);
   box-shadow: var(--shadow-glass);
   backdrop-filter: var(--backdrop-glass);
   -webkit-backdrop-filter: var(--backdrop-glass);
@@ -108,7 +108,7 @@
   .care-card-features { gap: 10px; margin-bottom: 20px; }
   .care-card-features li {
     align-items: flex-start; gap: 12px;
-    font-size: 16px; line-height: 1.42;
+    font-size: var(--fs-body-mobile); line-height: 1.42;
   }
   .care-card-features li::before {
     width: 9px; min-width: 9px; height: 9px;
@@ -116,6 +116,6 @@
     border: 2px solid var(--dark); border-radius: 50%;
   }
   .care-card-divider { margin-bottom: 20px; }
-  .care-card-text { margin-bottom: 20px; font-size: 16px; line-height: 1.32; }
+  .care-card-text { margin-bottom: 20px; font-size: var(--fs-body-mobile); line-height: 1.32; }
   .care-card-btn { background: rgba(255,255,255,0.8); }
 }

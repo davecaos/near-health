@@ -1,6 +1,6 @@
 /* ── Shaped by Real-World Use ── */
 .shaped-section { padding: 120px 0; }
-.shaped-section .container { padding: 0 74px 0 80px; }
+.shaped-section .container { padding: var(--px-section-x); }
 .shaped-section .section-title { margin-bottom: 32px; }
 .shaped-photo {
   position: relative;
@@ -37,7 +37,7 @@
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
-  .shaped-section { padding: 71px 0; }
+  .shaped-section { padding: var(--space-section-mobile) 0; }
   .shaped-section .container { padding: 0 19.5px; }
   .shaped-section .section-title { margin-bottom: 16px; letter-spacing: -0.01em; }
   .shaped-photo {

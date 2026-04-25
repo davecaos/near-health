@@ -1,6 +1,6 @@
 /* ── Member Experience ── */
 .member-experience { padding: 120px 0; }
-.member-experience .container { padding: 0 74px 0 80px; }
+.member-experience .container { padding: var(--px-section-x); }
 .member-header {
   display: flex; justify-content: space-between; align-items: flex-start;
   gap: var(--space-lg);
@@ -56,11 +56,11 @@
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
-  .member-experience { padding: 71px 0; }
+  .member-experience { padding: var(--space-section-mobile) 0; }
   .member-experience .container { padding: 0 19.5px; }
   .member-header { flex-direction: column; gap: 16px; }
   .member-header .section-title { letter-spacing: -0.01em; }
-  .member-desc { font-size: 16px; line-height: 1.42; }
+  .member-desc { font-size: var(--fs-body-mobile); line-height: 1.42; }
   .member-video-wrap {
     position: relative;
     max-width: 380px; aspect-ratio: 380/548;
