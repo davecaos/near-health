@@ -1,27 +1,45 @@
-/* ── Footer Logo ── */
+/* ── Footer Logo container ── */
 .footer-logo-section .container { padding: 0 74px 0 80px; }
 
 /* ── Footer ── */
 .footer { padding: var(--space-md) 0; }
-.footer .container { display: flex; align-items: center; gap: clamp(12px, 2vw, 24px); flex-wrap: wrap; }
-.footer-brand { width: 100%; max-width: 1440px; height: auto; justify-content: space-between; align-items: center; margin-bottom: var(--space-md); }
-.footer-brand .near-brand__icon { height: 375px; width: 368px; }
-.footer-brand .near-brand__wordmark img { height: 250px; width: auto; }
-.footer-socials { margin-left: auto; }
-.footer-item { font-size: clamp(10px, 0.76vw, 11px); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; transition: opacity 0.2s; }
+.footer .container {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: clamp(12px, 2vw, 24px);
+}
+.footer-brand {
+  width: 100%; max-width: 1440px; height: auto;
+  margin-bottom: var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand .near-brand__icon { width: 368px; height: 375px; }
+.footer-brand .near-brand__wordmark img { width: auto; height: 250px; }
+.footer-socials { display: flex; gap: var(--space-sm); margin-left: auto; }
+.footer-item {
+  font-size: clamp(10px, 0.76vw, 11px); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: opacity 0.2s;
+}
 .footer-item:hover { opacity: 0.6; }
-.footer-socials { display: flex; gap: var(--space-sm); }
 .social-icon {
-  width: 24px; height: 24px; background: var(--white);
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  border: 1px solid rgba(10,28,30,0.1); transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px;
+  border: 1px solid rgba(10,28,30,0.1); border-radius: 50%;
+  background: var(--white);
+  transition: all 0.2s;
 }
 .social-icon:hover { background: var(--dark); }
 .social-icon:hover svg path { stroke: var(--white); }
 
+/* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
-  .footer-brand { width: 100%; max-width: 380px; height: auto; gap: 32.8px; justify-content: flex-start; }
-  .footer-brand .near-brand__icon { height: 99px; width: 97.15px; flex-shrink: 0; }
+  .footer-brand {
+    width: 100%; max-width: 380px; height: auto;
+    gap: 32.8px;
+    justify-content: flex-start;
+  }
+  .footer-brand .near-brand__icon { width: 97.15px; height: 99px; flex-shrink: 0; }
   .footer-brand .near-brand__wordmark { gap: 0; flex-shrink: 1; min-width: 0; }
   /* Exact Figma dimensions + spacing for each N E A R letter */
   .footer-brand .near-brand__wordmark img:nth-child(1) { width: 56.41px; height: 64.57px; margin-right: 11.74px; }
@@ -35,11 +53,11 @@
     align-items: center;
     gap: var(--space-md) 0;
   }
-  .footer-brand { grid-row: 1; grid-column: 1 / -1; justify-self: start; margin-bottom: 0; }
-  .footer-terms { grid-row: 2; grid-column: 1; justify-self: start; }
-  .footer-socials { grid-row: 2; grid-column: 2; justify-self: center; margin-left: 0; }
-  .footer-privacy { grid-row: 2; grid-column: 3; justify-self: end; }
+  .footer-brand     { grid-row: 1; grid-column: 1 / -1; justify-self: start; margin-bottom: 0; }
+  .footer-terms     { grid-row: 2; grid-column: 1; justify-self: start; }
+  .footer-socials   { grid-row: 2; grid-column: 2; justify-self: center; margin-left: 0; }
+  .footer-privacy   { grid-row: 2; grid-column: 3; justify-self: end; }
   .footer-copyright { grid-row: 3; grid-column: 1 / 2; justify-self: start; white-space: nowrap; }
-  .footer-email { grid-row: 3; grid-column: 3; justify-self: end; }
+  .footer-email     { grid-row: 3; grid-column: 3; justify-self: end; }
   .footer-item { font-size: 11px; }
 }

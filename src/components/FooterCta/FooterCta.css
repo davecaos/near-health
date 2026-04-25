@@ -1,17 +1,20 @@
 /* ── Footer CTA — soft gradient presence ── */
 .footer-cta {
-  padding: 59px 0 var(--space-section); text-align: center;
-  position: relative; overflow: hidden;
+  position: relative;
+  padding: 59px 0 var(--space-section);
+  text-align: center;
+  overflow: hidden;
 }
 .footer-cta .container { position: relative; z-index: 1; }
 .footer-cta-text {
+  max-width: 533px;
+  margin: 0 auto var(--space-md);
   font-size: 18px; font-weight: 500; line-height: 1.35;
-  max-width: 533px; margin: 0 auto var(--space-md);
 }
 .footer-cta-buttons { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 auto; }
-.footer-cta-buttons .btn { text-align: center; justify-content: center; white-space: nowrap; }
+.footer-cta-buttons .btn { justify-content: center; text-align: center; white-space: nowrap; }
 
-/* Footer CTA staggered reveal */
+/* ── Reveal ── */
 .footer-cta .fade-in { opacity: 1; transform: none; transition: none; }
 .footer-cta .fade-in .footer-cta-text,
 .footer-cta .fade-in .footer-cta-buttons {
@@ -23,6 +26,7 @@
   opacity: 1; transform: translateY(0);
 }
 
+/* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
   .footer-cta { padding: 40px 0; }
   .footer-cta-text { font-size: 16px; }

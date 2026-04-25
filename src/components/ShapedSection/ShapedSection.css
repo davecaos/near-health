@@ -2,45 +2,61 @@
 .shaped-section { padding: 120px 0; }
 .shaped-section .container { padding: 0 74px 0 80px; }
 .shaped-section .section-title { margin-bottom: 32px; }
-.shaped-photo { width: 100%; aspect-ratio: 1440 / 725; border-radius: 30px; overflow: hidden; position: relative; }
-.shaped-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shaped-photo {
+  position: relative;
+  width: 100%; aspect-ratio: 1440 / 725;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.shaped-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .shaped-overlay {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: space-between;
   padding: clamp(24px, 4vw, 60px);
 }
 .shaped-overlay-text {
-  max-width: 480px; margin-left: auto;
-  font-family: var(--font-heading); font-size: clamp(18px, 2.2vw, 32px);
-  font-weight: 400; line-height: 1.3; letter-spacing: -0.01em;
+  max-width: 480px;
+  margin-left: auto;
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 2.2vw, 32px); font-weight: 400;
+  line-height: 1.3; letter-spacing: -0.01em;
   color: var(--white);
 }
 .shaped-overlay-badge {
   display: flex; align-items: center; gap: 12px;
-  margin-left: auto; max-width: 480px; width: 100%;
+  width: 100%; max-width: 480px;
+  margin-left: auto;
 }
 .shaped-overlay-badge .shaped-badge-icon { width: clamp(24px, 2.5vw, 36px); height: auto; }
 .shaped-overlay-badge span {
   font-size: var(--fs-btn); font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white); line-height: 1.5;
+  line-height: 1.5; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
 }
 
+/* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
   .shaped-section { padding: 71px 0; }
   .shaped-section .container { padding: 0 19.5px; }
-  .shaped-section .section-title { letter-spacing: -0.01em; margin-bottom: 16px; }
-  .shaped-photo { border-radius: 30px; max-width: 380px; height: auto; aspect-ratio: 380 / 665; margin: 0 auto; }
+  .shaped-section .section-title { margin-bottom: 16px; letter-spacing: -0.01em; }
+  .shaped-photo {
+    max-width: 380px; height: auto; aspect-ratio: 380 / 665;
+    margin: 0 auto;
+    border-radius: var(--radius-card);
+  }
   .shaped-photo img { height: 100%; object-fit: cover; }
   .shaped-overlay {
-    justify-content: flex-end; padding: 24px 29px;
-    background: linear-gradient(180deg, rgba(10, 28, 30, 0) 40%, #0A1C1E 100%);
+    justify-content: flex-end;
+    padding: 24px 29px;
+    background: linear-gradient(180deg, rgba(10, 28, 30, 0) 40%, var(--dark) 100%);
   }
   .shaped-overlay-text {
-    max-width: 100%; margin-left: 0;
+    max-width: 100%;
+    margin-left: 0;
     font-size: 20px; line-height: 1.2;
   }
-  .shaped-overlay-badge { margin-left: 0; margin-top: 24px; align-items: center; gap: 12px; }
+  .shaped-overlay-badge { align-items: center; gap: 12px; margin-top: 24px; margin-left: 0; }
   .shaped-overlay-badge .shaped-badge-icon { width: 29px; height: 30px; flex-shrink: 0; }
-  .shaped-overlay-badge span { font-size: 12px; line-height: 14px; max-width: 276px; }
+  .shaped-overlay-badge span { max-width: 276px; font-size: 12px; line-height: 14px; }
 }

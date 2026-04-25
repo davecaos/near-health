@@ -7,6 +7,7 @@
   /* Colors */
   --dark: #0A1C1E;
   --accent: #5EE6FD;
+  --accent-light: #A6F2FF;
   --white: #FFFFFF;
   --warm: #EEE0DB;
   --warm-light: #FAF4F1;
@@ -14,7 +15,11 @@
 
   /* Surfaces */
   --radius-card: 30px;
+  --radius-lg: 40px;
+  --radius-pill: 1000px;
   --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.08);
+  --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --backdrop-glass: blur(20px) saturate(150%);
   --surface-tint: rgba(10, 28, 30, 0.03);
 
   /* Fonts */

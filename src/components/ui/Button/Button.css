@@ -1,38 +1,43 @@
 /* ── Buttons ── */
 .btn, .btn--primary, .btn--secondary, .btn--outline, .btn--ghost {
   display: inline-flex; align-items: center; justify-content: center;
-  font-family: var(--font); font-weight: 600; cursor: pointer;
-  transition: all 0.25s var(--ease); border: 1.5px solid transparent;
+  border: 1.5px solid transparent;
+  font-family: var(--font); font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
 }
-.btn--md, .btn { padding: 12px 18px; border-radius: 30px; font-size: var(--fs-btn); }
-.btn--sm { padding: 8px 16px; border-radius: 30px; font-size: var(--fs-btn); }
-.btn--primary, .btn-primary { background: var(--accent); color: var(--dark); border-color: var(--accent); }
-.btn--primary:hover, .btn-primary:hover { background: #A6F2FF; border-color: #A6F2FF; }
+.btn--md, .btn { padding: 12px 18px; border-radius: var(--radius-card); font-size: var(--fs-btn); }
+.btn--sm        { padding: 8px 16px;  border-radius: var(--radius-card); font-size: var(--fs-btn); }
+
+/* ── Variants ── */
+.btn--primary, .btn-primary { border-color: var(--accent); background: var(--accent); color: var(--dark); }
+.btn--primary:hover, .btn-primary:hover { border-color: var(--accent-light); background: var(--accent-light); }
+
 /* Glass effect — same recipe as navbar, higher opacity for visibility */
 .btn--secondary, .btn-secondary {
   position: relative;
-  background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid rgba(255,255,255,0.4);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.14),
-              inset 0 1px 0 rgba(255,255,255,0.5);
   color: var(--dark);
+  background: rgba(255,255,255,0.35);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: var(--backdrop-glass);
+  -webkit-backdrop-filter: var(--backdrop-glass);
 }
 .btn--secondary::before, .btn-secondary::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
   border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
   pointer-events: none;
 }
-.btn--secondary:hover, .btn-secondary:hover {
-  background: rgba(255,255,255,0.5);
-}
-.btn--outline { background: transparent; color: var(--dark); border-color: var(--dark); }
+.btn--secondary:hover, .btn-secondary:hover { background: rgba(255,255,255,0.5); }
+
+.btn--outline { border-color: var(--dark); background: transparent; color: var(--dark); }
 .btn--outline:hover { background: var(--dark); color: var(--white); }
-.btn--ghost { background: rgba(255,255,255,0.5); color: var(--dark); border: none; }
+
+.btn--ghost { border: none; background: rgba(255,255,255,0.5); color: var(--dark); }
 .btn--ghost:hover { background: rgba(255,255,255,0.8); }
+
 /* Legacy compat */
 .btn-sm { padding: 8px 16px; }
