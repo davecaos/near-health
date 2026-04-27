@@ -11,9 +11,6 @@ const isMobileViewport = () =>
  * Video that loads/plays only when scrolled into view.
  * Source is picked at load time via native <source media>.
  * Poster is picked once at mount (no resize reactivity).
- *
- * Retains stalled/suspend/visibilitychange handlers as defensive iOS Safari
- * workarounds — see plan Risk 2 before removing.
  */
 export default function ScrollPlayVideo({
   desktop, mobile, desktopWebm, mobileWebm,
@@ -26,42 +23,15 @@ export default function ScrollPlayVideo({
     const video = videoRef.current
     if (!video) return
 
-    let visible = false
-    const tryPlay = () => {
-      if (visible && video.paused) video.play().catch(() => {})
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        visible = entry.isIntersecting
-        if (visible) tryPlay()
+        if (entry.isIntersecting) video.play().catch(() => {})
         else video.pause()
       },
       { threshold: 0.1 }
     )
-
-    const onVisibilityChange = () => {
-      if (!document.hidden && visible) tryPlay()
-    }
-
-    let stalledTimer = null
-    const onStalled = () => {
-      clearTimeout(stalledTimer)
-      stalledTimer = setTimeout(tryPlay, 300)
-    }
-
-    video.addEventListener('stalled', onStalled)
-    video.addEventListener('suspend', onStalled)
-    document.addEventListener('visibilitychange', onVisibilityChange)
     observer.observe(video)
-
-    return () => {
-      clearTimeout(stalledTimer)
-      video.removeEventListener('stalled', onStalled)
-      video.removeEventListener('suspend', onStalled)
-      document.removeEventListener('visibilitychange', onVisibilityChange)
-      observer.disconnect()
-    }
+    return () => observer.disconnect()
   }, [])
 
   return (
