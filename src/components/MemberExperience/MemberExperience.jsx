@@ -1,7 +1,7 @@
 import { useFadeIn } from '../../hooks/useScrollAnimation'
 import Button from '../ui/Button/Button'
 import SectionTitle from '../ui/SectionTitle/SectionTitle'
-import ResponsiveVideo from '../ui/ResponsiveVideo/ResponsiveVideo'
+import ScrollPlayVideo from '../ui/ScrollPlayVideo/ScrollPlayVideo'
 import './MemberExperience.css'
 
 export default function MemberExperience() {
@@ -16,12 +16,11 @@ export default function MemberExperience() {
         </div>
         <div className="member-video-animate">
           <div className="member-video-wrap">
-            <ResponsiveVideo
+            <ScrollPlayVideo
               desktop="assets/AI_Chat_Desktop.mp4"
               mobile="assets/AI_Chat_Mobile.mp4"
               desktopPoster="assets/AI_Chat_Desktop_poster.jpg"
               mobilePoster="assets/AI_Chat_Mobile_poster.jpg"
-              scrollPlay
               className="member-video"
             />
           </div>
