@@ -1,11 +1,54 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import NearBrand from '../ui/NearBrand/NearBrand'
 import './Footer.css'
 
 export default function Footer() {
+  const footerRef = useRef(null)
+  const brandRef = useRef(null)
+  const gradientRef = useRef(null)
+
+  useEffect(() => {
+    const footer = footerRef.current
+    const brand = brandRef.current
+    const gradient = gradientRef.current
+    if (!footer || !brand || !gradient) return
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) {
+      gsap.set([brand, gradient], { opacity: 1 })
+      return
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.set(brand, { opacity: 0, y: 90 })
+      gsap.set(gradient, { opacity: 0 })
+
+      gsap.to(brand, {
+        opacity: 1,
+        y: 0,
+        duration: 1.6,
+        ease: 'expo.out',
+        scrollTrigger: { trigger: footer, start: 'top 95%', once: true },
+      })
+
+      gsap.to(gradient, {
+        opacity: 1,
+        duration: 2.2,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: footer, start: 'top bottom', once: true },
+      })
+    }, footer)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <footer className="footer">
+    <footer className="footer" ref={footerRef}>
+      <div className="footer-gradient" ref={gradientRef} aria-hidden="true" />
       <div className="container">
-        <NearBrand size="lg" className="footer-brand" />
+        <NearBrand size="lg" className="footer-brand" ref={brandRef} />
         <span className="footer-item footer-copyright">&copy; Near Health LLC. 2026</span>
         <a href="mailto:hello@near.health" className="footer-item footer-email">hello@near.health</a>
         <a href="#" className="footer-item footer-terms">Terms</a>

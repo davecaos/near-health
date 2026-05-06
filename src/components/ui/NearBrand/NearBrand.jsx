@@ -1,9 +1,9 @@
 import { asset } from '../../../utils/assetPath'
 import './NearBrand.css'
 
-export default function NearBrand({ size = 'sm', className = '' }) {
+export default function NearBrand({ size = 'sm', className = '', ref }) {
   return (
-    <div className={`near-brand near-brand--${size} ${className}`.trim()}>
+    <div ref={ref} className={`near-brand near-brand--${size} ${className}`.trim()}>
       <img src={asset('assets/icons/near-logo.svg')} alt="Near Health" className="near-brand__icon" />
       <div className="near-brand__wordmark">
         <img src={asset('assets/icons/n.svg')} alt="n" />

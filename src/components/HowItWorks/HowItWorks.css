@@ -16,11 +16,10 @@
 
 /* ── Layout ── */
 .how-layout { position: relative; }
-.how-steps-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0; }
+.how-steps-row { display: flex; align-items: center; justify-content: center; gap: 0; }
 .how-step-card {
   position: relative;
-  flex-shrink: 0;
-  width: min(453px, 100%); max-height: 112px;
+  flex: 0 1 453px; min-width: 0; max-height: 112px;
   padding: clamp(16px, 1.8vw, 24px) clamp(18px, 2vw, 28px);
   border: 1px solid rgba(10,28,30,0.08);
   border-radius: clamp(20px, 2vw, 30px);
@@ -53,25 +52,6 @@
 }
 .how-circle-logo { width: 104px; height: 104px; }
 
-/* ── Reveal ── */
-.how-it-works .fade-in { opacity: 1; transform: none; transition: none; }
-.how-it-works .fade-in .how-header,
-.how-it-works .fade-in .how-step-card,
-.how-it-works .fade-in .how-center-icon {
-  opacity: 0; transform: translateY(16px);
-  transition: opacity var(--duration-reveal) var(--ease), transform var(--duration-reveal) var(--ease);
-}
-.how-it-works .fade-in .how-curves {
-  opacity: 0;
-  transition: opacity var(--duration-reveal) var(--ease);
-}
-.how-it-works .fade-in.visible .how-header,
-.how-it-works .fade-in.visible .how-step-card,
-.how-it-works .fade-in.visible .how-center-icon,
-.how-it-works .fade-in.visible .how-curves {
-  opacity: 1; transform: translateY(0);
-}
-
 /* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
   .how-steps-row { flex-direction: column; gap: 0; }
@@ -101,7 +81,10 @@
     transform: translateX(-50%);
   }
   .how-circle { width: 48px; height: 48px; border-radius: 13.85px; }
-  .how-circle-logo { width: 22px; height: 22px; }
+  /* Icon fills the container (matches desktop ratio: icon size = container size).
+     SVG's internal viewBox provides the visual padding, so the rendered glyph
+     scales proportionally with the dark badge. */
+  .how-circle-logo { width: 48px; height: 48px; }
   .how-steps-row {
     position: relative;
     flex-direction: column; align-items: center;

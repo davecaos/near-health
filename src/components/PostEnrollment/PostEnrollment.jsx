@@ -1,5 +1,7 @@
-import React from 'react'
-import { useFadeIn } from '../../hooks/useScrollAnimation'
+import React, { useRef } from 'react'
+import gsap from 'gsap'
+import { useScrollReveal } from '../../hooks/useScrollReveal'
+import { splitLines, lineRevealVars, blockRevealVars, blockRevealFromVars, selfTrigger } from '../../utils/reveal'
 import useIsMobile from '../../hooks/useIsMobile'
 import { asset } from '../../utils/assetPath'
 import './PostEnrollment.css'
@@ -33,17 +35,53 @@ const features = [
 ]
 
 export default function PostEnrollment() {
-  const fade = useFadeIn()
+  const sectionRef = useRef(null)
+  const titleRef = useRef(null)
+  const cardsRef = useRef([])
   const isMobile = useIsMobile()
 
+  useScrollReveal({
+    scopeRef: sectionRef,
+    prepare: () => {
+      const cards = cardsRef.current.filter(Boolean)
+      const dividers = sectionRef.current.querySelectorAll('.post-divider-v:not(.post-divider-hidden)')
+      gsap.set(titleRef.current, { autoAlpha: 0 })
+      gsap.set(cards, blockRevealFromVars())
+      gsap.set(dividers, { autoAlpha: 0 })
+      return [titleRef.current, ...cards, ...dividers]
+    },
+    animate: () => {
+      const cards = cardsRef.current.filter(Boolean)
+      const dividers = sectionRef.current.querySelectorAll('.post-divider-v:not(.post-divider-hidden)')
+      const titleSplit = splitLines(titleRef.current)
+      gsap.set(titleRef.current, { autoAlpha: 1 })
+
+      gsap.from(titleSplit.lines, { ...lineRevealVars(), scrollTrigger: selfTrigger(titleRef.current) })
+      if (cards.length) {
+        gsap.to(cards, { ...blockRevealVars({ stagger: 0.08 }), scrollTrigger: selfTrigger(cards[0]) })
+      }
+      if (dividers.length) {
+        gsap.to(dividers, {
+          autoAlpha: 1, duration: 0.8, ease: 'primary', stagger: 0.06,
+          scrollTrigger: selfTrigger(dividers[0]),
+        })
+      }
+    },
+    deps: [isMobile],
+  })
+
   return (
-    <section className="post-enrollment" id="why-near" ref={fade.ref}>
-      <div className={`container ${fade.className}`} data-navbar-dark>
-        <h2 className="section-title" style={{ transitionDelay: '0s' }}>Designed for the<br />post-enrollment reality</h2>
+    <section className="post-enrollment" id="why-near" ref={sectionRef}>
+      <div className="container">
+        <h2 className="section-title" ref={titleRef}>Designed for the<br />post-enrollment reality</h2>
         {isMobile ? (
           <div className="post-list">
             {features.map((f, i) => (
-              <div className="post-list-item" key={i} style={{ transitionDelay: `${0.08 + i * 0.08}s` }}>
+              <div
+                className="post-list-item"
+                key={i}
+                ref={(el) => { cardsRef.current[i] = el }}
+              >
                 <div className="post-list-header">
                   <div className="post-icon">{f.icon}</div>
                   <h3>{f.title}</h3>
@@ -58,7 +96,10 @@ export default function PostEnrollment() {
               {features.slice(0, 3).map((f, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <div className="post-divider-v"></div>}
-                  <div className="post-col" style={{ transitionDelay: `${0.1 + i * 0.1}s` }}>
+                  <div
+                    className="post-col"
+                    ref={(el) => { cardsRef.current[i] = el }}
+                  >
                     <div className="post-icon">{f.icon}</div>
                     <h3>{f.title}</h3>
                     <p>{f.desc}</p>
@@ -70,7 +111,10 @@ export default function PostEnrollment() {
               {features.slice(3).map((f, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <div className="post-divider-v"></div>}
-                  <div className="post-col" style={{ transitionDelay: `${0.3 + i * 0.1}s` }}>
+                  <div
+                    className="post-col"
+                    ref={(el) => { cardsRef.current[3 + i] = el }}
+                  >
                     <div className="post-icon">{f.icon}</div>
                     <h3>{f.title}</h3>
                     <p>{f.desc}</p>

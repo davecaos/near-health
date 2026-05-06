@@ -2,10 +2,22 @@
 .footer-logo-section .container { padding: var(--px-section-x); }
 
 /* ── Footer ── */
-.footer { padding: var(--space-md) 0; }
-.footer .container {
+.footer { position: relative; padding: var(--space-md) 0; }
+.footer .container { position: relative; z-index: 1;
   display: flex; flex-wrap: wrap; align-items: center;
   gap: clamp(12px, 2vw, 24px);
+}
+
+/* ── Cyan gradient: transparent in the top half, ramping to solid cyan at the
+   bottom of the footer (faded in via GSAP). z-index:-1 keeps it behind content. ── */
+.footer-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  background: linear-gradient(in oklab to bottom, rgba(94,230,253,0) 50%, #5EE6FD 100%);
+  will-change: opacity;
 }
 .footer-brand {
   width: 100%; max-width: 1440px; height: auto;
@@ -13,8 +25,6 @@
   align-items: center;
   justify-content: space-between;
 }
-.footer-brand .near-brand__icon { width: 368px; height: 375px; }
-.footer-brand .near-brand__wordmark img { width: auto; height: 250px; }
 .footer-socials { display: flex; gap: var(--space-sm); margin-left: auto; }
 .footer-item {
   font-size: clamp(10px, 0.76vw, 11px); font-weight: 500;
@@ -31,6 +41,22 @@
 }
 .social-icon:hover { background: var(--dark); }
 .social-icon:hover svg path { stroke: var(--white); }
+
+/* ── Footer logo: continuous 3D Y-axis rotation (scoped to the footer brand only) ── */
+.footer-brand { perspective: 800px; }
+.footer-brand .near-brand__icon {
+  animation: footer-logo-spin 6s linear infinite;
+  transform-origin: 50% 50%;
+  backface-visibility: visible;
+  will-change: transform;
+}
+@keyframes footer-logo-spin {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-brand .near-brand__icon { animation: none; }
+}
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
@@ -51,7 +77,7 @@
     grid-template-columns: 1fr auto 1fr;
     grid-template-rows: auto auto auto;
     align-items: center;
-    gap: var(--space-md) 0;
+    gap: 36px 0;
   }
   .footer-brand     { grid-row: 1; grid-column: 1 / -1; justify-self: start; margin-bottom: 0; }
   .footer-terms     { grid-row: 2; grid-column: 1; justify-self: start; }

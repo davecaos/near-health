@@ -10,8 +10,11 @@ import ShapedSection from './components/ShapedSection/ShapedSection'
 import CareConnected from './components/CareConnected/CareConnected'
 import FooterCta from './components/FooterCta/FooterCta'
 import Footer from './components/Footer/Footer'
+import { useLenis } from './hooks/useLenis'
 
 export default function App() {
+  useLenis()
+
   return (
     <>
       <Navbar />

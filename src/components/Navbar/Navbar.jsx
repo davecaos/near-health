@@ -1,11 +1,8 @@
 import { useState } from 'react'
-import { useNavbarScroll, useNavbarDark } from '../../hooks/useScrollAnimation'
 import NearBrand from '../ui/NearBrand/NearBrand'
 import './Navbar.css'
 
 export default function Navbar() {
-  const scrolled = useNavbarScroll()
-  const onDark = useNavbarDark()
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleLinkClick = (e, id) => {
@@ -20,7 +17,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className={`navbar${scrolled ? ' scrolled' : ''}${onDark ? ' navbar--dark' : ''}`}>
+    <nav className="navbar">
       <div className="nav-container">
         <a href="#" className="nav-logo">
           <NearBrand size="sm" />

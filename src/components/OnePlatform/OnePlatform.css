@@ -36,7 +36,7 @@
   line-height: 1; letter-spacing: -0.03em;
   text-align: center; white-space: nowrap;
   color: var(--white);
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease, color 0.25s ease;
 }
 .carousel-item::after {
   content: '\00B7';
@@ -45,6 +45,7 @@
   color: var(--white);
 }
 .carousel-item--active { color: var(--dark); }
+.carousel-track--snap .carousel-item { transition: none; }
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {

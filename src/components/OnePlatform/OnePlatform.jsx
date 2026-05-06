@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { useFadeIn } from '../../hooks/useScrollAnimation'
+import gsap from 'gsap'
+import { useScrollReveal } from '../../hooks/useScrollReveal'
+import { splitLines, lineRevealVars, blockRevealVars, blockRevealFromVars, selfTrigger } from '../../utils/reveal'
 import useIsMobile from '../../hooks/useIsMobile'
 import { asset } from '../../utils/assetPath'
 import './OnePlatform.css'
@@ -11,19 +13,41 @@ const COPIES = 3
 const items = Array.from({ length: COPIES }, () => INITIAL).flat()
 
 export default function OnePlatform() {
-  const fade = useFadeIn()
   const isMobile = useIsMobile()
   const centerOffset = Math.floor(INITIAL.length / 2)
 
   const [baseIndex, setBaseIndex] = useState(INITIAL.length)
   const [animated, setAnimated] = useState(false)
   const [tx, setTx] = useState(0)
+  const [snapping, setSnapping] = useState(false)
 
+  const sectionRef = useRef(null)
+  const titleRef = useRef(null)
+  const subtitleRef = useRef(null)
+  const phoneRef = useRef(null)
   const trackRef = useRef(null)
   const containerRef = useRef(null)
   const txRef = useRef(0)
   const baseRef = useRef(INITIAL.length)
   const busyRef = useRef(false)
+
+  useScrollReveal({
+    scopeRef: sectionRef,
+    prepare: () => {
+      gsap.set([titleRef.current, subtitleRef.current], { autoAlpha: 0 })
+      gsap.set(phoneRef.current, blockRevealFromVars())
+      return [titleRef.current, subtitleRef.current, phoneRef.current]
+    },
+    animate: () => {
+      const titleSplit = splitLines(titleRef.current)
+      const subSplit = splitLines(subtitleRef.current)
+      gsap.set([titleRef.current, subtitleRef.current], { autoAlpha: 1 })
+
+      gsap.from(titleSplit.lines, { ...lineRevealVars(), scrollTrigger: selfTrigger(titleRef.current) })
+      gsap.from(subSplit.lines, { ...lineRevealVars(), scrollTrigger: selfTrigger(subtitleRef.current) })
+      gsap.to(phoneRef.current, { ...blockRevealVars({ stagger: 0 }), scrollTrigger: selfTrigger(phoneRef.current) })
+    },
+  })
 
   const activeIndex = baseIndex + centerOffset
 
@@ -72,15 +96,18 @@ export default function OnePlatform() {
   }, [applyTx, getTxForIndex, centerOffset])
 
   /* On transitionend: check if we need to jump back */
-  const onTransitionEnd = useCallback(() => {
+  const onTransitionEnd = useCallback((e) => {
+    if (e.target !== trackRef.current || e.propertyName !== 'transform') return
     busyRef.current = false
 
     if (baseRef.current >= 2 * INITIAL.length) {
       const newBase = baseRef.current - INITIAL.length
       baseRef.current = newBase
+      setSnapping(true)
       setBaseIndex(newBase)
+      applyTx(getTxForIndex(newBase + centerOffset), false)
       requestAnimationFrame(() => {
-        applyTx(getTxForIndex(newBase + centerOffset), false)
+        requestAnimationFrame(() => setSnapping(false))
       })
     }
   }, [applyTx, getTxForIndex, centerOffset])
@@ -92,13 +119,13 @@ export default function OnePlatform() {
   }, [advance])
 
   return (
-    <section className="one-platform" id="one-platform" ref={fade.ref}>
-      <div className={`container one-platform-inner ${fade.className}`}>
+    <section className="one-platform" id="one-platform" ref={sectionRef}>
+      <div className="container one-platform-inner">
         <div className="platform-text">
-          <h2 className="section-title">One platform.<br />All coverage.</h2>
-          <p className="platform-subtitle">Supporting the coverage types brokers and providers work with every day.</p>
+          <h2 className="section-title" ref={titleRef}>One platform.<br />All coverage.</h2>
+          <p className="platform-subtitle" ref={subtitleRef}>Supporting the coverage types brokers and providers work with every day.</p>
         </div>
-        <div className="platform-phone">
+        <div className="platform-phone" ref={phoneRef}>
           <picture>
             <source srcSet={asset(isMobile ? 'assets/images/one-platform-mobile.webp' : 'assets/images/one-platform-desktop.webp')} type="image/webp" />
             <img
@@ -113,7 +140,7 @@ export default function OnePlatform() {
 
       <div className="coverage-carousel" ref={containerRef}>
         <div
-          className="carousel-track"
+          className={`carousel-track${snapping ? ' carousel-track--snap' : ''}`}
           ref={trackRef}
           onTransitionEnd={onTransitionEnd}
           style={{

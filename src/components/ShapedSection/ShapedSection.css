@@ -41,22 +41,23 @@
   .shaped-section .container { padding: 0 19.5px; }
   .shaped-section .section-title { margin-bottom: 16px; letter-spacing: -0.01em; }
   .shaped-photo {
-    max-width: 380px; height: auto; aspect-ratio: 380 / 665;
+    max-width: 380px; height: auto; aspect-ratio: 380 / 675;
     margin: 0 auto;
     border-radius: var(--radius-card);
   }
-  .shaped-photo img { height: 100%; object-fit: cover; }
+  .shaped-photo img { height: 100%; object-fit: cover; object-position: 19% 67%; }
   .shaped-overlay {
     justify-content: flex-end;
-    padding: 24px 29px;
-    background: linear-gradient(180deg, rgba(10, 28, 30, 0) 40%, var(--dark) 100%);
+    padding: 28px;
+    background: linear-gradient(180deg, rgba(10, 28, 30, 0) 35%, var(--dark) 95%);
   }
   .shaped-overlay-text {
     max-width: 100%;
     margin-left: 0;
-    font-size: 20px; line-height: 1.2;
+    font-size: 20px; line-height: 1.25;
   }
-  .shaped-overlay-badge { align-items: center; gap: 12px; margin-top: 24px; margin-left: 0; }
+  .shaped-overlay-badge { align-items: center; gap: 12px; margin-top: 28px; margin-left: 0; }
   .shaped-overlay-badge .shaped-badge-icon { width: 29px; height: 30px; flex-shrink: 0; }
   .shaped-overlay-badge span { max-width: 276px; font-size: 12px; line-height: 14px; }
 }
+

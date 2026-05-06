@@ -26,18 +26,6 @@
 .feature-card h3 { margin-bottom: 8px; font-size: var(--fs-h5); font-weight: 500; }
 .feature-card p  { font-size: var(--fs-body-sm); font-weight: 500; line-height: 1.35; color: var(--text-muted); }
 
-/* ── Reveal ── */
-.real-world .fade-in { opacity: 1; transform: none; transition: none; }
-.real-world .fade-in .section-title,
-.real-world .fade-in .feature-card {
-  opacity: 0; transform: translateY(14px);
-  transition: opacity var(--duration-reveal) var(--ease-out), transform var(--duration-reveal) var(--ease-out);
-}
-.real-world .fade-in.visible .section-title,
-.real-world .fade-in.visible .feature-card {
-  opacity: 1; transform: translateY(0);
-}
-
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
   .real-world { padding: var(--space-section-mobile) 0; }
