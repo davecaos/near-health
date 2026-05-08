@@ -15,7 +15,7 @@
    itself, leaving CareJourney's --space-section padding-top visible as the
    section gap instead of being covered by the card. */
 @media (min-width: 1025px) {
-  .hero { padding-bottom: 30vh; }
+  .hero { padding-bottom: 50vh; }
 }
 .hero-container {
   display: flex; flex-direction: column; gap: var(--space-md);

@@ -24,7 +24,7 @@ export function lineRevealVars({ duration = 1, stagger = 0.08 } = {}) {
     yPercent: 100,
     opacity: 0,
     duration,
-    ease: PRIMARY_EASE,
+    ease: 'expo.out',
     stagger,
   }
 }
@@ -47,7 +47,7 @@ export function blockRevealVars({ duration = 1, stagger = 0.1 } = {}) {
     autoAlpha: 1,
     y: 0,
     duration,
-    ease: PRIMARY_EASE,
+    ease: 'expo.out',
     stagger,
   }
 }

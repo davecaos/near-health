@@ -62,7 +62,7 @@ export default function PostEnrollment() {
       }
       if (dividers.length) {
         gsap.to(dividers, {
-          autoAlpha: 1, duration: 0.8, ease: 'primary', stagger: 0.06,
+          autoAlpha: 1, duration: 0.8, ease: 'expo.out', stagger: 0.06,
           scrollTrigger: selfTrigger(dividers[0]),
         })
       }

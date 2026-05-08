@@ -99,6 +99,8 @@ export default function HowItWorks() {
       const paths = [leftPathRef.current, rightPathRef.current].filter(Boolean)
       gsap.set(text, { autoAlpha: 0 })
       gsap.set(blocks, blockRevealFromVars())
+      // Step 1 emerges from a smaller offset so it feels softer than the later steps.
+      if (card1Ref.current) gsap.set(card1Ref.current, blockRevealFromVars({ y: 16 }))
       if (paths.length) gsap.set(paths, { autoAlpha: 0 })
       return [...text, ...blocks, ...paths]
     },
@@ -123,16 +125,17 @@ export default function HowItWorks() {
         gsap.to(centerIconRef.current, { ...blockRevealVars({ stagger: 0 }), scrollTrigger: selfTrigger(centerIconRef.current) })
       }
 
-      // Journey is a single composed sequence: card1 → leftCurve → card2 → rightCurve → card3.
-      // Triggered when card1 (the entry of the path) enters view. Overlaps so it flows.
+      // Journey is a single composed sequence with a deliberate rhythm:
+      //   step 1 — soft, emerging (longest settle, smallest offset)
+      //   curve 1 + step 2 — more active and orchestrated (tighter, overlapped)
+      //   curve 2 + step 3 — calmer and resolved (longer settle, slight breath before landing)
       const journey = gsap.timeline({ scrollTrigger: selfTrigger(card1Ref.current) })
-      const cardVars = blockRevealVars({ stagger: 0, duration: 0.55 })
-      const curveVars = { strokeDashoffset: 0, duration: 0.35, ease: PRIMARY_EASE }
-      journey.to(card1Ref.current, cardVars)
-      if (curves) journey.to(curves.lp, curveVars, '-=0.3')
-      journey.to(card2Ref.current, cardVars, '-=0.2')
-      if (curves) journey.to(curves.rp, curveVars, '-=0.3')
-      journey.to(card3Ref.current, cardVars, '-=0.2')
+      const cardBase = { autoAlpha: 1, y: 0, ease: 'expo.out' }
+      journey.to(card1Ref.current, { ...cardBase, duration: 0.95 })
+      if (curves) journey.to(curves.lp, { strokeDashoffset: 0, duration: 0.4, ease: PRIMARY_EASE }, '-=0.5')
+      journey.to(card2Ref.current, { ...cardBase, duration: 0.5 }, '-=0.22')
+      if (curves) journey.to(curves.rp, { strokeDashoffset: 0, duration: 0.55, ease: PRIMARY_EASE }, '-=0.28')
+      journey.to(card3Ref.current, { ...cardBase, duration: 1 }, '-=0.18')
     },
     deps: [isMobile],
   })
