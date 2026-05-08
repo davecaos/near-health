@@ -58,15 +58,17 @@ export default function OnePlatform() {
     const els = Array.from(track.children)
     let centers = []
     let setWidth = 0
-    let containerWidth = 0
+    let spacing = 0
     let containerCenter = 0
     let baseTx = 0
 
     const measure = () => {
       centers = els.map((el) => el.offsetLeft + el.offsetWidth / 2)
       setWidth = centers[INITIAL.length] - centers[0]
-      containerWidth = container.offsetWidth
-      containerCenter = containerWidth / 2
+      // Average gap between adjacent item centres — used to scale the
+      // active/inactive crossfade so neighbouring items hand off cleanly.
+      spacing = setWidth / INITIAL.length
+      containerCenter = container.offsetWidth / 2
       const startIdx = INITIAL.length + Math.floor(INITIAL.length / 2)
       baseTx = containerCenter - centers[startIdx]
     }
@@ -79,12 +81,16 @@ export default function OnePlatform() {
     const paintItem = (el, i) => {
       const screenX = centers[i] + tx
       const dist = Math.abs(screenX - containerCenter)
-      const fadeRange = containerWidth * 0.45
-      const sharpRange = Math.max(60, containerWidth * 0.06)
-      const fadeT = Math.min(1, dist / fadeRange)
-      const colorT = Math.min(1, dist / sharpRange)
-      el.style.opacity = (1 - fadeT * 0.78).toString()
-      el.style.setProperty('--t', colorT.toString())
+      // t scales 0 (centred = active dark) → 1 (one item-spacing away = inactive
+      // white). Adjacent items therefore crossfade through 50/50 at the midpoint
+      // between their centres, so the handoff happens exactly when one item
+      // takes over from the other — no gray dead-zone, no abrupt swap.
+      const t = Math.min(1, dist / spacing)
+      // Opacity has a wider falloff so far-away items still register as context
+      // without competing with the active one for attention.
+      const fadeT = Math.min(1, dist / (spacing * 2.2))
+      el.style.opacity = (1 - fadeT * 0.7).toString()
+      el.style.setProperty('--t', t.toString())
     }
 
     const tick = (time) => {
