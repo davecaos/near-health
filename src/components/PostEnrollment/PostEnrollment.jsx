@@ -46,8 +46,8 @@ export default function PostEnrollment() {
       const cards = cardsRef.current.filter(Boolean)
       const dividers = sectionRef.current.querySelectorAll('.post-divider-v:not(.post-divider-hidden)')
       gsap.set(titleRef.current, { autoAlpha: 0 })
-      gsap.set(cards, blockRevealFromVars())
-      gsap.set(dividers, { autoAlpha: 0 })
+      if (cards.length) gsap.set(cards, blockRevealFromVars())
+      if (dividers.length) gsap.set(dividers, { autoAlpha: 0 })
       return [titleRef.current, ...cards, ...dividers]
     },
     animate: () => {

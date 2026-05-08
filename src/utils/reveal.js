@@ -8,10 +8,11 @@ import { PRIMARY_EASE } from './eases'
  * `gsap.context` will revert it on cleanup.
  */
 export function splitLines(el, { linesClass = 'reveal-line' } = {}) {
-  // autoSplit: SplitText re-measures when fonts finish loading or the container
-  // resizes, so mobile/desktop transitions and late web-font swaps don't leave
-  // orphan words from a stale line measurement.
-  return new SplitText(el, { type: 'lines', mask: 'lines', linesClass, autoSplit: true })
+  // useScrollReveal already awaits document.fonts.ready before building tweens,
+  // so the synchronous split here measures against the final webfont metrics.
+  // (autoSplit defers the split internally and was leaving split.lines empty
+  // at tween-build time on slower networks.)
+  return new SplitText(el, { type: 'lines', mask: 'lines', linesClass })
 }
 
 /**
