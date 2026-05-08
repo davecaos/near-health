@@ -1,9 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NearBrand from '../ui/NearBrand/NearBrand'
 import './Navbar.css'
 
+const HIDE_AFTER = 80          // px — give the navbar a stable header band before it can hide
+const DELTA_THRESHOLD = 6      // px — ignore tiny jitter (Lenis can produce sub-pixel deltas)
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
+
+  useEffect(() => {
+    let lastY = window.scrollY
+    let raf = 0
+
+    const update = () => {
+      raf = 0
+      const y = window.scrollY
+      const dy = y - lastY
+      if (Math.abs(dy) < DELTA_THRESHOLD) return
+      // Always show near the top regardless of direction.
+      if (y < HIDE_AFTER) setHidden(false)
+      else if (dy > 0) setHidden(true)
+      else setHidden(false)
+      lastY = y
+    }
+
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(update)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
 
   const handleLinkClick = (e, id) => {
     e.preventDefault()
@@ -17,7 +49,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar${hidden && !menuOpen ? ' navbar--hidden' : ''}`}>
       <div className="nav-container">
         <a href="#" className="nav-logo">
           <NearBrand size="sm" />
