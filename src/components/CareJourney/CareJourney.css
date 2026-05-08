@@ -96,7 +96,6 @@
   color: var(--dark);
   background: var(--glass-surface);
   backdrop-filter: var(--backdrop-glass);
-  -webkit-backdrop-filter: var(--backdrop-glass);
   cursor: pointer;
   transition: all 0.25s ease;
 }

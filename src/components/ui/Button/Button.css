@@ -21,7 +21,6 @@
   color: var(--dark);
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: var(--backdrop-glass);
-  -webkit-backdrop-filter: var(--backdrop-glass);
 }
 .btn--secondary::before, .btn-secondary::before {
   content: '';
