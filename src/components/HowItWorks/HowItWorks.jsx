@@ -125,17 +125,16 @@ export default function HowItWorks() {
         gsap.to(centerIconRef.current, { ...blockRevealVars({ stagger: 0 }), scrollTrigger: selfTrigger(centerIconRef.current) })
       }
 
-      // Journey is a single composed sequence with a deliberate rhythm:
-      //   step 1 — soft, emerging (longest settle, smallest offset)
-      //   curve 1 + step 2 — more active and orchestrated (tighter, overlapped)
-      //   curve 2 + step 3 — calmer and resolved (longer settle, slight breath before landing)
+      // Journey is a single composed sequence whose three card fades grow
+      // progressively slower — each step takes longer to settle than the last,
+      // so the sequence eases toward resolution rather than hitting a uniform beat.
       const journey = gsap.timeline({ scrollTrigger: selfTrigger(card1Ref.current) })
       const cardBase = { autoAlpha: 1, y: 0, ease: 'expo.out' }
-      journey.to(card1Ref.current, { ...cardBase, duration: 0.95 })
-      if (curves) journey.to(curves.lp, { strokeDashoffset: 0, duration: 0.4, ease: PRIMARY_EASE }, '-=0.5')
-      journey.to(card2Ref.current, { ...cardBase, duration: 0.5 }, '-=0.22')
-      if (curves) journey.to(curves.rp, { strokeDashoffset: 0, duration: 0.55, ease: PRIMARY_EASE }, '-=0.28')
-      journey.to(card3Ref.current, { ...cardBase, duration: 1 }, '-=0.18')
+      journey.to(card1Ref.current, { ...cardBase, duration: 0.6 })
+      if (curves) journey.to(curves.lp, { strokeDashoffset: 0, duration: 0.45, ease: PRIMARY_EASE }, '-=0.3')
+      journey.to(card2Ref.current, { ...cardBase, duration: 0.95 }, '-=0.2')
+      if (curves) journey.to(curves.rp, { strokeDashoffset: 0, duration: 0.55, ease: PRIMARY_EASE }, '-=0.55')
+      journey.to(card3Ref.current, { ...cardBase, duration: 1.4 }, '-=0.25')
     },
     deps: [isMobile],
   })
