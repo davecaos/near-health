@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { splitLines, lineRevealVars, blockRevealVars, blockRevealFromVars, selfTrigger } from '../../utils/reveal'
@@ -7,19 +7,14 @@ import { asset } from '../../utils/assetPath'
 import './OnePlatform.css'
 
 const INITIAL = ['Vision', 'Dental', 'Medicare', 'ACA', 'Employer-sponsored']
-const INTERVAL = 2200
-const DURATION = 550
-const COPIES = 3
+const COPIES = 4
 const items = Array.from({ length: COPIES }, () => INITIAL).flat()
+
+// px per second — slow enough that the eye can read each label as it passes.
+const SPEED = 70
 
 export default function OnePlatform() {
   const isMobile = useIsMobile()
-  const centerOffset = Math.floor(INITIAL.length / 2)
-
-  const [baseIndex, setBaseIndex] = useState(INITIAL.length)
-  const [animated, setAnimated] = useState(false)
-  const [tx, setTx] = useState(0)
-  const [snapping, setSnapping] = useState(false)
 
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
@@ -27,9 +22,6 @@ export default function OnePlatform() {
   const phoneRef = useRef(null)
   const trackRef = useRef(null)
   const containerRef = useRef(null)
-  const txRef = useRef(0)
-  const baseRef = useRef(INITIAL.length)
-  const busyRef = useRef(false)
 
   useScrollReveal({
     scopeRef: sectionRef,
@@ -49,74 +41,99 @@ export default function OnePlatform() {
     },
   })
 
-  const activeIndex = baseIndex + centerOffset
-
-  const getTxForIndex = useCallback((idx) => {
-    const track = trackRef.current
+  /* Continuous horizontal flow.
+     - tx decreases linearly each frame at SPEED px/s
+     - when tx crosses one INITIAL-set-width, snap it back so loops are seamless
+     - per-frame: each item's distance from container center drives both opacity
+       (gentle, wide falloff) and a --t custom prop (sharp falloff, drives color
+        via color-mix in CSS) so the active label crisply reads as solid */
+  useEffect(() => {
+    if (typeof window === 'undefined') return
     const container = containerRef.current
-    if (!track || !container) return 0
-    const item = track.children[idx]
-    if (!item) return 0
-    return container.offsetWidth / 2 - (item.offsetLeft + item.offsetWidth / 2)
-  }, [])
+    const track = trackRef.current
+    if (!container || !track) return
 
-  const applyTx = useCallback((value, withAnim) => {
-    txRef.current = value
-    setAnimated(withAnim)
-    setTx(value)
-  }, [])
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  /* Center on mount */
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      applyTx(getTxForIndex(INITIAL.length + centerOffset), false)
-    })
-  }, [])
+    const els = Array.from(track.children)
+    let centers = []
+    let setWidth = 0
+    let containerWidth = 0
+    let containerCenter = 0
+    let baseTx = 0
 
-  /* Resize handler */
-  useEffect(() => {
+    const measure = () => {
+      centers = els.map((el) => el.offsetLeft + el.offsetWidth / 2)
+      setWidth = centers[INITIAL.length] - centers[0]
+      containerWidth = container.offsetWidth
+      containerCenter = containerWidth / 2
+      const startIdx = INITIAL.length + Math.floor(INITIAL.length / 2)
+      baseTx = containerCenter - centers[startIdx]
+    }
+    measure()
+
+    let tx = baseTx
+    let last = 0
+    let raf = 0
+
+    const paintItem = (el, i) => {
+      const screenX = centers[i] + tx
+      const dist = Math.abs(screenX - containerCenter)
+      const fadeRange = containerWidth * 0.45
+      const sharpRange = Math.max(60, containerWidth * 0.06)
+      const fadeT = Math.min(1, dist / fadeRange)
+      const colorT = Math.min(1, dist / sharpRange)
+      el.style.opacity = (1 - fadeT * 0.78).toString()
+      el.style.setProperty('--t', colorT.toString())
+    }
+
+    const tick = (time) => {
+      if (!last) last = time
+      const dt = (time - last) / 1000
+      last = time
+
+      tx -= SPEED * dt
+      // Keep tx in (baseTx - setWidth, baseTx]; wrapping by setWidth lands the
+      // next identical item at center, so the loop is invisible.
+      while (setWidth > 0 && tx <= baseTx - setWidth) tx += setWidth
+
+      track.style.transform = `translate3d(${tx}px, 0, 0)`
+      els.forEach(paintItem)
+
+      raf = requestAnimationFrame(tick)
+    }
+
+    if (reduceMotion) {
+      // Static state: fix the start frame so labels still read sensibly.
+      track.style.transform = `translate3d(${baseTx}px, 0, 0)`
+      els.forEach(paintItem)
+      return
+    }
+
+    raf = requestAnimationFrame(tick)
+
     const onResize = () => {
-      applyTx(getTxForIndex(baseRef.current + centerOffset), false)
+      const prevSet = setWidth
+      measure()
+      // Keep the visible offset stable across resize: shift tx by the change in baseTx.
+      if (prevSet > 0) tx = ((tx - baseTx) % setWidth + setWidth) % setWidth + (baseTx - setWidth)
     }
     window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [applyTx, getTxForIndex, centerOffset])
 
-  /* Advance one step */
-  const advance = useCallback(() => {
-    if (busyRef.current) return
-    busyRef.current = true
-
-    const newBase = baseRef.current + 1
-    const newActive = newBase + centerOffset
-
-    applyTx(getTxForIndex(newActive), true)
-    baseRef.current = newBase
-    setBaseIndex(newBase)
-  }, [applyTx, getTxForIndex, centerOffset])
-
-  /* On transitionend: check if we need to jump back */
-  const onTransitionEnd = useCallback((e) => {
-    if (e.target !== trackRef.current || e.propertyName !== 'transform') return
-    busyRef.current = false
-
-    if (baseRef.current >= 2 * INITIAL.length) {
-      const newBase = baseRef.current - INITIAL.length
-      baseRef.current = newBase
-      setSnapping(true)
-      setBaseIndex(newBase)
-      applyTx(getTxForIndex(newBase + centerOffset), false)
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setSnapping(false))
+    // Webfonts can shift item widths after first measure; re-measure when they settle.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        const prevSet = setWidth
+        measure()
+        if (prevSet > 0) tx = ((tx - baseTx) % setWidth + setWidth) % setWidth + (baseTx - setWidth)
       })
     }
-  }, [applyTx, getTxForIndex, centerOffset])
 
-  /* Auto-advance interval */
-  useEffect(() => {
-    const id = setInterval(advance, INTERVAL)
-    return () => clearInterval(id)
-  }, [advance])
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
 
   return (
     <section className="one-platform" id="one-platform" ref={sectionRef}>
@@ -139,29 +156,10 @@ export default function OnePlatform() {
       </div>
 
       <div className="coverage-carousel" ref={containerRef}>
-        <div
-          className={`carousel-track${snapping ? ' carousel-track--snap' : ''}`}
-          ref={trackRef}
-          onTransitionEnd={onTransitionEnd}
-          style={{
-            transform: `translateX(${tx}px)`,
-            transition: animated
-              ? `transform ${DURATION}ms cubic-bezier(0.16,1,0.3,1)`
-              : 'none',
-          }}
-        >
-          {items.map((item, i) => {
-            const dist = Math.abs(i - activeIndex)
-            return (
-              <span
-                key={`${item}-${i}`}
-                className={`carousel-item${i === activeIndex ? ' carousel-item--active' : ''}`}
-                style={{ opacity: Math.max(0.15, 1 - dist * 0.25) }}
-              >
-                {item}
-              </span>
-            )
-          })}
+        <div className="carousel-track" ref={trackRef}>
+          {items.map((item, i) => (
+            <span key={`${item}-${i}`} className="carousel-item">{item}</span>
+          ))}
         </div>
       </div>
     </section>

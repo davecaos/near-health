@@ -104,12 +104,16 @@
   height: 130px;
   overflow: hidden;
   opacity: 0;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  /* First item (top, ~22% of the 130px viewport) stays fully opaque; the rest
+     fade progressively toward transparent so the active row reads as solid
+     and trailing rows as supporting context. */
+  mask-image: linear-gradient(to bottom, black 0%, black 22%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 22%, transparent 100%);
   animation: fade-in-track 0.3s ease 1.05s forwards;
 }
-/* Track ticks like a clock: 7 steps × (1.2s hold + 0.3s slide) = 10.5s loop.
-   Item height = 28px, so each tick advances by one row. */
+/* Track flows continuously: 7 items × 28px = 196px loop, linear so motion
+   never pauses. The mask gradient (solid at top, fading to transparent below)
+   is what creates the "highlight as items reach the top" feel. */
 .built-for-track {
   display: flex; flex-direction: column;
   -webkit-font-smoothing: antialiased;
@@ -117,7 +121,7 @@
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  animation: built-for-scroll-v 10.5s ease-out 1.35s infinite;
+  animation: built-for-scroll-v 14s linear 1.35s infinite;
 }
 .built-for-item {
   height: 28px;
@@ -127,20 +131,8 @@
 }
 
 @keyframes built-for-scroll-v {
-  0%,    11.43% { transform: translateY(0); }
-  14.29%        { transform: translateY(-28px); }
-  25.71%        { transform: translateY(-28px); }
-  28.57%        { transform: translateY(-56px); }
-  40.00%        { transform: translateY(-56px); }
-  42.86%        { transform: translateY(-84px); }
-  54.29%        { transform: translateY(-84px); }
-  57.14%        { transform: translateY(-112px); }
-  68.57%        { transform: translateY(-112px); }
-  71.43%        { transform: translateY(-140px); }
-  82.86%        { transform: translateY(-140px); }
-  85.71%        { transform: translateY(-168px); }
-  97.14%        { transform: translateY(-168px); }
-  100%          { transform: translateY(-196px); }
+  from { transform: translateY(0); }
+  to   { transform: translateY(-196px); }
 }
 
 /* ── Hero Mobile ── */
@@ -201,8 +193,8 @@
 @keyframes fade-in-track {
   to { opacity: 1; }
 }
-/* Track ticks like a clock: 7 steps × (1.2s hold + 0.3s slide) = 10.5s loop.
-   Loops seamlessly because -560px lands on the next repeated set in TRIPLED. */
+/* Continuous linear scroll: 7 items × 80px = 560px loop. Loops seamlessly
+   because -560px lands on the next repeated set in TRIPLED. */
 .built-for-h-track {
   display: flex; align-items: center; gap: 0;
   -webkit-font-smoothing: antialiased;
@@ -210,7 +202,7 @@
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  animation: built-for-scroll 10.5s ease-out 1.35s infinite;
+  animation: built-for-scroll 14s linear 1.35s infinite;
 }
 .built-for-h-item {
   flex-shrink: 0;
@@ -219,20 +211,8 @@
   text-align: center;
 }
 @keyframes built-for-scroll {
-  0%,    11.43% { transform: translate3d(0,    0, 0); }
-  14.29%        { transform: translate3d(-80px,  0, 0); }
-  25.71%        { transform: translate3d(-80px,  0, 0); }
-  28.57%        { transform: translate3d(-160px, 0, 0); }
-  40.00%        { transform: translate3d(-160px, 0, 0); }
-  42.86%        { transform: translate3d(-240px, 0, 0); }
-  54.29%        { transform: translate3d(-240px, 0, 0); }
-  57.14%        { transform: translate3d(-320px, 0, 0); }
-  68.57%        { transform: translate3d(-320px, 0, 0); }
-  71.43%        { transform: translate3d(-400px, 0, 0); }
-  82.86%        { transform: translate3d(-400px, 0, 0); }
-  85.71%        { transform: translate3d(-480px, 0, 0); }
-  97.14%        { transform: translate3d(-480px, 0, 0); }
-  100%          { transform: translate3d(-560px, 0, 0); }
+  from { transform: translate3d(0,      0, 0); }
+  to   { transform: translate3d(-560px, 0, 0); }
 }
 .hero-mobile-video {
   position: relative;

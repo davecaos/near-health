@@ -35,8 +35,9 @@
   font-size: 96px; font-weight: 400;
   line-height: 1; letter-spacing: -0.03em;
   text-align: center; white-space: nowrap;
-  color: var(--white);
-  transition: opacity 0.6s ease, color 0.25s ease;
+  /* --t is set per-frame from JS: 0 at center → 1 outside the highlight band.
+     color-mix blends from --dark (active, t=0) to --white (inactive, t=1). */
+  color: color-mix(in srgb, var(--dark) calc((1 - var(--t, 1)) * 100%), var(--white));
 }
 .carousel-item::after {
   content: '\00B7';
@@ -44,8 +45,6 @@
   font-weight: 400;
   color: var(--white);
 }
-.carousel-item--active { color: var(--dark); }
-.carousel-track--snap .carousel-item { transition: none; }
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
