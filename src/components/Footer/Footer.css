@@ -42,22 +42,6 @@
 .social-icon:hover { background: var(--dark); }
 .social-icon:hover svg path { stroke: var(--white); }
 
-/* ── Footer logo: continuous 3D Y-axis rotation (scoped to the footer brand only) ── */
-.footer-brand { perspective: 800px; }
-.footer-brand .near-brand__icon {
-  animation: footer-logo-spin 6s linear infinite;
-  transform-origin: 50% 50%;
-  backface-visibility: visible;
-  will-change: transform;
-}
-@keyframes footer-logo-spin {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .footer-brand .near-brand__icon { animation: none; }
-}
-
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
   .footer-brand {
