@@ -107,6 +107,11 @@
   pointer-events: none;
 }
 .care-card-btn:hover { background: rgba(255,255,255,0.5); }
+/* While the card is hovered the lottie gradient plays underneath; make the
+   button background solid so its label reads cleanly above the animation
+   instead of being tinted by what's behind it. */
+.care-card:hover .care-card-btn { background: #FFFFFF; }
+.care-card:hover .care-card-btn:hover { background: rgba(255,255,255,0.85); }
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
