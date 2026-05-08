@@ -94,24 +94,11 @@
   font-size: var(--fs-btn); font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--dark);
-  background: var(--glass-surface);
-  backdrop-filter: var(--backdrop-glass);
+  background: #FFFFFF;
   cursor: pointer;
   transition: all 0.25s ease;
 }
-.care-card-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
-  pointer-events: none;
-}
-.care-card-btn:hover { background: rgba(255,255,255,0.5); }
-/* While the card is hovered the lottie gradient plays underneath; make the
-   button background solid so its label reads cleanly above the animation
-   instead of being tinted by what's behind it. */
-.care-card:hover .care-card-btn { background: #FFFFFF; }
-.care-card:hover .care-card-btn:hover { background: rgba(255,255,255,0.85); }
+.care-card-btn:hover { background: rgba(255,255,255,0.85); }
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
@@ -136,5 +123,4 @@
   }
   .care-card-divider { margin-bottom: 20px; }
   .care-card-text { margin-bottom: 20px; font-size: var(--fs-body-mobile); line-height: 1.32; }
-  .care-card-btn { background: rgba(255,255,255,0.8); }
 }
