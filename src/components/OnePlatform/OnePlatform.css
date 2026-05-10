@@ -56,7 +56,7 @@
   }
   .platform-subtitle { font-size: var(--fs-body-mobile); line-height: 1.32; }
   .platform-phone { border-radius: var(--radius-card); }
-  .platform-phone-img { width: 100%; height: auto; border-radius: var(--radius-card); }
-  .carousel-item { font-size: 28px; }
+  .platform-phone-img { width: 100%; height: auto; border-radius: var(--radius-card); transform: scale(1.05); }
+  .carousel-item { font-size: 2.25rem; }
   .coverage-carousel { width: 100vw; margin-left: calc(-50vw + 50%); }
 }

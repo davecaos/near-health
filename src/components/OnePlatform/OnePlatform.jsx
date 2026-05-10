@@ -57,12 +57,15 @@ export default function OnePlatform() {
 
     const els = Array.from(track.children)
     let centers = []
+    let halfWidths = []
+    let smoothT = []
     let setWidth = 0
     let spacing = 0
     let containerCenter = 0
     let baseTx = 0
 
     const measure = () => {
+      halfWidths = els.map((el) => el.offsetWidth / 2)
       centers = els.map((el) => el.offsetLeft + el.offsetWidth / 2)
       setWidth = centers[INITIAL.length] - centers[0]
       // Average gap between adjacent item centres — used to scale the
@@ -71,6 +74,7 @@ export default function OnePlatform() {
       containerCenter = container.offsetWidth / 2
       const startIdx = INITIAL.length + Math.floor(INITIAL.length / 2)
       baseTx = containerCenter - centers[startIdx]
+      if (smoothT.length === 0) smoothT = els.map(() => 1)
     }
     measure()
 
@@ -78,11 +82,16 @@ export default function OnePlatform() {
     let last = 0
     let raf = 0
 
+    // Asymmetric time constants: darkening (inactive→active) feels abrupt
+    // at the same speed as lightening, so we ease it in more slowly.
+    const TAU_DARKEN = 0.35
+    const TAU_LIGHTEN = 0.15
+
     // Winner-take-all highlight: only the single item nearest the centre is
     // ever darkened. As soon as another item becomes the closest, the
     // highlight hands off — there's no moment where two items are both
     // partially dark, and no white-only gap between consecutive actives.
-    const paint = () => {
+    const paint = (dt) => {
       let minDist = Infinity
       let minIdx = -1
       for (let i = 0; i < els.length; i++) {
@@ -99,14 +108,23 @@ export default function OnePlatform() {
         // Inactive items: forced to white.
         let t = 1
         if (i === minIdx) {
-          const x = Math.min(1, dist / (spacing * 0.5))
+          // Subtract the item's half-width so wide items (e.g. "Employer-sponsored")
+          // stay fully dark until their trailing edge clears the centre, not just their centre.
+          const adjustedDist = Math.max(0, dist - halfWidths[i])
+          const x = Math.min(1, adjustedDist / (spacing * 0.5))
           t = x * x * (3 - 2 * x)
         }
+        // Direction-dependent tau: darkening (t < smoothT) eases in slowly so
+        // the active colour builds gradually; lightening stays snappy.
+        // dt=0 (reduced-motion) snaps immediately.
+        const darkening = t < smoothT[i]
+        const lerpFactor = dt > 0 ? 1 - Math.exp(-dt / (darkening ? TAU_DARKEN : TAU_LIGHTEN)) : 1
+        smoothT[i] += (t - smoothT[i]) * lerpFactor
         // Opacity has a wider falloff so far-away items still register as
         // context without competing with the active one for attention.
         const fadeT = Math.min(1, dist / (spacing * 2.2))
         el.style.opacity = (1 - fadeT * 0.7).toString()
-        el.style.setProperty('--t', t.toString())
+        el.style.setProperty('--t', smoothT[i].toString())
       }
     }
 
@@ -115,13 +133,13 @@ export default function OnePlatform() {
       const dt = (time - last) / 1000
       last = time
 
-      tx -= SPEED * dt
+      tx -= (window.innerWidth <= 768 ? 35 : SPEED) * dt
       // Keep tx in (baseTx - setWidth, baseTx]; wrapping by setWidth lands the
       // next identical item at center, so the loop is invisible.
       while (setWidth > 0 && tx <= baseTx - setWidth) tx += setWidth
 
       track.style.transform = `translate3d(${tx}px, 0, 0)`
-      paint()
+      paint(dt)
 
       raf = requestAnimationFrame(tick)
     }
@@ -129,7 +147,7 @@ export default function OnePlatform() {
     if (reduceMotion) {
       // Static state: fix the start frame so labels still read sensibly.
       track.style.transform = `translate3d(${baseTx}px, 0, 0)`
-      paint()
+      paint(0)
       return
     }
 

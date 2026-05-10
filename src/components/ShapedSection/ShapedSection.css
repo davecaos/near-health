@@ -37,7 +37,7 @@
 
 /* ── Mobile (≤768px) ── */
 @media (max-width: 768px) {
-  .shaped-section { padding: var(--space-section-mobile) 0; }
+  .shaped-section { padding: var(--space-section-mobile) 0; margin-bottom: 0; }
   .shaped-section .container { padding: 0 19.5px; }
   .shaped-section .section-title { margin-bottom: 16px; letter-spacing: -0.01em; }
   .shaped-photo {

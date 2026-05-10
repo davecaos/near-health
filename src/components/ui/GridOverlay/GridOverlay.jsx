@@ -3,7 +3,6 @@ import './GridOverlay.css'
 
 const COLUMNS = 12
 const STORAGE_KEY = 'grid-overlay-on'
-
 // Dev-only utility — render this component conditionally on
 // `import.meta.env.DEV` at the call site (see App.jsx) so the button,
 // the keyboard listener, and the overlay never ship to production.

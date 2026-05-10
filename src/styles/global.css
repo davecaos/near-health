@@ -80,7 +80,7 @@ body {
    as the page grows taller than the image's natural height */
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1;
-  background: url('/landing/assets/page-bg.webp') center center / cover no-repeat;
+  background: url('/background.svg') center center / cover no-repeat;
   pointer-events: none;
 }
 img { max-width: 100%; height: auto; display: block; }

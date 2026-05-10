@@ -27,6 +27,10 @@ export default function App() {
           `navbar-edge` is the real white hairline that escapes the blend. */}
       <div className="navbar-blur" aria-hidden="true" />
       <div className="navbar-edge" aria-hidden="true" />
+      {/* Real CTA button — sibling of .navbar so it escapes mix-blend-mode:
+          difference. The in-navbar button is visibility:hidden (holds flex
+          space). This element tracks the same show/hide animation via CSS. */}
+      <a href="#contact" className="navbar-cta-fixed">Request a demo</a>
       <Hero />
       <CareJourney />
       <MemberExperience />

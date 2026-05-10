@@ -14,12 +14,15 @@
   padding: 165px 0 var(--space-lg);
   overflow: visible;
 }
-/* Desktop only: pad the hero's bottom by ~the card's transform overflow so
-   the scaled video card has somewhere to "spill" into within the hero
-   itself, leaving CareJourney's --space-section padding-top visible as the
-   section gap instead of being covered by the card. */
+/* Desktop only: tail space below the expanded (post-scrub) video card.
+   Calibrated so the visible gap between the card's bottom and CareJourney's
+   top edge lands at 120px — pairing with CareJourney's 120px padding-top to
+   produce a 240px section gap. JS in Hero.jsx (onRefreshInit) recomputes
+   this exactly using the measured slot height; this CSS value is a sane
+   default for first paint. Math: paddingBottom = 100vh − pad − 82 − slotH + 120
+   ≈ 100vh − 80 − 82 − 552 + 120 ≈ 100vh − 594px. */
 @media (min-width: 1025px) {
-  .hero { padding-bottom: 50vh; }
+  .hero { padding-bottom: calc(100vh - 594px); }
 }
 .hero-container {
   display: flex; flex-direction: column; gap: var(--space-md);
@@ -44,16 +47,16 @@
 }
 
 /* Row 2: subtitle+buttons left, video right.
-   Sized so the card can scrub natural→full and unstick with the standard
-   section gap before CareJourney. Math:
-     scrub distance = 130vh (matches scrollTrigger end in Hero.jsx:
-       0.7vh scale + 0.6vh hold-at-100% = 1.3 * vh)
-     sticky-release zone (cardH_natural + sticky_top ≈ 542px) overlaps the
-     scrub. So min-height = scrub + sticky_top + cardH_natural ≈ 190vh. */
+   Sized so the slot unsticks the instant the scrub completes — no extra
+   pinned scroll between the animation finishing and CareJourney coming in.
+   Math: min-height = scrub_distance + slotH_natural + sticky_top
+                    = 130vh + ~552px + 82px ≈ 130vh + 634px.
+   JS in Hero.jsx (onRefreshInit) recomputes this exactly using the measured
+   slot height; this value is the first-paint fallback. */
 .hero-bottom-row {
   display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap;
   width: 100%;
-  min-height: 190vh;
+  min-height: calc(130vh + 634px);
 }
 .hero-left { flex-shrink: 0; max-width: 420px; }
 .hero-subtitle {
@@ -114,24 +117,28 @@
   height: 130px;
   overflow: hidden;
   opacity: 0;
-  /* Top fade (0-12%) softens items as they scroll off the top edge so they
-     don't read as sharply clipped. Solid band (12-34%) anchors the active row;
-     fade to transparent below treats trailing rows as supporting context. */
-  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 34%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 34%, transparent 100%);
+  /* Tight active band (15-25%) anchors a single highlighted row; the fade
+     below it drops to transparent by 65% so off-band rows recede quickly
+     rather than lingering as faint ghosts to the bottom. */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 25%, transparent 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 25%, transparent 65%, transparent 100%);
   animation: fade-in-track 0.3s ease 1.05s forwards;
 }
 /* Track flows continuously: 7 items × 28px = 196px loop, linear so motion
    never pauses. The mask gradient (solid at top, fading to transparent below)
-   is what creates the "highlight as items reach the top" feel. */
+   is what creates the "highlight as items reach the top" feel.
+   translate3d on both the static base and the keyframes keeps the element on
+   the same compositor layer across the loop boundary — without that match,
+   the iteration restart can read as a 1-frame snap. */
 .built-for-track {
   display: flex; flex-direction: column;
   -webkit-font-smoothing: antialiased;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  animation: built-for-scroll-v 14s linear 1.35s infinite;
+  animation: built-for-scroll-v 18s linear 1.35s infinite;
 }
 .built-for-item {
   height: 28px;
@@ -141,8 +148,8 @@
 }
 
 @keyframes built-for-scroll-v {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-196px); }
+  from { transform: translate3d(0,    0, 0); }
+  to   { transform: translate3d(0, -196px, 0); }
 }
 
 /* ── Hero Mobile ── */
@@ -187,32 +194,48 @@
   animation: line-grow 0.8s var(--ease) 0.25s forwards;
 }
 @keyframes line-grow {
-  to { height: 40px; }
+  to { height: 24px; }
 }
-/* Viewport handles the fade-in — one animation only */
+/* Viewport handles the fade-in — one animation only.
+   Width is 100% of the parent (container content area) instead of the
+   prior 100vw breakout — that way the viewport's center is the SAME 50%
+   reference the label/line are already centered to (`align-items: center`
+   on `.hero-mobile-built-for`). No vw math, no scrollbar drift, items
+   guaranteed to sit directly under the label.
+   Mask shape: tight 40-60% opaque band centered on the viewport so the
+   highlighted item reads cleanly; sides start fading at 25% / 75% so
+   off-center labels recede quickly. */
 .built-for-h-viewport {
   position: relative;
-  width: 100vw; max-width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
   overflow: hidden;
   opacity: 0;
-  mask-image: linear-gradient(to right, transparent 0%, transparent 18%, black 30%, black 70%, transparent 95%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 18%, black 30%, black 70%, transparent 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 25%, black 40%, black 60%, transparent 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 25%, black 40%, black 60%, transparent 75%, transparent 100%);
   animation: fade-in-track 0.3s ease 1.05s forwards;
 }
 @keyframes fade-in-track {
   to { opacity: 1; }
 }
 /* Continuous linear scroll: 7 items × 80px = 560px loop. Loops seamlessly
-   because -560px lands on the next repeated set in TRIPLED. */
+   because -560px lands on the next repeated set in TRIPLED. translate3d on
+   the keyframes keeps the layer stable across the loop boundary, removing
+   the 1-frame snap that otherwise reads as an abrupt restart.
+   Centering: items live at x = 0, 80, … from the track's left edge; the
+   `margin-left: calc(50% - 600px)` shift puts item 7's center (7·80 + 40 = 600)
+   exactly on viewport-center (50% of container) — i.e. directly under the
+   centered "Built for" label. Item 7 sits in the middle copy of TRIPLED so
+   there are always enough items both sides to fill the viewport. */
 .built-for-h-track {
   display: flex; align-items: center; gap: 0;
   -webkit-font-smoothing: antialiased;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  margin-left: calc(50% - 600px);
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  animation: built-for-scroll 14s linear 1.35s infinite;
+  animation: built-for-scroll 18s linear 1.35s infinite;
 }
 .built-for-h-item {
   flex-shrink: 0;

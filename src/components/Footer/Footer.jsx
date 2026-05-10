@@ -53,16 +53,16 @@ export default function Footer() {
           once: true,
           onEnter: () => {
             gsap.to(stopProxy, {
-              v: 28,
-              duration: 4.5,
+              v: 15,
+              duration: 2.2,
               ease: 'sine.inOut',
               yoyo: true,
               repeat: -1,
               onUpdate: writeStop,
             })
             gsap.to(gradient, {
-              opacity: 0.55,
-              duration: 5.0,
+              opacity: 0.3,
+              duration: 2.5,
               delay: 3.6,
               ease: 'sine.inOut',
               yoyo: true,
