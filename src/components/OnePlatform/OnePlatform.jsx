@@ -81,11 +81,16 @@ export default function OnePlatform() {
     const paintItem = (el, i) => {
       const screenX = centers[i] + tx
       const dist = Math.abs(screenX - containerCenter)
-      // t scales 0 (centred = active dark) → 1 (one item-spacing away = inactive
-      // white). Adjacent items therefore crossfade through 50/50 at the midpoint
-      // between their centres, so the handoff happens exactly when one item
-      // takes over from the other — no gray dead-zone, no abrupt swap.
-      const t = Math.min(1, dist / spacing)
+      // Plateau-with-smoothstep falloff: the active word stays fully dark for a
+      // wide centre band (innerR), then smoothly transitions to white across a
+      // short ramp (innerR → outerR), then is white. Both endpoints sit well
+      // inside one item-spacing so adjacent items are always white when one is
+      // at the centre — the highlight never doubles up — while the active word
+      // gets a long dwell at full dark and a soft (not instant) colour change.
+      const innerR = spacing * 0.32
+      const outerR = spacing * 0.48
+      const x = Math.max(0, Math.min(1, (dist - innerR) / (outerR - innerR)))
+      const t = x * x * (3 - 2 * x)
       // Opacity has a wider falloff so far-away items still register as context
       // without competing with the active one for attention.
       const fadeT = Math.min(1, dist / (spacing * 2.2))
