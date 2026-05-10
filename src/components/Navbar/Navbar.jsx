@@ -50,6 +50,11 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar${hidden && !menuOpen ? ' navbar--hidden' : ''}`}>
+      {/* Glass plate is a SIBLING of nav-container so mix-blend-mode on
+          links/logo can blend against the rendered glass (which carries the
+          backdrop-filter result of the page below). If the glass were a
+          parent or background on .navbar, the blend would be trapped. */}
+      <div className="navbar__glass" aria-hidden="true" />
       <div className="nav-container">
         <a href="#" className="nav-logo">
           <NearBrand size="sm" />

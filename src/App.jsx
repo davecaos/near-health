@@ -18,6 +18,14 @@ export default function App() {
   return (
     <>
       <Navbar />
+      {/* Both layers are siblings AFTER <Navbar/> so the
+          `.navbar--hidden ~ ...` CSS selectors can slide them together.
+          `navbar-blur` carries the `backdrop-filter` (kept outside the
+          navbar so the parent's `mix-blend-mode: difference` doesn't trap
+          it). z-index in CSS keeps it visually below the navbar.
+          `navbar-edge` is the real white hairline that escapes the blend. */}
+      <div className="navbar-blur" aria-hidden="true" />
+      <div className="navbar-edge" aria-hidden="true" />
       <Hero />
       <CareJourney />
       <MemberExperience />
