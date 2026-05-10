@@ -27,41 +27,64 @@ export default function Hero() {
     const card = cardRef.current
     if (!row || !card) return
 
-    const targets = { dx: 0, dy: 0, scale: 1 }
+    const targets = { dx: 0, dy: 0, w: 0, h: 0, w0: 0, h0: 0 }
     const fadeTargets = [headingRef.current, carouselWrapRef.current, leftRef.current].filter(Boolean)
 
     const ctx = gsap.context(() => {
-      // Card expands from natural size → full-width (with site gutters) and
-      // holds at full size for the rest of the scroll-zone.
-      // Border-radius is intentionally NOT animated — transform: scale()
-      // visually scales the corners proportionally with the card.
-      gsap.to(card, {
-        x: () => targets.dx,
-        y: () => targets.dy,
-        scale: () => targets.scale,
-        ease: 'none',
+      // The visible inner card grows from its natural pixel size → a viewport-
+      // sized rect with equal padding on all four sides. We animate real
+      // width/height (not transform: scale) so the inner <video>'s box ends
+      // up at the right aspect ratio — object-fit: cover then crops cleanly
+      // instead of the entire scaled box being stretched.
+      // The first 0.7 of the timeline runs the resize; the remaining 0.6
+      // is an empty hold that keeps the scrub pinned at full size.
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: row,
           start: 'top top',
-          end: () => '+=' + window.innerHeight * 0.7,
+          end: () => '+=' + window.innerHeight * 1.3,
           scrub: 0.6,
           invalidateOnRefresh: true,
           onRefreshInit: () => {
-            // Read the card's natural geometry (un-stuck, no transform).
-            // PAD_X mirrors the site's --px horizontal padding so the
-            // expanded card stops at the same gutters as the rest of the page.
-            // dy stays 0: with transform-origin 50% 0% (top center), the
-            // card grows only downward + sideways from its sticky top.
+            // Read the inner card's natural geometry (no transform, no
+            // animated width/height). It sits absolutely positioned over the
+            // outer layout slot, so its rect matches the slot's natural size.
+            // STICKY_TOP mirrors the CSS `position: sticky; top: 82px;` on the
+            // outer slot — we can't read getBoundingClientRect().top because
+            // onRefreshInit fires at scroll = 0 (card not yet stuck).
+            const STICKY_TOP = 82
             const vw = window.innerWidth
-            const padX = Math.max(20, Math.min(80, 0.05 * vw)) // clamp(20px, 5vw, 80px)
-            gsap.set(card, { clearProps: 'transform' })
+            const vh = window.innerHeight
+            const pad = Math.max(72, Math.min(96, 0.05 * vw)) // ≥72px keeps the expanded card clear of the 66px navbar
+            gsap.set(card, { clearProps: 'width,height,transform' })
             const r = card.getBoundingClientRect()
-            targets.dx = vw / 2 - (r.left + r.width / 2)
-            targets.dy = 0
-            targets.scale = (vw - 2 * padX) / r.width
+            targets.w0 = r.width
+            targets.h0 = r.height
+            targets.w = vw - 2 * pad
+            targets.h = vh - 2 * pad
+            // Center the resized box on the viewport. Anchor is the inner's
+            // top-left (top:0, left:0 of the slot, slot top = STICKY_TOP).
+            targets.dx = vw / 2 - r.left - targets.w / 2
+            targets.dy = pad - STICKY_TOP
           },
         },
       })
+
+      tl.fromTo(
+        card,
+        { width: () => targets.w0, height: () => targets.h0 },
+        {
+          x: () => targets.dx,
+          y: () => targets.dy,
+          width: () => targets.w,
+          height: () => targets.h,
+          ease: 'none',
+          duration: 0.7,
+        },
+      )
+      // Hold: empty tween of duration 0.6 keeps the scrub pinned at full size
+      // for ~60% of the viewport before the trigger releases.
+      tl.to({}, { duration: 0.6 })
 
       if (fadeTargets.length) {
         gsap.to(fadeTargets, {
@@ -117,8 +140,10 @@ export default function Hero() {
                   <a href="#contact" className="btn btn--secondary">Talk to us</a>
                 </div>
               </div>
-              <div ref={cardRef} className="hero-video-card">
-                <ResponsiveVideo desktop="assets/Hero_Desktop.mp4" mobile="assets/Hero_Mobile.mp4" desktopWebm="assets/Hero_Desktop.webm" mobileWebm="assets/Hero_Mobile.webm" />
+              <div className="hero-video-card">
+                <div ref={cardRef} className="hero-video-card-inner">
+                  <ResponsiveVideo desktop="assets/Hero_Desktop.mp4" mobile="assets/Hero_Mobile.mp4" desktopWebm="assets/Hero_Desktop.webm" mobileWebm="assets/Hero_Mobile.webm" />
+                </div>
               </div>
             </div>
           </>

@@ -42,13 +42,14 @@
 /* Row 2: subtitle+buttons left, video right.
    Sized so the card can scrub natural→full and unstick with the standard
    section gap before CareJourney. Math:
-     scrub distance = 70vh (matches scrollTrigger end in Hero.jsx)
+     scrub distance = 130vh (matches scrollTrigger end in Hero.jsx:
+       0.7vh scale + 0.6vh hold-at-100% = 1.3 * vh)
      sticky-release zone (cardH_natural + sticky_top ≈ 542px) overlaps the
-     scrub. So min-height = scrub + sticky_top + cardH_natural ≈ 130vh. */
+     scrub. So min-height = scrub + sticky_top + cardH_natural ≈ 190vh. */
 .hero-bottom-row {
   display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: nowrap;
   width: 100%;
-  min-height: 130vh;
+  min-height: 190vh;
 }
 .hero-left { flex-shrink: 0; max-width: 420px; }
 .hero-subtitle {
@@ -59,26 +60,29 @@
 .hero-buttons { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .hero-buttons .btn { justify-content: center; text-align: center; white-space: nowrap; }
 .hero-video-card {
-  /* Sticky offset = navbar height (66px) + 16px breathing room.
-     Hero.jsx mirrors this constant when computing the centered end-state. */
+  /* Layout slot only — the visible card lives in .hero-video-card-inner.
+     Sticky offset = navbar height (66px) + 16px breathing room. */
   position: sticky; top: 82px;
   z-index: 2;
   flex: 1;
   width: 100%; max-width: 982px; aspect-ratio: 982/552;
   margin-left: var(--space-lg);
+}
+.hero-video-card-inner {
+  /* Visible card — absolute over the layout slot so we can animate its
+     real width/height past the slot's bounds without affecting flex layout.
+     Animating width/height (instead of non-uniform scale) keeps the inner
+     <video> element's box at the right aspect ratio so object-fit: cover
+     crops correctly instead of stretching. */
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
   border-radius: var(--radius-card);
   overflow: hidden;
   background: var(--surface-tint);
   box-shadow: var(--shadow-card);
-  /* Anchor scale to the TOP edge so growing the card never shifts its top
-     away from the navbar — only expands width and downward height. */
-  transform-origin: 50% 0%;
-  will-change: transform;
+  will-change: width, height, transform;
 }
-/* .hero is also a flex item — min-height: 100vh is on it via existing rule.
-   Hero's min-height was driven by the original 100vh layout; it now grows
-   organically via the 200vh bottom-row above. */
-.hero-video-card video {
+.hero-video-card-inner video {
   position: absolute; inset: 0;
   display: block;
   width: 100%; height: 100%;
@@ -86,11 +90,13 @@
 }
 
 /* ── Built-for ticker (desktop) ── */
-.built-for-label { font-size: var(--fs-caption); font-weight: 500; white-space: nowrap; }
+/* margin-top offsets account for the viewport's 12% top fade band so the
+   label and divider stay visually aligned with the now-shifted active row. */
+.built-for-label { font-size: var(--fs-caption); font-weight: 500; white-space: nowrap; margin-top: 16px; }
 /* Pure CSS: divider grows via keyframe, no JS class toggle */
 .built-for-divider {
   flex-shrink: 0;
-  width: 0; height: 1px; margin-top: 9px;
+  width: 0; height: 1px; margin-top: 25px;
   background: var(--dark);
   animation: divider-grow 0.8s var(--ease) 0.25s forwards;
 }
@@ -104,11 +110,11 @@
   height: 130px;
   overflow: hidden;
   opacity: 0;
-  /* First item (top, ~22% of the 130px viewport) stays fully opaque; the rest
-     fade progressively toward transparent so the active row reads as solid
-     and trailing rows as supporting context. */
-  mask-image: linear-gradient(to bottom, black 0%, black 22%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 22%, transparent 100%);
+  /* Top fade (0-12%) softens items as they scroll off the top edge so they
+     don't read as sharply clipped. Solid band (12-34%) anchors the active row;
+     fade to transparent below treats trailing rows as supporting context. */
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 34%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 34%, transparent 100%);
   animation: fade-in-track 0.3s ease 1.05s forwards;
 }
 /* Track flows continuously: 7 items × 28px = 196px loop, linear so motion
