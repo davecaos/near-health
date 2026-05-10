@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { splitLines, lineRevealVars, blockRevealVars, blockRevealFromVars, selfTrigger } from '../../utils/reveal'
 import Button from '../ui/Button/Button'
@@ -7,13 +8,48 @@ import SectionTitle from '../ui/SectionTitle/SectionTitle'
 import ScrollPlayVideo from '../ui/ScrollPlayVideo/ScrollPlayVideo'
 import './MemberExperience.css'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export default function MemberExperience() {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const descRef = useRef(null)
   const videoRef = useRef(null)
+  const videoWrapRef = useRef(null)
   const footerTextRef = useRef(null)
   const footerBtnsRef = useRef(null)
+
+  // Scroll-driven scale: the entire section pins at the top of the viewport
+  // while the user scrolls ~100vh; during that range the video wrap scales
+  // from 0.75 → 1, anchored at its top edge so it grows only downward.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (window.innerWidth <= 1024) return // mobile/tablet uses a different layout
+
+    const section = sectionRef.current
+    const wrap = videoWrapRef.current
+    if (!section || !wrap) return
+
+    const ctx = gsap.context(() => {
+      gsap.set(wrap, { scale: 0.75, transformOrigin: '50% 0%', willChange: 'transform' })
+      gsap.to(wrap, {
+        scale: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => '+=' + window.innerHeight,
+          scrub: 0.6,
+          pin: section,
+          pinSpacing: true,
+          invalidateOnRefresh: true,
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   useScrollReveal({
     scopeRef: sectionRef,
@@ -48,7 +84,7 @@ export default function MemberExperience() {
           <p className="member-desc" ref={descRef}>Members can interact via chat or voice for everyday questions after enrollment. Near takes over the request, keeps brokers in the loop, and routes care when needed.</p>
         </div>
         <div className="member-video-animate" ref={videoRef}>
-          <div className="member-video-wrap">
+          <div className="member-video-wrap" ref={videoWrapRef}>
             <ScrollPlayVideo
               desktop="assets/AI_Chat_Desktop.mp4"
               mobile="assets/AI_Chat_Mobile.mp4"
