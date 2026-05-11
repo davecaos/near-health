@@ -82,6 +82,7 @@ body::before {
   content: ''; position: fixed; inset: 0; z-index: -1;
   background: url('/background.svg') center center / cover no-repeat;
   pointer-events: none;
+  transform: scaleX(-1);
 }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
