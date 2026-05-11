@@ -76,13 +76,13 @@ body {
   position: relative; font-size: var(--fs-body);
   background: var(--white);
 }
-/* Figma "Background Layer" — the source SVG is 1600×10244 (a tall portrait
-   designed as the FULL-PAGE backdrop). Position absolute + 100% size so the
-   entire SVG stretches across the document, instead of cropping a tiny middle
-   slice into a fixed viewport (which produced a single heavily-coloured band). */
+/* Figma "Background Layer" — fixed to viewport with 100% 100% sizing so the
+   entire SVG (all its gradient colours) stretches into every viewport rather
+   than being cropped. Stretching is acceptable because the source is an
+   abstract soft gradient with no sharp features. */
 body::before {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background: url('/background.svg') center top / 100% 100% no-repeat;
+  content: ''; position: fixed; inset: 0; z-index: -1;
+  background: url('/background.svg') center center / 100% 100% no-repeat;
   pointer-events: none;
 }
 img { max-width: 100%; height: auto; display: block; }
