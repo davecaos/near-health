@@ -76,13 +76,13 @@ body {
   position: relative; font-size: var(--fs-body);
   background: var(--white);
 }
-/* Figma "Background Layer" — fixed to viewport with 100% 100% sizing so the
-   entire SVG (all its gradient colours) stretches into every viewport rather
-   than being cropped. Stretching is acceptable because the source is an
-   abstract soft gradient with no sharp features. */
+/* Figma "Background Layer" — absolutely positioned at the top of the document,
+   full width, with the SVG rendered at its natural aspect ratio (1600 × 10244). */
 body::before {
-  content: ''; position: fixed; inset: 0; z-index: -1;
-  background: url('/background.svg') center center / 100% 100% no-repeat;
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; aspect-ratio: 1600 / 10244;
+  z-index: -1;
+  background: url('/background.svg') top left / 100% 100% no-repeat;
   pointer-events: none;
 }
 img { max-width: 100%; height: auto; display: block; }
