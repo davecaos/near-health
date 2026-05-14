@@ -207,7 +207,7 @@ export default function CareJourney() {
     <section className="care-journey" id="built-for" ref={sectionRef}>
       <div className="container">
         <div ref={headerRef}>
-          <SectionTitle subtitle="A coordinated path across brokers, providers, and members." className="care-journey-header">
+          <SectionTitle subtitle="A coordinated path across brokers, providers, and members." className="care-journey-header" titleClassName="care-journey-header">
             Serving the full care journey
           </SectionTitle>
         </div>

@@ -8,7 +8,7 @@
 }
 .footer .container { position: relative; z-index: 1;
   display: flex; flex-wrap: wrap; align-items: center;
-  gap: clamp(12px, 2vw, 24px);
+  gap: 0;
 }
 
 /* ── Cyan gradient: transparent in the top half, ramping to solid cyan at the
@@ -34,7 +34,7 @@
 }
 .footer-brand {
   width: 100%; max-width: 1440px; height: auto;
-  margin-bottom: var(--space-md);
+  margin-bottom: 1.5rem;
   align-items: center;
   justify-content: space-between;
 }
@@ -67,20 +67,7 @@
     gap: 36px 0;
     container-type: inline-size;
   }
-  /* cqw heights are derived so that ∑(widths via aspect-ratios) + ∑(gaps/margins)
-     = exactly 100cqw. Icon AR≈0.981, N≈0.873, E≈0.954, A≈0.983, R≈0.5. */
-  .footer-brand {
-    width: 100%; height: auto;
-    gap: 8.63cqw;
-    justify-content: flex-start;
-  }
-  .footer-brand .near-brand__icon { width: auto; height: 26.05cqw; flex-shrink: 0; }
-  .footer-brand .near-brand__wordmark { gap: 0; flex-shrink: 1; min-width: 0; }
-  .footer-brand .near-brand__wordmark svg:nth-child(1) { width: auto; height: 16.99cqw; margin-right: 3.09cqw; }
-  .footer-brand .near-brand__wordmark svg:nth-child(2) { width: auto; height: 17.34cqw; margin-right: 2.06cqw; }
-  .footer-brand .near-brand__wordmark svg:nth-child(3) { width: auto; height: 17.34cqw; margin-right: 3.73cqw; }
-  .footer-brand .near-brand__wordmark svg:nth-child(4) { width: auto; height: 16.99cqw; }
-  .footer-brand     { grid-row: 1; grid-column: 1 / -1; justify-self: start; margin-bottom: 0; }
+  .footer-brand     { grid-row: 1; grid-column: 1 / -1; justify-self: start; margin-bottom: 1.5rem; width: 100%; height: auto; }
   .footer-terms     { grid-row: 2; grid-column: 1; justify-self: start; }
   .footer-socials   { grid-row: 2; grid-column: 2; justify-self: center; margin-left: 0; }
   .footer-privacy   { grid-row: 2; grid-column: 3; justify-self: end; }

@@ -19,11 +19,8 @@
 
 /* ── Coverage carousel ── */
 .coverage-carousel {
-  margin-top: var(--space-lg);
-  padding: 36px 0;
+  margin-top: 4.25rem;
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
 .carousel-track {
   position: relative;
@@ -60,7 +57,7 @@
   .platform-phone { border-radius: var(--radius-card); }
   .platform-phone-img { width: 100%; height: auto; }
   .carousel-item { font-size: 2.25rem; }
-  .coverage-carousel { width: 100vw; margin-left: calc(-50vw + 50%); }
+  .coverage-carousel { width: 100vw; margin-left: calc(-50vw + 50%); margin-top: 40px; }
 }
 
 /* ── Tablet (481px–1024px) ──
@@ -68,4 +65,9 @@
    phone, keeping a more proportionate hero on mid-size screens. */
 @media (min-width: 481px) and (max-width: 1024px) {
   .platform-phone-img { width: 380px; max-width: 100%; }
+}
+
+/* ── Mobile (≤480px) ── */
+@media (max-width: 480px) {
+  .carousel-item { font-size: 36px; }
 }

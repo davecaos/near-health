@@ -11,7 +11,6 @@ import CareConnected from './components/CareConnected/CareConnected'
 import FooterCta from './components/FooterCta/FooterCta'
 import Footer from './components/Footer/Footer'
 import GridOverlay from './components/ui/GridOverlay/GridOverlay'
-import NavColorTuner from './components/ui/NavColorTuner/NavColorTuner'
 import { useLenis } from './hooks/useLenis'
 
 export default function App() {
@@ -46,7 +45,6 @@ export default function App() {
         <Footer />
       </div>
       {import.meta.env.DEV && <GridOverlay />}
-      {import.meta.env.DEV && <NavColorTuner />}
     </>
   )
 }

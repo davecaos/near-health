@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import gsap from 'gsap'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { splitLines, lineRevealVars, selfTrigger } from '../../utils/reveal'
@@ -6,6 +6,15 @@ import { asset } from '../../utils/assetPath'
 import './ShapedSection.css'
 
 export default function ShapedSection() {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= 480 : false
+  )
+  useEffect(() => {
+    const handle = () => setIsMobile(window.innerWidth <= 480)
+    window.addEventListener('resize', handle)
+    return () => window.removeEventListener('resize', handle)
+  }, [])
+
   const sectionRef = useRef(null)
   const cardRef = useRef(null)
   const titleRef = useRef(null)
@@ -15,12 +24,12 @@ export default function ShapedSection() {
   useScrollReveal({
     scopeRef: sectionRef,
     prepare: () => {
-      const targets = [badgeRef.current, textRef.current, titleRef.current]
+      const targets = [badgeRef.current, textRef.current, titleRef.current].filter(Boolean)
       gsap.set(targets, { autoAlpha: 0 })
       return targets
     },
     animate: () => {
-      const targets = [badgeRef.current, textRef.current, titleRef.current]
+      const targets = [badgeRef.current, textRef.current, titleRef.current].filter(Boolean)
       const splits = targets.map((el) => splitLines(el))
       gsap.set(targets, { autoAlpha: 1 })
 
@@ -35,14 +44,11 @@ export default function ShapedSection() {
       <div className="container">
         <h2 className="section-title" ref={titleRef}>Shaped by real-world use</h2>
         <div className="shaped-photo" ref={cardRef}>
-          <picture>
-            <source srcSet={asset('assets/images/shaped-real-world.webp')} type="image/webp" />
-            <img
-              src={asset('assets/images/shaped-real-world.png')}
-              alt="Real-world healthcare"
-              loading="lazy"
-            />
-          </picture>
+          <img
+            src={asset(isMobile ? 'shaped-mobile.jpg' : 'shaped.jpg')}
+            alt="Real-world healthcare"
+            loading="lazy"
+          />
           <div className="shaped-overlay">
             <p className="shaped-overlay-text" ref={textRef}>
               From intake and scheduling to claims and follow-ups, every part reflects real operational needs – not assumptions. This isn&rsquo;t a top-down product. It&rsquo;s built from how care actually moves. Because the best systems aren&rsquo;t imagined. They&rsquo;re shaped by the people who rely on them.

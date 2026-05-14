@@ -1,7 +1,7 @@
 /* ── Footer CTA — soft gradient presence ── */
 .footer-cta {
   position: relative;
-  padding: 59px 0 255px;
+  padding: 1.5rem 0 255px;
   text-align: center;
   overflow: hidden;
   isolation: isolate;
@@ -28,7 +28,7 @@
 .footer-cta .container { position: relative; z-index: 1; }
 .footer-cta-text {
   max-width: 700px;
-  margin: 0 auto var(--space-md);
+  margin: 0 auto 32px;
   font-size: var(--fs-subtitle); font-weight: 500; line-height: 1.35; text-wrap: balance;
 }
 .footer-cta-buttons { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 auto; }
@@ -36,7 +36,7 @@
 
 /* ── Mobile (≤480px) ── */
 @media (max-width: 480px) {
-  .footer-cta { padding: 0 0 140px; }
+  .footer-cta { padding: 3rem 0 140px; }
   .footer-cta-text { font-size: 16px; }
 }
 

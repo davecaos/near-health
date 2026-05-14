@@ -130,17 +130,27 @@ ul { list-style: none; }
 
 
 /* ── Section shared ── */
+.section-header { margin-bottom: 32px; }
+/* SplitText clones the h2 per line — zero out margin on clones inside .section-header
+   so only the wrapper's margin-bottom controls spacing, not each cloned line. */
+.section-header .section-title { margin-bottom: 0; }
 .section-title {
   font-family: var(--font-heading); font-size: var(--fs-h2);
   font-weight: 400; line-height: 1; letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 .section-subtitle {
   font-size: var(--fs-subtitle); font-weight: 500;
   line-height: 1.36; letter-spacing: 0.02em; margin-top: var(--space-sm);
+  text-wrap: balance;
 }
 .footer-wrap { position: relative; }
 
 @media (max-width: 1024px) {
   :root { --page-px: 19.5px; }
   .section-subtitle { font-size: var(--fs-body-mobile); }
+}
+@media (max-width: 480px) {
+  .section-subtitle { margin-top: 0; }
+  .section-title { font-size: 36px; margin-bottom: 22px; }
 }

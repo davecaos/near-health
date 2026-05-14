@@ -42,14 +42,14 @@
 @media (max-width: 480px) {
   .real-world { padding: var(--space-section-mobile) 0; }
   .real-world .container { padding: 0 19.5px; }
-  .real-world .section-title { margin-bottom: 28px; letter-spacing: -0.01em; text-align: center; }
+  .real-world .section-title { margin-bottom: 28px; letter-spacing: -0.01em; text-align: left; }
   .real-world .mobile-only  { display: inline; }
   .real-world .desktop-only { display: none; }
   .features-grid { grid-template-columns: 1fr; gap: 11px; }
   .feature-card {
     display: grid; grid-template-columns: 36px 1fr; grid-template-rows: auto auto;
     column-gap: 14px; row-gap: 10px; align-content: start;
-    max-width: 381px; min-height: 0; height: auto;
+    max-width: 100%; width: 100%; min-height: 0; height: auto;
     padding: 16px 16.5px;
     border-radius: 26px;
     text-align: left;
@@ -62,6 +62,7 @@
     margin: 0;
     border-radius: 746.25px;
   }
+  .feature-icon img { width: 16px; height: 16px; }
   .feature-card h3 {
     grid-column: 2; grid-row: 1;
     margin-bottom: 0;

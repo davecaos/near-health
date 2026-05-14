@@ -5,14 +5,14 @@
    logo follows the tuned nav-link tone. */
 .near-brand {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 .near-brand__icon,
 .near-brand__wordmark svg {
   flex-shrink: 0;
   transition: color 0.3s var(--ease);
 }
-.near-brand__wordmark { display: flex; align-items: flex-end; }
+.near-brand__wordmark { display: flex; align-items: center; }
 
 /* ── Variants ── */
 /* sm = header */
@@ -20,6 +20,13 @@
 .near-brand--sm .near-brand__icon { width: auto; height: clamp(22px, 1.8vw, 27px); }
 .near-brand--sm .near-brand__wordmark { gap: 2px; }
 .near-brand--sm .near-brand__wordmark svg { width: auto; height: clamp(14px, 1.2vw, 18px); }
+/* sm mobile override — total brand width ≈ 103px */
+@media (max-width: 1024px) {
+  .near-brand--sm { gap: 9px; }
+  .near-brand--sm .near-brand__icon { height: 27px; }
+  .near-brand--sm .near-brand__wordmark svg { height: 18px; }
+}
+
 /* lg = footer */
 .near-brand--lg { gap: clamp(16px, 2vw, 32px); }
 .near-brand--lg .near-brand__icon { width: auto; height: clamp(120px, 25vw, 375px); }

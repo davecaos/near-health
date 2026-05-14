@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
 import { splitLines, lineRevealVars, blockRevealVars, blockRevealFromVars, selfTrigger } from '../../utils/reveal'
-import useIsMobile from '../../hooks/useIsMobile'
-import { BREAKPOINT_PHONE } from '../../utils/layout'
 import { asset } from '../../utils/assetPath'
 import './OnePlatform.css'
 
-const INITIAL = ['Vision', 'Dental', 'Medicare', 'ACA', 'Employer-sponsored']
+const INITIAL = ['Vision', 'Dental', 'Medicare', 'ACA', 'Employer']
 const COPIES = 4
 const items = Array.from({ length: COPIES }, () => INITIAL).flat()
 
@@ -15,18 +13,6 @@ const items = Array.from({ length: COPIES }, () => INITIAL).flat()
 const SPEED = 70
 
 export default function OnePlatform() {
-  const isMobile = useIsMobile()
-
-  // Use the mobile image only on small phones (≤480px), not on tablet
-  const [useSmallImage, setUseSmallImage] = useState(
-    typeof window !== 'undefined' ? window.innerWidth <= BREAKPOINT_PHONE : false
-  )
-  useEffect(() => {
-    const handle = () => setUseSmallImage(window.innerWidth <= BREAKPOINT_PHONE)
-    window.addEventListener('resize', handle)
-    return () => window.removeEventListener('resize', handle)
-  }, [])
-
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
@@ -119,10 +105,7 @@ export default function OnePlatform() {
         // Inactive items: forced to white.
         let t = 1
         if (i === minIdx) {
-          // Subtract the item's half-width so wide items (e.g. "Employer-sponsored")
-          // stay fully dark until their trailing edge clears the centre, not just their centre.
-          const adjustedDist = Math.max(0, dist - halfWidths[i])
-          const x = Math.min(1, adjustedDist / (spacing * 0.5))
+          const x = Math.min(1, dist / (spacing * 0.5))
           t = x * x * (3 - 2 * x)
         }
         // Direction-dependent tau: darkening (t < smoothT) eases in slowly so
@@ -131,10 +114,6 @@ export default function OnePlatform() {
         const darkening = t < smoothT[i]
         const lerpFactor = dt > 0 ? 1 - Math.exp(-dt / (darkening ? TAU_DARKEN : TAU_LIGHTEN)) : 1
         smoothT[i] += (t - smoothT[i]) * lerpFactor
-        // Opacity has a wider falloff so far-away items still register as
-        // context without competing with the active one for attention.
-        const fadeT = Math.min(1, dist / (spacing * 2.2))
-        el.style.opacity = (1 - fadeT * 0.7).toString()
         el.style.setProperty('--t', smoothT[i].toString())
       }
     }
@@ -145,9 +124,17 @@ export default function OnePlatform() {
       last = time
 
       tx -= (window.innerWidth <= 768 ? 35 : SPEED) * dt
-      // Keep tx in (baseTx - setWidth, baseTx]; wrapping by setWidth lands the
-      // next identical item at center, so the loop is invisible.
-      while (setWidth > 0 && tx <= baseTx - setWidth) tx += setWidth
+
+      // Wrap tx and rotate smoothT to match. When tx jumps by setWidth, every
+      // item visually lands where the item INITIAL.length slots ahead used to
+      // be. Without rotating smoothT, the active-colour state becomes stale and
+      // causes a visible flash on the wrap frame.
+      let wraps = 0
+      while (setWidth > 0 && tx <= baseTx - setWidth) { tx += setWidth; wraps++ }
+      if (wraps > 0) {
+        const shift = (wraps * INITIAL.length) % smoothT.length
+        smoothT = [...smoothT.slice(shift), ...smoothT.slice(0, shift)]
+      }
 
       track.style.transform = `translate3d(${tx}px, 0, 0)`
       paint(dt)
@@ -195,15 +182,12 @@ export default function OnePlatform() {
           <p className="platform-subtitle" ref={subtitleRef}>Supporting the coverage types brokers and providers work with every day.</p>
         </div>
         <div className="platform-phone" ref={phoneRef}>
-          <picture>
-            <source srcSet={asset(useSmallImage ? 'assets/images/one-platform-mobile.webp' : 'assets/images/one-platform-desktop.webp')} type="image/webp" />
-            <img
-              src={asset(useSmallImage ? 'assets/images/one-platform-mobile.jpg' : 'assets/images/one-platform-desktop.jpg')}
-              alt="Near Health - Activate Care"
-              loading="lazy"
-              className="platform-phone-img"
-            />
-          </picture>
+          <img
+            src={asset('activate-care.jpg')}
+            alt="Near Health - Activate Care"
+            loading="lazy"
+            className="platform-phone-img"
+          />
         </div>
       </div>
 

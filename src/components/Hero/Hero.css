@@ -95,10 +95,13 @@
   object-fit: cover;
 }
 
+/* Carousel wrap offset — baked from tuner defaults (X: -32px, Y: 32px) */
+.hero-carousel-wrap { transform: translate(-32px, 32px); }
+
 /* ── Built-for ticker (desktop) ── */
 /* margin-top offsets account for the viewport's 12% top fade band so the
    label and divider stay visually aligned with the now-shifted active row. */
-.built-for-label { font-size: var(--fs-caption); font-weight: 500; white-space: nowrap; margin-top: 56px; }
+.built-for-label { font-size: 14px; font-weight: 500; white-space: nowrap; margin-top: 56px; }
 /* Pure CSS: divider grows via keyframe, no JS class toggle */
 .built-for-divider {
   flex-shrink: 0;
@@ -116,37 +119,46 @@
   height: 180px;
   overflow: hidden;
   opacity: 0;
-  mask-image: linear-gradient(to bottom, transparent 25%, black 30%, black 70%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 25%, black 30%, black 70%, transparent 100%);
+  /* Active item sits at the top (fully opaque), items below fade to transparent.
+     No top fade — the first item should always be fully visible. */
+  /* topEnd=20% → activeEnd=30%: fade in
+     30%→50%: ease-in² ramp from 100% → 20% (nextOpacity)
+     50%→170%: ease-in² tail from 20% → 0% (fadeEnd) */
+  mask-image: linear-gradient(to bottom,
+    transparent 20%, black 30%,
+    rgba(0,0,0,1.000) 30.0%, rgba(0,0,0,0.950) 35.0%,
+    rgba(0,0,0,0.800) 40.0%, rgba(0,0,0,0.550) 45.0%,
+    rgba(0,0,0,0.200) 50.0%,
+    rgba(0,0,0,0.139) 70.0%, rgba(0,0,0,0.089) 90.0%,
+    rgba(0,0,0,0.050) 110.0%, rgba(0,0,0,0.022) 130.0%,
+    rgba(0,0,0,0.006) 150.0%, rgba(0,0,0,0.000) 170.0%);
+  -webkit-mask-image: linear-gradient(to bottom,
+    transparent 20%, black 30%,
+    rgba(0,0,0,1.000) 30.0%, rgba(0,0,0,0.950) 35.0%,
+    rgba(0,0,0,0.800) 40.0%, rgba(0,0,0,0.550) 45.0%,
+    rgba(0,0,0,0.200) 50.0%,
+    rgba(0,0,0,0.139) 70.0%, rgba(0,0,0,0.089) 90.0%,
+    rgba(0,0,0,0.050) 110.0%, rgba(0,0,0,0.022) 130.0%,
+    rgba(0,0,0,0.006) 150.0%, rgba(0,0,0,0.000) 170.0%);
   animation: fade-in-track 0.3s ease 1.05s forwards;
 }
-/* Track flows continuously: 7 items × 28px = 196px loop, linear so motion
-   never pauses. The mask gradient (solid at top, fading to transparent below)
-   is what creates the "highlight as items reach the top" feel.
-   translate3d on both the static base and the keyframes keeps the element on
-   the same compositor layer across the loop boundary — without that match,
-   the iteration restart can read as a 1-frame snap. */
+/* 7 items × 14px + 6 gaps × 8px = 146px loop distance.
+   translate3d on base + keyframes keeps the element on the same compositor
+   layer across the loop boundary — prevents the 1-frame snap on restart. */
 .built-for-track {
-  display: flex; flex-direction: column;
+  display: flex; flex-direction: column; gap: 8px;
   -webkit-font-smoothing: antialiased;
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
   will-change: transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  animation: built-for-scroll-v 14.4s linear 1.35s infinite;
 }
 .built-for-item {
-  height: 28px;
-  font-size: var(--fs-caption); font-weight: 500; line-height: 28px;
+  height: 14px;
+  font-size: 14px; font-weight: 500; line-height: 1;
   color: inherit;
   white-space: nowrap;
 }
 
-@keyframes built-for-scroll-v {
-  from { transform: translate3d(0,    0, 0); }
-  to   { transform: translate3d(0, -196px, 0); }
-}
 
 /* ── Hero Mobile ── */
 .hero-mobile-top {
@@ -211,8 +223,8 @@
   width: 100%;
   overflow: hidden;
   opacity: 0;
-  mask-image: linear-gradient(to right, transparent 0%, transparent 15%, black 35%, black 65%, transparent 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 15%, black 35%, black 65%, transparent 85%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 5%, black 30%, black 70%, transparent 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 5%, black 30%, black 70%, transparent 95%, transparent 100%);
   animation: fade-in-track 0.3s ease 1.05s forwards;
 }
 @keyframes fade-in-track {
@@ -320,7 +332,8 @@
   .built-for-h-viewport {
     width: 100vw;
     margin-left: calc(-1 * var(--page-px));
-    mask-image: linear-gradient(to right, transparent 0%, black 42%, black 58%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 42%, black 58%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 80%, black 20%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 80%, black 20%, transparent 100%);
   }
+  .built-for-h-item { font-size: 16px; }
 }

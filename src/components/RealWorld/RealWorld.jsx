@@ -44,10 +44,7 @@ export default function RealWorld() {
   return (
     <section className="real-world" id="real-world" ref={sectionRef}>
       <div className="container">
-        <h2 className="section-title" ref={titleRef}>
-          <span className="desktop-only">Built for real-world operations</span>
-          <span className="mobile-only">Shaped by<br />real-world use</span>
-        </h2>
+        <h2 className="section-title" ref={titleRef}>Built for real-world operations</h2>
         <div className="features-grid">
           {features.map((f, i) => (
             <div

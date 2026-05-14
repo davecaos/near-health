@@ -10,10 +10,10 @@
 }
 .post-enrollment .section-title { margin-bottom: 10.5rem; color: var(--white); }
 .post-grid {
-  display: flex; flex-wrap: wrap; gap: 22px;
+  display: flex; flex-wrap: wrap; gap: 32px;
 }
 .post-grid-bottom { margin-top: 5rem; }
-.post-col { flex: 1 1 min(392px, 30%); padding: 0; display: flex; flex-direction: row; align-items: flex-start; gap: 32px; }
+.post-col { flex: 1; padding: 0; display: flex; flex-direction: row; align-items: flex-start; gap: 32px; }
 .post-divider-v { flex-shrink: 0; width: 1px; background: rgba(255,255,255,0.1); }
 .post-divider-hidden { visibility: hidden; }
 .post-col-hidden { visibility: hidden; }
@@ -36,14 +36,12 @@
    Section/card padding stays at the desktop values for tablet (see below)
    and only collapses at the phone breakpoint. */
 @media (max-width: 1023px) {
-  .post-list-item { padding: 24px 0; }
-  .post-list-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 10px;
-  }
-  .post-list-header .post-icon { flex-shrink: 0; margin-bottom: 0; }
-  .post-list-header h3 { font-size: 22px; font-weight: 500; line-height: 1.13; color: var(--white); }
-  .post-list-item p    { font-size: 16px; font-weight: 500; line-height: 1.42; color: rgba(255,255,255,0.6); }
+  .post-list-item { display: flex; flex-direction: row; align-items: flex-start; gap: 16px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  .post-list-item:first-child { border-top: none; }
+  .post-list-item .post-icon { flex-shrink: 0; margin-top: 2px; }
+  .post-list-body { display: flex; flex-direction: column; gap: 6px; }
+  .post-list-body h3 { font-size: 22px; font-weight: 500; line-height: 1.13; color: var(--white); }
+  .post-list-body p  { font-size: 16px; font-weight: 500; line-height: 1.42; color: rgba(255,255,255,0.6); }
 }
 
 /* ── Mobile only (≤480px) ── */
