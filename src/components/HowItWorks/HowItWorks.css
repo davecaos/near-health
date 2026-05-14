@@ -12,7 +12,7 @@
   text-align: center; text-transform: uppercase;
 }
 .how-header .section-title { max-width: 820px; margin: 0 auto 20px; }
-.how-desc { max-width: 454px; margin: 0 auto; font-size: var(--fs-body-sm); font-weight: 500; line-height: 1.4; text-wrap: balance; }
+.how-desc { max-width: 454px; margin: 0 auto; font-size: var(--fs-body-sm); font-weight: 500; line-height: 1.4; }
 
 /* ── Layout ── */
 .how-layout { position: relative; }

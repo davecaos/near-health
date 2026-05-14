@@ -81,8 +81,8 @@ export default function OnePlatform() {
 
     // Asymmetric time constants: darkening (inactive→active) feels abrupt
     // at the same speed as lightening, so we ease it in more slowly.
-    const TAU_DARKEN = 0.35
-    const TAU_LIGHTEN = 0.15
+    const TAU_DARKEN = 0.08
+    const TAU_LIGHTEN = 0.04
 
     // Winner-take-all highlight: only the single item nearest the centre is
     // ever darkened. As soon as another item becomes the closest, the

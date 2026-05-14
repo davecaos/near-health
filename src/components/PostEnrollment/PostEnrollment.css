@@ -39,9 +39,10 @@
   .post-list-item { display: flex; flex-direction: row; align-items: flex-start; gap: 16px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.1); }
   .post-list-item:first-child { border-top: none; }
   .post-list-item .post-icon { flex-shrink: 0; margin-top: 2px; }
+  .post-list-item .post-icon img, .post-list-item .post-icon svg { width: 16px; height: 16px; }
   .post-list-body { display: flex; flex-direction: column; gap: 6px; }
   .post-list-body h3 { font-size: 22px; font-weight: 500; line-height: 1.13; color: var(--white); }
-  .post-list-body p  { font-size: 16px; font-weight: 500; line-height: 1.42; color: rgba(255,255,255,0.6); }
+  .post-list-body p  { font-size: 16px; font-weight: 500; line-height: 1.42; color: rgba(255,255,255,0.6); padding-right: 56px; }
 }
 
 /* ── Mobile only (≤480px) ── */

@@ -15,6 +15,7 @@ const cards = [
     subtitle: 'Agents · Agencies · FMOs · GAs',
     image: asset('assets/images/person1.jpg'),
     imageWebp: asset('assets/images/person1.webp'),
+    imageMobile: asset('assets/images/broker-mobile.jpg'),
     features: [
       'Reduce manual follow-ups and service workload.',
       'Improve member experience and retention.',
@@ -27,6 +28,7 @@ const cards = [
     subtitle: 'Clinics · Groups · MSOs',
     image: asset('assets/images/person2.jpg'),
     imageWebp: asset('assets/images/person2.webp'),
+    imageMobile: asset('assets/images/provider-mobile.jpg'),
     features: [
       'Expand your reach through a trusted, AI-powered provider network.',
       'Gain visibility with high-intent patients and broker-driven referrals.',
@@ -89,7 +91,7 @@ function CareCard({ card, refProp, mobileActive }) {
       <div className="care-card-photo">
         <picture>
           <source srcSet={card.imageWebp} type="image/webp" />
-          <img src={card.image} alt={card.title} loading="lazy" />
+          <img src={isMobile && card.imageMobile ? card.imageMobile : card.image} alt={card.title} loading="lazy" />
         </picture>
         <div className="care-card-overlay">
           <h3>{card.title}</h3>

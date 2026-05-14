@@ -73,7 +73,7 @@ export default function PostEnrollment() {
   return (
     <section className="post-enrollment" id="why-near" ref={sectionRef}>
       <div className="container">
-        <h2 className="section-title" ref={titleRef}>Designed for the<br />post-enrollment reality</h2>
+        <h2 className="section-title" ref={titleRef}>Designed for the<br className="mobile-br" />post-enrollment<br className="mobile-br" /> reality</h2>
         {isMobile ? (
           <div className="post-list">
             {features.map((f, i) => (

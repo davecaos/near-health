@@ -129,6 +129,9 @@ ul { list-style: none; }
 .container { max-width: calc(1440px + 2 * var(--px)); margin: 0 auto; padding: 0 var(--px); }
 
 
+.mobile-br { display: none; }
+@media (max-width: 480px) { .mobile-br { display: block; } }
+
 /* ── Section shared ── */
 .section-header { margin-bottom: 32px; }
 /* SplitText clones the h2 per line — zero out margin on clones inside .section-header
