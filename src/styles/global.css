@@ -150,6 +150,6 @@ ul { list-style: none; }
   .section-subtitle { font-size: var(--fs-body-mobile); }
 }
 @media (max-width: 480px) {
-  .section-subtitle { margin-top: 0; }
+  .section-subtitle { margin-top: 0; text-wrap: unset; }
   .section-title { font-size: 36px; margin-bottom: 22px; }
 }
