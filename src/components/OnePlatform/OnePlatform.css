@@ -1,10 +1,6 @@
 /* ── One Platform ── */
 .one-platform {
   padding: var(--space-section-desktop) 0; overflow: hidden;
-  background:
-    radial-gradient(ellipse 70% 30% at 0% 50%, rgba(var(--accent-peach-bold-rgb), 0.65) 0%, rgba(var(--accent-peach-bold-rgb), 0) 100%),
-    radial-gradient(ellipse at 100% 55%, rgba(var(--accent-dusty-cool-rgb), 0.55) 0%, rgba(var(--accent-dusty-cool-rgb), 0) 52%),
-    linear-gradient(180deg, var(--bg-stop-5) 0%, var(--bg-stop-6) 100%);
 }
 .one-platform .section-title {
   font-family: var(--font-heading);

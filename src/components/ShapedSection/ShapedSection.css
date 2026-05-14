@@ -1,10 +1,6 @@
 /* ── Shaped by Real-World Use ── */
 .shaped-section {
   padding: var(--space-section-desktop) 0 15rem;
-  background:
-    radial-gradient(ellipse at 0% 55%, rgba(var(--accent-peach-mid-rgb), 0.55) 0%, rgba(var(--accent-peach-mid-rgb), 0) 50%),
-    radial-gradient(ellipse at 100% 60%, rgba(var(--accent-dusty-deep-rgb), 0.55) 0%, rgba(var(--accent-dusty-deep-rgb), 0) 52%),
-    linear-gradient(180deg, var(--bg-stop-7) 0%, var(--bg-stop-8) 100%);
 }
 .shaped-section .container { padding: var(--px-section-x); }
 .shaped-section .section-title { margin-bottom: 32px; }
@@ -30,18 +26,19 @@
   z-index: 2;
   display: flex; flex-direction: column; justify-content: space-between;
   padding: clamp(24px, 4vw, 60px);
+  padding-right: calc(clamp(24px, 4vw, 60px) + 88px);
 }
 .shaped-overlay-text {
-  width: 100%; max-width: 480px;
+  width: 100%; max-width: clamp(240px, 34vw, 480px);
   margin-left: auto;
   font-family: var(--font-heading);
-  font-size: clamp(18px, 2.2vw, 30px); font-weight: 400;
+  font-size: clamp(14px, 2.2vw, 30px); font-weight: 400;
   line-height: 1.3; letter-spacing: -0.01em;
   color: var(--white);
 }
 .shaped-overlay-badge {
   display: flex; align-items: center; gap: 12px;
-  width: 100%; max-width: 480px;
+  width: 100%; max-width: clamp(240px, 34vw, 480px);
   margin-left: auto;
 }
 .shaped-overlay-badge .shaped-badge-icon { width: clamp(24px, 2.5vw, 36px); height: auto; }

@@ -1,10 +1,6 @@
 /* ── Care Journey ── */
 .care-journey {
   padding: var(--space-section) 0 var(--space-section-desktop);
-  background:
-    radial-gradient(ellipse 70% 45% at 15% 50%, rgba(var(--accent-cream-warm-rgb), 0.65) 0%, rgba(var(--accent-cream-warm-rgb), 0) 100%),
-    radial-gradient(ellipse at 85% 65%, rgba(var(--accent-dusty-light-rgb), 0.45) 0%, rgba(var(--accent-dusty-light-rgb), 0) 50%),
-    linear-gradient(180deg, var(--bg-stop-1) 0%, var(--bg-stop-2) 100%);
 }
 .care-journey .container { padding: var(--px-section-x); }
 .care-journey-header { margin-bottom: var(--space-md); }

@@ -1,14 +1,11 @@
 /* ── Care, Connected ── */
 .care-connected {
   padding: 0;
-  background:
-    radial-gradient(ellipse at 50% 55%, rgba(var(--accent-cream-bright-rgb), 0.45) 0%, rgba(var(--accent-cream-bright-rgb), 0) 50%),
-    linear-gradient(180deg, var(--bg-stop-8) 0%, var(--bg-stop-9) 100%);
 }
 .care-connected-card {
   position: relative;
   display: flex; align-items: center; justify-content: center;
-  width: min(1183px, 100%); height: 510px;
+  width: min(1183px, 100%); aspect-ratio: 946 / 408;
   margin: 0 auto;
   border-radius: var(--radius-pill);
   overflow: hidden;

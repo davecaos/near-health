@@ -5,10 +5,6 @@
 .footer {
   position: relative; padding: var(--space-md) 0;
   isolation: isolate;
-  background:
-    radial-gradient(ellipse at 15% 100%, rgba(var(--accent-cyan-rgb), 0.65) 0%, rgba(var(--accent-cyan-rgb), 0) 42%),
-    radial-gradient(ellipse at 100% 45%, rgba(var(--accent-dusty-neutral-rgb), 0.55) 0%, rgba(var(--accent-dusty-neutral-rgb), 0) 50%),
-    linear-gradient(180deg, var(--bg-stop-9) 0%, var(--bg-footer-end) 100%);
 }
 .footer .container { position: relative; z-index: 1;
   display: flex; flex-wrap: wrap; align-items: center;

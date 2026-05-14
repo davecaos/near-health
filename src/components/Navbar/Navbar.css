@@ -46,6 +46,13 @@
   transition: transform 0.35s var(--ease);
   will-change: transform;
 }
+.navbar-edge::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 100%;
+  width: 100%; height: 1px;
+  background: rgba(10, 28, 30, 0.2);
+}
 /* When .navbar gets the hidden class, slide the blur and edge up the
    navbar's height so they track the bottom edge of the hidden navbar.
    `~` (general sibling) is required because .navbar-edge is no longer

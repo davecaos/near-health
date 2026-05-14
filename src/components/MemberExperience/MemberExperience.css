@@ -1,10 +1,6 @@
 /* ── Member Experience ── */
 .member-experience {
   padding: var(--space-section-desktop) 0;
-  background:
-    radial-gradient(ellipse at 35% 45%, rgba(var(--accent-cream-mid-rgb), 0.5) 0%, rgba(var(--accent-cream-mid-rgb), 0) 50%),
-    radial-gradient(ellipse at 100% 70%, rgba(var(--accent-dusty-warm-rgb), 0.45) 0%, rgba(var(--accent-dusty-warm-rgb), 0) 55%),
-    linear-gradient(180deg, var(--bg-stop-2) 0%, var(--bg-stop-3) 100%);
 }
 .member-experience .container { padding: var(--px-section-x); }
 .member-header {

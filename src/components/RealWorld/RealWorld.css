@@ -1,10 +1,6 @@
 /* ── Real-World Operations ── */
 .real-world {
   padding: var(--space-section-desktop) 0;
-  background:
-    radial-gradient(ellipse 70% 45% at 15% 50%, rgba(var(--accent-peach-warm-rgb), 0.5) 0%, rgba(var(--accent-peach-warm-rgb), 0) 100%),
-    radial-gradient(ellipse at 90% 70%, rgba(var(--accent-dusty-lilac-rgb), 0.5) 0%, rgba(var(--accent-dusty-lilac-rgb), 0) 50%),
-    linear-gradient(180deg, var(--bg-stop-6) 0%, var(--bg-stop-7) 100%);
 }
 .real-world .container { padding: var(--px-section-x); }
 .real-world .section-title { margin-bottom: 32px; }
