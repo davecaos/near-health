@@ -149,6 +149,7 @@ ul { list-style: none; }
 @media (max-width: 1024px) {
   :root { --page-px: 19.5px; }
   .section-subtitle { font-size: var(--fs-body-mobile); }
+  body { background-image: url('/background-mobile.svg'); }
 }
 @media (max-width: 480px) {
   .section-subtitle { margin-top: 0; text-wrap: unset; }
