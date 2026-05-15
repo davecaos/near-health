@@ -68,8 +68,6 @@
   --navbar-h: 66px;
   --navbar-sticky-offset: 82px;    /* --navbar-h + 16px breathing room */
 
-  /* Page background base */
-  --bg-page: #eee2df;
 
   /* Section-background palette ramp. Each --bg-stop-N is the boundary shared
      between section N and section N+1, so adjacent linear-gradient handoffs
@@ -111,7 +109,7 @@
 
 /* ── Reset ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { -webkit-font-smoothing: antialiased; background: var(--bg-page); overscroll-behavior-y: none; overflow-x: clip; }
+html { -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; overflow-x: clip; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -120,7 +118,7 @@ html.lenis, html.lenis body { height: auto; }
 body {
   font-family: var(--font); color: var(--dark); overflow-x: clip;
   position: relative; font-size: var(--fs-body);
-  background: url('/background.svg') left top / 100% auto no-repeat var(--bg-page);
+  background: url('/background.svg') center top / cover no-repeat;
 }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
