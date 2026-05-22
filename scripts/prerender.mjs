@@ -24,7 +24,7 @@ async function prerender() {
   const browser = await chromium.launch()
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } })
 
-  await page.goto(`${address}landing/`, { waitUntil: 'networkidle', timeout: 15000 })
+  await page.goto(`${address}near-health/`, { waitUntil: 'networkidle', timeout: 15000 })
 
   const rootHtml = await page.$eval('#root', (el) => el.innerHTML)
 
